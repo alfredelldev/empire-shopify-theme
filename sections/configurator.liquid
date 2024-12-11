@@ -1,0 +1,76 @@
+{% style %}
+  .dpo-container {
+    display: none !important;
+  }
+
+  .product-configurator {
+    margin-top: {{ section.settings.space_above }}rem;
+    margin-bottom: {{ section.settings.space_below }}rem;
+  }
+
+  #configurator {
+    scroll-margin: 145px;
+  }
+{% endstyle %}
+
+<script>
+  function lowerChatWidgetZIndex() {
+    const widget = document.getElementById('launcher');
+    if (widget) {
+      widget.style.zIndex = 2;
+    }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+      lowerChatWidgetZIndex();
+    }, 5000);
+  });
+</script>
+
+<div id="configurator" data-product-id="{{ product.id }}"></div>
+
+{%- liquid
+  render 'configurator.js'
+  render 'Error.js'
+  render 'ScaleableImage.js'
+-%}
+
+{% schema %}
+{
+  "name": "Product Configurator",
+  "class": "product-configurator product-section--container",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "space_above",
+      "label": "Space Above",
+      "default": 2,
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem"
+    },
+    {
+      "type": "range",
+      "id": "space_below",
+      "label": "Space Below",
+      "default": 0,
+      "min": 0,
+      "max": 10,
+      "step": 0.5,
+      "unit": "rem"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Product",
+      "name": "Product Configurator"
+    }
+  ]
+}
+{% endschema %}

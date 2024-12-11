@@ -1,0 +1,29 @@
+{% style %}
+  .configurator-button {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    font-weight: bold;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--chakra-colors-blackAlpha-900, rgba(0, 0, 0, 0.92));
+    background-color: var(--chakra-colors-blackAlpha-50, rgba(0, 0, 0, 0.04));
+    transition: all 0.2s ease-in-out;
+  }
+
+  .configurator-button:hover {
+    background-color: var(--chakra-colors-blackAlpha-200, rgba(0, 0, 0, 0.08));
+    transform: scale(1.01);
+  }
+
+  .configurator-button:focus,
+  .configurator-button:active {
+    background-color: var(--chakra-colors-blackAlpha-300, rgba(0, 0, 0, 0.016));
+    transform: scale(0.98);
+  }
+{% endstyle %}
+
+<a href="#configurator" class="configurator-button">
+  {{- button_text -}}
+</a>

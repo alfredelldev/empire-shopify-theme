@@ -1,0 +1,598 @@
+{%- liquid
+  comment
+    collection.metafields.filters.excluded_filter_groups
+  endcomment
+  assign excluded_tag_groups_metafield = collection.metafields.filters.excluded_filter_groups | newline_to_br | split: '<br />'
+  assign excluded_tag_groups = blank
+  for excluded_tag_group in excluded_tag_groups_metafield
+    assign excluded_tag_group_clean = excluded_tag_group | strip
+    assign excluded_tag_groups = excluded_tag_groups | append: ',' | append: excluded_tag_group_clean
+  endfor
+  assign excluded_tag_groups = excluded_tag_groups | split: ','
+
+  assign filtered_tag_groups = blank
+  for tag_group in tag_groups
+    unless excluded_tag_groups contains tag_group
+      assign filtered_tag_groups = filtered_tag_groups | append: tag_group | append: '|'
+    endunless
+  endfor
+  assign tag_groups = filtered_tag_groups | split: '|' | uniq
+
+  comment
+    collection.metafields.filters.excluded_tags
+  endcomment
+  assign excluded_tags_metafield = collection.metafields.filters.excluded_tags | newline_to_br | split: '<br />'
+  assign excluded_tags = blank
+  for excluded_tag in excluded_tags_metafield
+    assign excluded_tag_clean = excluded_tag | strip
+    assign excluded_tags = excluded_tags | append: ',' | append: excluded_tag_clean
+  endfor
+  assign excluded_tags = excluded_tags | split: ','
+-%}
+
+{% style %}
+  .collection-head--container {
+    --gray-50: #fafafa;
+    --gray-100: #eeeeee;
+    --gray-200: #dddddd;
+    --gray-300: #aaaaaa;
+    --gray-500: #555555;
+    --brand-800: #0e4060;
+    --brand-900: #092a3f;
+
+    background-color: var(--gray-50);
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  .collection-head--container > * {
+    --layout-container-gutter: 25px;
+    --layout-container-max-width: 1400px;
+    max-width: var(--layout-container-max-width, 1400px);
+    margin: 1.75rem auto;
+    padding-right: var(--layout-container-gutter, 25px);
+    padding-left: var(--layout-container-gutter, 25px);
+  }
+
+  .collection-head--filter-container {
+    --left-element-width: 240px;
+    --gap: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+  }
+
+  .collection-head--filter-container select {
+    border-radius: 3px;
+    border-color: transparent;
+    background-color: var(--gray-100);
+    padding: 5px;
+    margin: 0 2px;
+    cursor: pointer;
+    transition: background-color 100ms ease-in-out;
+    /* This is to make the arrow padding align with the select padding */
+    border-right: 6px solid transparent;
+  }
+
+  /* Lessen padding and margin on mobile */
+  @media only screen and (max-width: 600px) {
+    .breadcrumbs-container {
+      margin: 8px 0;
+      padding: 8px;
+    }
+
+    .collection-head--filter-container {
+      margin: 0;
+      padding: 8px;
+    }
+  }
+
+  .collection-head--filter-container select:hover {
+    background-color: var(--gray-200);
+  }
+
+  .collection-head--filter-info h1 {
+    margin: 0 0 10px 0;
+  }
+
+  .collection-head--filter-info p {
+    line-height: 1.5;
+  }
+
+  .collection-head--filter-options-container {
+    flex: 1; /* take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .collection-head--filter-options-container label {
+    width: fit-content;
+  }
+
+  /* Increase the label font-size on mobile */
+  @media only screen and (max-width: 600px) {
+    .collection-head--filter-options-container label {
+      font-size: 1.15rem;
+    }
+  }
+
+  .collection-head--filter-tag-option-group {
+    height: max-content;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 160px;
+    gap: 10px;
+    overflow-x: hidden;
+    overscroll-behavior-x: contain;
+    padding: 2px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .collection-head--filter-tag-option {
+    height: 100%;
+    min-height: 200px;
+    display: grid;
+    grid-template-rows: min-content;
+    background-color: #fff;
+    outline: 2px solid transparent;
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    transition: all 100ms ease-in-out;
+    scroll-snap-align: start;
+    scroll-margin: 2px;
+  }
+
+  .collection-head--filter-tag-option.disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .collection-head--filter-tag-option-group.active {
+    cursor: grabbing !important;
+  }
+
+  .collection-head--filter-tag-option:not(.disabled):hover {
+    outline: 2px solid var(--gray-300);
+  }
+
+  .collection-head--filter-tag-option:hover a {
+    background-color: rgba(255 255 255 / 1%);
+  }
+
+  /* This is to make the entire div clickable
+    * We can't wrap it in the link due to Liquid :/ */
+  .collection-head--filter-tag-option {
+    position: relative;
+  }
+  .collection-head--filter-tag-option a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .collection-head--filter-tag-option a,
+  .collection-head--filter-tag-option p {
+    margin: 0;
+    padding: 10px;
+    padding-top: 11px;
+    line-height: normal;
+    text-decoration: none;
+    color: var(--gray-500);
+  }
+
+  .filter-tag-option--selected {
+    outline: 2px solid var(--brand-800);
+  }
+
+  .filter-tag-option--selected:not(.disabled):hover,
+  .filter-tag-option--selected:hover {
+    outline: 2px solid var(--brand-900);
+  }
+
+  img[src=''] {
+    opacity: 0;
+  }
+
+  .collection-head--filter-tag-option .no-image,
+  .collection-head--filter-tag-option > img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    background-color: #eee;
+  }
+
+  .collection-head--filter-tag-option .no-image {
+    background-image: url({{'logo.svg'|asset_img_url}});
+  }
+
+  .visually-hidden:not(:focus):not(:active) {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .collection-head--filter-tag-option img {
+    position: relative;
+  }
+
+  .arrow-container {
+    position: absolute;
+    top: 15px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .arrow-container.next {
+    right: -18px;
+  }
+  .arrow-container.prev {
+    left: -18px;
+    z-index: 1;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .arrow-container.next {
+      right: -10px;
+    }
+    .arrow-container.prev {
+      left: -10px;
+    }
+  }
+
+  .collection-head--filter-options-container {
+    position: relative;
+  }
+
+  .collection-head--filter-tag-option-group .arrow {
+    width: 40px;
+    height: 40px;
+    aspect-ratio: 1;
+    background-color: white;
+    border: 1px solid rgba(0 0 0 / 10%);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 100ms ease-in-out;
+  }
+  /* Increase clickable area */
+  .collection-head--filter-tag-option-group .arrow:after {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    bottom: -50px;
+    left: -50px;
+  }
+  @media only screen and (max-width: 600px) {
+    .collection-head--filter-tag-option-group .arrow.prev:after {
+      left: 0;
+    }
+    .collection-head--filter-tag-option-group .arrow.next:after {
+      right: 0;
+    }
+  }
+  .collection-head--filter-tag-option-group .arrow:hover {
+    transform: scale(1.08);
+  }
+  .collection-head--filter-tag-option-group .arrow:active {
+    transform: scale(0.99);
+  }
+  .collection-head--filter-tag-option-group .arrow.next,
+  .collection-head--filter-tag-option-group .arrow.prev {
+    display: none;
+  }
+
+  @media only screen and (max-width: 767px) {
+    .collection-head--filter-tag-option-group {
+      overflow-x: scroll;
+    }
+
+    .arrow-container {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<div class="collection-head--container">
+  {% render 'breadcrumbs' %}
+
+  <div class="collection-head--filter-container">
+    <div class="collection-head--filter-info">
+      <h1 class="collection--title">{{ collection.title }}</h1>
+      {% if collection.metafields.filter.description %}
+        <p class="collection--description rte">{{- collection.metafields.filter.description }}</p>
+      {% endif %}
+    </div>
+
+    {% assign most_recent_group = current_tags.last | split: '_' | first %}
+
+    <div class="collection-head--filter-options-container">
+      <label>
+        Filter by
+        <select name="filter" id="filter">
+          {% for category in tag_groups %}
+            {% unless excluded_tag_groups contains category %}
+              {% assign category_display_name = category | replace: 'Sub-Category', 'Type' %}
+              <option
+                value="{{ category }}"
+                {% if category == most_recent_group %}
+                  selected
+                {% endif %}
+              >
+                {{ category_display_name }}
+              </option>
+            {% endunless %}
+          {% endfor %}
+        </select>
+      </label>
+
+      {% for group in tag_option_groups %}
+        {% liquid
+          assign category = group | split: ':' | first
+          assign category_display_name = category | replace: 'Sub-Category', 'Type'
+          assign options = group | split: ':' | last | split: ','
+          assign number_of_disabled_options = 0
+        %}
+
+        <div
+          for="{{ category }}"
+          data-option-group="{{ category }}"
+          class="collection-head--filter-tag-option-group {% unless category == last_category %}visually-hidden{% endunless %}"
+        >
+          <div class="arrow-container prev">
+            <div class="arrow prev">
+              {% render 'icon-chevron-right', rotation: 90 %}
+            </div>
+          </div>
+          {% for option in options %}
+            {% liquid
+              assign tag = option | split: '!' | first
+              assign option_name = tag | split: '_' | last
+              assign option_product = option | split: '!' | last
+              assign option_image = option_product | split: '%' | first
+              assign option_image_product_id = option_product | split: '%' | last
+
+              if collections['image-mapper'].metafields.custom.image_mapper.value[tag] != blank
+                assign option_image = collections['image-mapper'].metafields.custom.image_mapper.value[tag]
+              endif
+
+              if option_image contains '//'
+                assign option_image = option_image
+              else
+                assign option_image = 'https://cdn.shopify.com/s/files/1/0507/4822/7764/files/no-image.svg?v=1690173292'
+              endif
+
+              assign is_active = false
+              assign within_group = false
+              assign is_disabled = false
+
+              if current_tags contains tag
+                assign is_active = true
+              endif
+
+              unless collection.tags contains tag
+                assign is_disabled = true
+                assign number_of_disabled_options = number_of_disabled_options | plus: 1
+              endunless
+
+              if category contains 'Brand'
+                assign is_disabled = false
+              endif
+
+              if excluded_tags contains tag
+                assign is_disabled = true
+              endif
+
+              for current_tag in current_tags
+                assign current_tag_group = current_tag | split: '_' | first
+                if current_tag_group == category
+                  assign within_group = true
+                  assign active_tag_in_group = current_tag | handleize | append: '+'
+                  break
+                endif
+              endfor
+            %}
+
+            {% unless is_disabled %}
+              <div
+                class="collection-head--filter-tag-option{% if is_active %} filter-tag-option--selected{% endif -%}{% if is_disabled %} disabled{% endif -%}"
+              >
+                <img
+                  data-image-product-id="{{ option_image_product_id }}"
+                  src="{{ option_image }}"
+                  alt="{{ option_name }}"
+                  width="120"
+                  height="auto"
+                >
+                <p>{{ option_name }}</p>
+                {% if is_disabled %}
+                {% elsif is_active %}
+                  {%- liquid
+                    comment
+                      This is just to add ?shop_all to the end of the tag link
+                    endcomment
+
+                    assign link_to_tag = '' | link_to_remove_tag: tag
+                    assign tag_link_split = link_to_tag | split: '<a href="' | last
+                    assign tag_link_href = tag_link_split | split: '" title="' | first
+                    assign tag_link_split = tag_link_split | split: '" title="' | last
+                    assign tag_link_title = tag_link_split | split: '">' | first
+                  -%}
+                  <a href="{{ tag_link_href }}?shop_all" title="{{ tag_link_title }}"></a>
+                {% elsif within_group %}
+                  {%- liquid
+                    comment
+                      This is just to add ?shop_all to the end of the tag link
+                    endcomment
+
+                    assign link_to_tag = '' | link_to_add_tag: tag | remove: active_tag_in_group
+                    assign tag_link_split = link_to_tag | split: '<a href="' | last
+                    assign tag_link_href = tag_link_split | split: '" title="' | first
+                    assign tag_link_split = tag_link_split | split: '" title="' | last
+                    assign tag_link_title = tag_link_split | split: '">' | first
+                  -%}
+                  {{ '' | link_to_add_tag: tag | remove: active_tag_in_group }}
+                {% else %}
+                  {%- liquid
+                    comment
+                      This is just to add ?shop_all to the end of the tag link
+                    endcomment
+
+                    assign link_to_tag = '' | link_to_add_tag: tag
+                    assign tag_link_split = link_to_tag | split: '<a href="' | last
+                    assign tag_link_href = tag_link_split | split: '" title="' | first
+                    assign tag_link_split = tag_link_split | split: '" title="' | last
+                    assign tag_link_title = tag_link_split | split: '">' | first
+                  -%}
+                  {{ '' | link_to_add_tag: tag }}
+                {% endif %}
+              </div>
+            {% endunless %}
+          {% endfor %}
+          {% if number_of_disabled_options == options.size %}
+            <p style="color: var(--gray-500); grid-column: span 2;">
+              No options available for this category. Select another category or clear filters to see more options.
+            </p>
+          {% endif %}
+          <div class="arrow-container next">
+            <div class="arrow next">
+              {% render 'icon-chevron-right', rotation: -90 %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Global variables
+  const groupSelect = document.querySelector('#filter');
+  const optionGroups = document.querySelectorAll('[data-option-group]');
+
+  let selectedGroup = null;
+  let selectedOption = null;
+
+  // Functions
+  function updateSelectedOption(optionInput) {
+    selectedOption = optionInput;
+
+    optionGroups.forEach((optionGroup) => {
+      optionGroup.classList.remove('active');
+    });
+
+    selectedOption.closest('.collection-head--filter-tag-option-group').classList.add('active');
+  }
+
+  function updateSelectedGroup() {
+    selectedGroup = groupSelect.value;
+
+    optionGroups.forEach((optionGroup) => {
+      optionGroup.classList.remove('active');
+      optionGroup.classList.add('visually-hidden');
+
+      const group = optionGroup.dataset.optionGroup;
+      if (group === selectedGroup) {
+        optionGroup.classList.add('active');
+        optionGroup.classList.remove('visually-hidden');
+      }
+
+      if (group === selectedGroup) {
+        const isOverflowing = optionGroup.scrollWidth > optionGroup.clientWidth;
+
+        if (isOverflowing) {
+          optionGroup.querySelector('.arrow.next').style.display = 'flex';
+        }
+      }
+
+      const arrowNext = optionGroup.querySelector('.arrow.next');
+      const arrowPrev = optionGroup.querySelector('.arrow.prev');
+
+      if (arrowNext) {
+        arrowNext.addEventListener(
+          'click',
+          () => {
+            arrowPrev.style.display = 'flex';
+
+            optionGroup.scrollBy({
+              left: 400,
+              behavior: 'smooth',
+            });
+
+            if (optionGroup.scrollWidth - optionGroup.scrollLeft <= optionGroup.clientWidth) {
+              console.log('end');
+              arrowNext.style.display = 'none';
+            }
+          },
+          false
+        );
+      }
+
+      if (arrowPrev) {
+        arrowPrev.addEventListener(
+          'click',
+          () => {
+            arrowNext.style.display = 'flex';
+
+            optionGroup.scrollBy({
+              left: -400,
+              behavior: 'smooth',
+            });
+
+            if (optionGroup.scrollLeft <= 0) {
+              arrowPrev.style.display = 'none';
+            }
+          },
+          false
+        );
+      }
+    });
+  }
+
+  function scrollSelectedOptionIntoView() {
+    selectedOption = document.querySelector('.filter-tag-option--selected');
+    if (selectedOption) {
+      selectedOption.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  }
+
+  // Event listeners
+  if (groupSelect) {
+    groupSelect.addEventListener('change', (e) => {
+      updateSelectedGroup();
+    });
+  }
+
+  // Set initial state
+  if (groupSelect) {
+    updateSelectedGroup();
+  }
+
+  setTimeout(() => {
+    scrollSelectedOptionIntoView();
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('tag_group')) {
+      const tagGroup = params.get('tag_group');
+      groupSelect.value = tagGroup;
+      updateSelectedGroup();
+    }
+  }, 0);
+</script>

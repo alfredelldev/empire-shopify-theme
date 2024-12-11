@@ -1,0 +1,106 @@
+{% style %}
+  .stock-level {
+    display: flex;
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    flex-direction: column-reverse;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-radius: 6px;
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .stock-level {
+      max-width: 100%;
+    }
+  }
+
+  .stock-level--details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .stock-level {
+      text-align: right;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .stock-level--details {
+      align-items: flex-end;
+    }
+  }
+
+  .stock-level--details p {
+    margin: 0;
+  }
+
+  .stock-level img {
+    aspect-ratio: 1;
+    object-fit: contain;
+  }
+
+  .stock-level--availability {
+    font-weight: bold;
+  }
+
+  .colour-stock {
+    color: green;
+  }
+
+  .colour-stock--low {
+    color: {{ block.settings.colour_stock_low | default: red }};
+  }
+{% endstyle %}
+
+
+
+{% assign variant_selected = product.first_available_variant %}
+{% if product.selected_variant != nil %}
+  {% assign variant_selected = product.selected_variant %}
+{% endif %}
+
+{% assign lowest_stock = 0 %}
+{% for variant in product.variants %}
+  {% if variant.inventory_quantity > 0 %}
+    {% assign lowest_stock = variant.inventory_quantity %}
+  {% endif %}
+{% endfor %}
+
+{% assign selected_variant = variant_selected.inventory_quantity %}
+
+
+{% if lowest_stock > 0 %}
+  <div class="stock-level" style="{% if selected_variant <= 0 %}display:none;{% endif %}}">
+    <div class="stock-level--details">
+      <p class="stock-level--availability">
+        Available Quantity:
+        <span class="colour-stock{% if stock < 5 %} colour-stock--low{% endif %}">
+          {{ selected_variant }}
+        </span>
+      </p>
+      <p>This item is available and ready for same day dispatch.</p>
+    </div>
+    <img src="{{ 'Express-Ship.webp' | asset_url }}" width="65" height="auto" loading="eager">
+  </div>
+{% endif %}
+
+           {% assign is_low_stock = false %}
+            {% for tag in product.tags %}
+              {% if tag == 'LOWSTOCK' %}
+                  {% assign is_low_stock = true %}
+              {% endif %}
+            {% endfor %}
+            
+            {% if is_low_stock == true %}
+              <div style="color:red; padding:0.5em 0;">
+                <b>This product is currently low in stock, please call us on </b><a href="tel:(02) 9160 3988">(02) 9160 3988</a> <b>to confirm availability.</b>
+              </div>
+            {% endif %}

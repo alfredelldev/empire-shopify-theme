@@ -1,0 +1,35 @@
+{% comment %}
+  @param collection Collection
+    Collection to link to
+
+  @param button_label String
+    Label to override collection name
+{% endcomment %}
+
+{% style %}
+  .navmenu-highlight {
+    background-color: #ffd241;
+    color: #000;
+    display: flex !important;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    white-space: nowrap;
+  }
+{% endstyle %}
+
+{% capture button_label %}
+  {% if button_label %}
+    {{ button_label }}
+  {% else %}
+    {{ collection.title }}
+  {% endif %}
+{% endcapture %}
+
+<a
+  class="navmenu-link navmenu-link-depth-1 navmenu-highlight"
+  href="{{ collection.url }}"
+>
+  {% render 'icon-rocket-ship', fill: 'currentColor' %}
+  <span>{{ button_label }}</span>
+</a>

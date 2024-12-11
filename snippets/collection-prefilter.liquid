@@ -1,0 +1,572 @@
+{%- liquid
+  comment
+    collection.metafields.prefilters.excluded_tag_groups
+  endcomment
+  assign excluded_tag_groups_metafield = collection.metafields.prefilters.excluded_tag_groups | newline_to_br | split: '<br />'
+  assign excluded_tag_groups = blank
+  for excluded_tag_group in excluded_tag_groups_metafield
+    assign excluded_tag_group_clean = excluded_tag_group | strip
+    assign excluded_tag_groups = excluded_tag_groups | append: ',' | append: excluded_tag_group_clean
+  endfor
+  assign excluded_tag_groups = excluded_tag_groups | split: ','
+
+  comment
+    collection.metafields.prefilters.excluded_tags
+  endcomment
+  assign excluded_tags_metafield = collection.metafields.prefilters.excluded_tags | newline_to_br | split: '<br />'
+  assign excluded_tags = blank
+  for excluded_tag in excluded_tags_metafield
+    assign excluded_tag_clean = excluded_tag | strip
+    assign excluded_tags = excluded_tags | append: ',' | append: excluded_tag_clean
+  endfor
+  assign excluded_tags = excluded_tags | split: ','
+-%}
+
+{% style %}
+  #collection-prefilter {
+    --brand-primary: #1c83c4;
+    --brand-600: #176da3;
+    --brand-800: #0e4060;
+    --brand-900: #092a3f;
+    --gray-50: #fafafa;
+    --gray-75: #f5f5f5;
+    --gray-100: #eeeeee;
+    --gray-150: #e3e3e3;
+    --gray-200: #dddddd;
+    --gray-300: #aaaaaa;
+    --gray-500: #555555;
+    --background-grey: #f5f5f5;
+    --border-radius: 0.33rem;
+  }
+
+  #collection-prefilter .collection-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 2rem;
+  }
+  #collection-prefilter .collection-title h1 {
+    {% if collection.title.size > 8 %}display: block;{% endif %}
+    color: var(--brand-primary);
+    text-align: center;
+    margin: 0;
+    max-width: 320px;
+  }
+  #collection-prefilter .collection-title p {
+    margin: 0;
+  }
+
+  #collection-prefilter .prefilter-wrapper > p {
+    margin: 1rem 0 0;
+    font-weight: normal;
+    font-size: 18px;
+  }
+
+  #collection-prefilter .description {
+    margin: 1rem 0;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  #collection-prefilter .collection--description {
+    padding: 2rem 1rem 0;
+    margin: 0 auto;
+    max-width: 70ch;
+  }
+
+  #collection-prefilter .collection--description h2, #collection-prefilter .collection--description h3 {
+    font-size: larger;
+  }
+
+  #collection-prefilter .prefilter-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+
+  #collection-prefilter .prefilter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 700px;
+    max-width: 100%;
+    margin: auto;
+    padding: 1rem 0;
+  }
+
+  #collection-prefilter .prefilter > label {
+    cursor: pointer;
+    margin: 4px;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--gray-100);
+    border: 1px solid var(--gray-150);
+    border-radius: 7px;
+    line-height: 1;
+  }
+
+  #collection-prefilter .prefilter > label:hover {
+    background-color: var(--gray-150);
+    border-color: var(--gray-300);
+  }
+
+  #collection-prefilter .prefilter > label:active {
+    background-color: var(--gray-200);
+    border-color: var(--gray-300);
+  }
+
+  #collection-prefilter input[type='radio']:checked + label {
+    background-color: white;
+    border-color: var(--gray-300);
+  }
+
+  #collection-prefilter .options-wrapper {
+    order: 1;
+    margin: 1rem 0;
+    padding: 0.75rem;
+    width: 700px;
+    max-width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+
+    background-color: var(--gray-75);
+    outline: 1px solid var(--gray-200);
+    border-radius: var(--border-radius);
+
+    display: none;
+  }
+
+  #collection-prefilter .options {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  #collection-prefilter .prefilters--filter-group {
+    display: none;
+    width: 100%;
+    max-width: 1100px;
+    padding-bottom: 1rem;
+  }
+
+  #collection-prefilter input[type='radio'] {
+    display: none;
+  }
+
+  #collection-prefilter .option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.5rem;
+    color: #555;
+    background-color: white;
+    outline: none;
+    border: 1px solid var(--gray-150);
+    border-radius: var(--border-radius);
+
+    transition: all 100ms ease-in-out;
+  }
+
+  #collection-prefilter .option:hover {
+    outline: 1px solid var(--brand-primary);
+    border-color: var(--brand-primary);
+  }
+
+  #collection-prefilter .option:active {
+    background-color: var(--gray-150);
+    border-color: var(--brand-800);
+  }
+
+  #collection-prefilter .option .image {
+    height: 140px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  #collection-prefilter .option img {
+    border-radius: calc(var(--border-radius) / 2);
+  }
+
+  #collection-prefilter .option p {
+    margin: 0;
+    padding: 1rem 0 0.5rem;
+    line-height: 1.2;
+    max-width: 140px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  /* This is a hack to make the entire div clickable */
+  #collection-prefilter .option {
+    position: relative;
+  }
+  #collection-prefilter .option a {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #collection-prefilter .option p {
+    transform: translateX(10px);
+    transition: all 215ms ease-in-out;
+  }
+
+  #collection-prefilter .option svg {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 215ms ease-in-out;
+  }
+
+  #collection-prefilter .option:hover p {
+    transform: translateX(0);
+  }
+
+  #collection-prefilter .option:hover svg {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  #collection-prefilter .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  #collection-prefilter a.button {
+    --padding: 0.5rem 0.8rem;
+    --border-radius: 0.33rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    padding: var(--padding);
+    background-color: var(--gray-150);
+    color: black;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    transition: background-color 100ms ease-in-out;
+  }
+
+  #collection-prefilter a.button.accent {
+    background-color: var(--brand-primary);
+    color: white;
+  }
+
+  #collection-prefilter a.button.accent:hover {
+    background-color: var(--brand-600);
+  }
+
+  #collection-prefilter a.button.accent:active {
+    background-color: var(--brand-800);
+  }
+
+  @media screen and (max-width: 400px) {
+    #collection-prefilter .buttons {
+      width: 100%;
+      position: fixed;
+      z-index: 999999;
+      bottom: 0;
+      left: 0;
+
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: center;
+      gap: 0.5rem;
+
+      padding: 1rem;
+      background-color: white;
+      border-top: 1px solid var(--gray-200);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+
+    #collection-filter .button {
+      text-wrap: nowrap;
+    }
+  }
+{% endstyle %}
+
+<section id="collection-prefilter">
+  <div class="prefilter-wrapper">
+    <div class="collection-title">
+      <h1>{{ collection.title }}</h1>
+      {% if collection.metafields.prefilter.description != blank %}
+        <p class="description">{{ collection.metafields.prefilter.description }}</p>
+      {% endif %}
+    </div>
+
+    <p>Filter by</p>
+    <div class="prefilters--container">
+      <div class="prefilters--filter-selector prefilter">
+        {% assign existing_groups = blank %}
+        {% for group in tag_groups %}
+          {% unless excluded_tag_groups contains group %}
+            {% assign existing_groups = existing_groups | split: ',' %}
+            {% unless existing_groups contains group %}
+              {% assign existing_groups = existing_groups | join: ',' %}
+              {% assign existing_groups = existing_groups | append: ',' | append: group %}
+              <input
+                type="radio"
+                name="tag_group"
+                id="{{ group }}"
+                value="{{ group }}"
+                data-tag-group-name="{{ group }}"
+                {% if forloop.first %}
+                  checked
+                {% endif %}
+              >
+              <label for="{{ group }}">{{ group }}</label>
+            {% endunless %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+
+      <div class="prefilters--filters-wrapper">
+        {% for option in tag_option_groups %}
+          {% assign group = option | split: ':' | first %}
+          {% unless excluded_tag_groups contains group %}
+            {% assign options = option | split: ':' | last | split: ',' %}
+            <div class="prefilters--filter-group options" data-tag-group-name="{{ group }}">
+              {% liquid
+                if group == 'Size'
+                  comment
+                    Sort tags by size if they have a size prefix (mm)
+
+                    FORBODEING FOR ANYONE LOOKING AT THIS CODE
+                    DO NOT PERCEIVE IT OR I WILL HAVE TO HEX YOU FOR 7 YEARS
+                  endcomment
+                  assign tags_to_sort = blank
+                  for option in options
+                    assign option_suffix = option | split: '!' | first | split: '_' | last | slice: -2, 2
+                    if option_suffix == 'mm'
+                      assign tags_to_sort = tags_to_sort | append: option | append: ','
+                    endif
+                  endfor
+
+                  assign two_digit_values = blank
+                  assign three_digit_values = blank
+                  assign four_digit_values = blank
+                  assign five_digit_values = blank
+                  assign tags_to_sort = tags_to_sort | split: ','
+                  for tag in tags_to_sort
+                    assign value_length = tag | split: '!' | first | split: '_' | last | split: 'mm' | first | size
+                    if value_length == 2
+                      assign two_digit_values = two_digit_values | append: tag | append: ','
+                    elsif value_length == 3
+                      assign three_digit_values = three_digit_values | append: tag | append: ','
+                    elsif value_length == 4
+                      assign four_digit_values = four_digit_values | append: tag | append: ','
+                    elsif value_length == 5
+                      assign five_digit_values = five_digit_values | append: tag | append: ','
+                    endif
+                  endfor
+
+                  assign options = two_digit_values | append: three_digit_values | append: four_digit_values | append: five_digit_values | split: ','
+                endif
+              %}
+              {% for option in options %}
+                {% liquid
+                  assign tag = option | split: '!' | first
+                  assign option_name = tag | split: '_' | last
+                  assign option_product = option | split: '!' | last
+                  assign option_image = option_product | split: '%' | first
+                  assign option_image_product_id = option_product | split: '%' | last
+
+                  if collections['image-mapper'].metafields.custom.image_mapper.value[tag] != blank
+                    assign option_image = collections['image-mapper'].metafields.custom.image_mapper.value[tag]
+                  endif
+
+                  if option_image contains '//'
+                    assign option_image = option_image
+                  else
+                    assign option_image = 'https://cdn.shopify.com/s/files/1/0507/4822/7764/files/no-image.svg?v=1690173292'
+                  endif
+                %}
+                {% unless excluded_tags contains tag %}
+                  <div
+                    id="option_{{ tag | handleize }}"
+                    class="option"
+                    data-tag="{{ tag | handleize }}"
+                    data-tag-full="{{ tag }}"
+                    data-tag-option="{{ option_name }}"
+                    {% if options.size > 4 %}
+                      style="height: auto"
+                    {% endif %}
+                  >
+                    <div class="image">
+                      <img
+                        data-image-product-id="{{ option_image_product_id }}"
+                        src="{{ option_image }}"
+                        alt="{{ option_name }}"
+                        width="140"
+                        height="auto"
+                      >
+                    </div>
+                    <p>
+                      {{ option_name }}
+                      <svg
+                        width="15"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </p>
+                    {{ '' | link_to_add_tag: tag }}
+                  </div>
+                {% endunless %}
+              {% endfor %}
+            </div>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="buttons">
+      <a id="collection-button-prefilter" class="button accent" href="">
+        <span>
+          Shop by
+          <span data-tag-category></span>
+        </span>
+        <img
+          src="https://cdn.shopify.com/s/files/1/0507/4822/7764/files/icon-arrow-right.svg?v=1690166735"
+          height="9"
+          width="auto"
+        >
+      </a>
+      <a id="collection-button-all" class="button" href="{{ collection.url }}?shop_all">
+        Shop all {{ collection.title -}}
+      </a>
+    </div>
+  </div>
+
+  {%- unless collection.description == blank -%}
+    <div class="collection--description">
+      {{- collection.description -}}
+    </div>
+  {%- endunless -%}
+</section>
+
+<script>
+  const tagGroups = document.querySelectorAll('input[name="tag_group"]');
+  const tagGroupOptions = document.querySelectorAll('div.prefilters--filter-group');
+  const tagOptions = document.querySelectorAll('div.option');
+  const tags = Array.from(tagOptions).map((option) => option.dataset.tag);
+
+  const buttonPrefilter = document.querySelector('#collection-button-prefilter');
+  const buttonPrefilterCategory = buttonPrefilter.querySelector('[data-tag-category]');
+
+  let currentCategory = null;
+  let currentOption = null;
+
+  function hidePrefilter() {
+    const prefilter = document.getElementById('collection-prefilter');
+    if (!prefilter) return;
+    prefilter.style.display = 'none';
+  }
+
+  function showPrefilter() {
+    const prefilter = document.getElementById('collection-prefilter');
+    if (!prefilter) return;
+    prefilter.style.display = null;
+  }
+
+  function hideOtherShopifySections() {
+    const mainSite = document.getElementById('site-main');
+    const collectionPrefilter = document.getElementById('collection-prefilter');
+    const shopifySections = mainSite.querySelectorAll('.shopify-section');
+
+    // Add collection prefilter to the top of the page
+    mainSite.appendChild(collectionPrefilter);
+    shopifySections.forEach((section) => {
+      section.style.display = 'none';
+    });
+  }
+
+  function showOtherShopifySections() {
+    const mainSite = document.getElementById('site-main');
+    const shopifySections = mainSite.querySelectorAll('.shopify-section');
+
+    // Add collection prefilter to the top of the page
+    // mainSite.removeChild(collectionPrefilter);
+    shopifySections.forEach((section) => {
+      section.style.display = null;
+    });
+  }
+
+  function updateSelectedCategory(tagGroup) {
+    currentCategory = tagGroup.value;
+    currentCategoryName = tagGroup.dataset.tagGroupName;
+
+    const tagGroupOptionsArray = Array.from(tagGroupOptions);
+    const currentOptionsWrapper = tagGroupOptionsArray.find((g) => g.dataset.tagGroupName == currentCategoryName);
+    if (currentOptionsWrapper) {
+      tagGroupOptions.forEach((g) => (g.style.display = 'none'));
+      currentOptionsWrapper.style.display = 'flex';
+    }
+
+    buttonPrefilterCategory.innerHTML = currentCategoryName;
+    buttonPrefilterCategory.style.fontWeight = 'bold';
+    buttonPrefilter.href = `{{ collection.url }}?tag_group=${currentCategory}`;
+  }
+
+  tagGroups.forEach((tagGroup) => {
+    tagGroup.addEventListener('change', () => {
+      updateSelectedCategory(tagGroup);
+    });
+  });
+
+  setTimeout(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (
+      params.has('sort_by') ||
+      params.has('tag_group') ||
+      params.has('shop_all') ||
+      window.location.pathname
+        .split('/')
+        .pop()
+        .split('+')
+        .some((tag) => tags.includes(tag)) ||
+      window.innerWidth <= 767
+    ) {
+      hidePrefilter();
+      return;
+    }
+
+    updateSelectedCategory(tagGroups[0]);
+    hideOtherShopifySections();
+  }, 5);
+
+  /* Watch the size of the window so we can hide the prefilters on mobile */
+  window.addEventListener(
+    'resize',
+    function (event) {
+      if (window.innerWidth <= 767) {
+        showOtherShopifySections();
+        hidePrefilter();
+      } else {
+        hideOtherShopifySections();
+        showPrefilter();
+      }
+    },
+    true
+  );
+</script>

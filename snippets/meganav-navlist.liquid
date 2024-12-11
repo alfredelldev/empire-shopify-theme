@@ -1,0 +1,61 @@
+{% comment %}
+  Meganav Navlist Template
+  This template recursively renders a list of links.
+
+  @params links LinkList: An array of links to render.
+  @params parent Link: The parent link of the list.
+  @params depth Number: The depth of the list.
+  @params top_offset Number: The top offset of the list.
+{% endcomment %}
+
+{% assign depth = depth | plus: 1 %}
+
+{% if links.size > 0 %}
+  <ul
+    class="meganav__navlist"
+    data-meganav-depth="{{ depth }}"
+    style="top: -{{ top_offset | minus: 1 | times: 42 }}px;"
+  >
+    {% for link in links %}
+      <li
+        class="meganav__navlist--item {% if forloop.first and depth == 1 %}meganav__navlist--item-active{% endif %}"
+        data-meganav-depth="{{ depth }}"
+      >
+        <a href="{{ link.url }}">
+          <div class="meganav__navlist--item-content">
+            {% if link.object != blank %}
+              {% assign collection = link.object %}
+              {% if collection.metafields.meganav.icon != blank %}
+                <img
+                  class="meganav__navlist--item-content--icon"
+                  src="{{ collection.metafields.meganav.icon | image_url }}"
+                  width="16"
+                  height="auto"
+                  alt="{{ collection.title }}"
+                >
+              {% endif %}
+            {% endif %}
+            <span>{{- link.title -}}</span>
+          </div>
+          {% unless link.links.size == 0 %}
+            {% render 'icon-chevron-right' %}
+          {% endunless %}
+        </a>
+
+        {% unless link.links.size == 0 %}
+          {% render 'meganav-navlist', links: link.links, parent: link, depth: depth, top_offset: forloop.index %}
+        {% endunless %}
+      </li>
+    {% endfor %}
+
+    {% if parent != blank %}
+      <li class="meganav__navlist--item meganav__navlist--item--view-all" data-meganav-depth="{{ depth }}">
+        <a href="{{ parent.url }}">View All</a>
+      </li>
+    {% endif %}
+  </ul>
+{% else %}
+  <a href="{{ links[0].url }}" data-meganav-depth="{{ depth }}">
+    {{- links[0].title -}}
+  </a>
+{% endif %}

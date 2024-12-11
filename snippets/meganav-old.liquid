@@ -1,0 +1,95 @@
+{% comment %}
+  @param menu: link_list
+  @param title?: string
+  @param collection?: collection
+  @param highlight?: boolean
+{% endcomment %}
+
+{% assign button_label = menu.title %}
+{% unless title == blank %}
+  {% assign button_label = title %}
+{% endunless %}
+
+<div class="meganav" data-handle="{{ menu.handle }}">
+  {% if collection != blank %}
+    <a href="{{ collection.url }}" class="meganav__link">
+      {{- button_label -}}
+    </a>
+  {% else %}
+    <span class="meganav__link">
+      {{- button_label -}}
+    </span>
+  {% endif %}
+
+  <div class="meganav__wrapper">
+    {% render 'meganav-navlist', links: menu.links, depth: 0 %}
+  </div>
+</div>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    const meganav = document.querySelector('.meganav[data-handle="{{ menu.handle }}"]');
+    const meganavWrapper = meganav.querySelector('.meganav__wrapper');
+    const meganavNavlistItems = meganav.querySelectorAll('.meganav__navlist--item');
+
+    let previousItem;
+
+    // Offset width of meganav wrapper based on previous meganav button widths
+    const allMeganavs = document.querySelectorAll('.meganav');
+    let offsetWidth = 0;
+    for (let i = 0; i < allMeganavs.length; i++) {
+      if (allMeganavs[i].dataset.handle === '{{ menu.handle }}') {
+        break;
+      }
+
+      offsetWidth += allMeganavs[i].offsetWidth;
+    }
+    meganavWrapper.style.left = `-${offsetWidth}px`;
+
+    if (!meganavNavlistItems.length) {
+      return;
+    }
+
+    const meganavHeight = 42 * 12;
+    meganavWrapper.style.height = `${meganavHeight}px`;
+
+    meganavNavlistItems.forEach(function (item) {
+      const depth = item.dataset.meganavDepth;
+
+      item.addEventListener('mouseenter', function () {
+        const isLowestDepth = depth === '1';
+        if (isLowestDepth) {
+          meganavNavlistItems.forEach(function (item) {
+            item.classList.remove('meganav__navlist--item-active');
+          });
+        }
+
+        const isSameDepth = parseInt(depth) === parseInt(previousItem?.dataset.meganavDepth);
+        if (isSameDepth) {
+          meganavNavlistItems.forEach(function (item) {
+            if (item.dataset.meganavDepth === depth) {
+              item.classList.remove('meganav__navlist--item-active');
+            }
+          });
+        }
+
+        const isLessDepth = parseInt(depth) < parseInt(previousItem?.dataset.meganavDepth);
+        if (isLessDepth) {
+          meganavNavlistItems.forEach(function (item) {
+            if (parseInt(item.dataset.meganavDepth) === parseInt(depth)) {
+              item.classList.remove('meganav__navlist--item-active');
+            }
+          });
+        }
+
+        const hasGreaterDepth = parseInt(depth) > parseInt(previousItem?.dataset.meganavDepth);
+        if (previousItem && !hasGreaterDepth) {
+          previousItem.classList.remove('meganav__navlist--item-active');
+        }
+
+        item.classList.add('meganav__navlist--item-active');
+        previousItem = item;
+      });
+    });
+  });
+</script>

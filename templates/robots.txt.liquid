@@ -1,0 +1,41 @@
+# we use Shopify as our ecommerce platform
+{%- comment -%}
+# Caution! Please read https://help.shopify.com/en/manual/promoting-marketing/seo/editing-robots-txt before proceeding to make changes to this file.
+{% endcomment %}
+{% for group in robots.default_groups %}
+  {{- group.user_agent -}}
+
+  {% for rule in group.rules %}
+    {{- rule -}}
+  {% endfor %}
+
+  {%- if group.user_agent.value == '*' -%}
+{{ 'Disallow: /*q=*' }}
+{{ 'Disallow: /*?*q=' }}
+{{ 'Disallow: /collections/*/product-type_*' }}
+{{ 'Disallow: /collections/*/brand*' }}
+{{ 'Disallow: /collections/*/range*' }}
+{{ 'Disallow: /collections/*/category*' }}
+{{ 'Disallow: /collections/*/colour*' }}
+{{ 'Disallow: /collections/*/sub-category*' }}
+{{ 'Disallow: /collections/*/size*' }}
+{{ 'Disallow: /collections/*/material*' }}
+{{ 'Disallow: /collections/*/mounting-style*' }}
+{{ 'Disallow: /collections/*/arm-length*' }}
+{{ 'Disallow: /collections/*/shape*' }}
+{{ 'Disallow: /collections/*/spout-length*' }}
+{{ 'Disallow: /collections/*/features*' }}
+{{ 'Disallow: /collections/*/type-of-use*' }}
+{{ 'Disallow: /collections/*/water-system-type*' }}
+{{ 'Disallow: /collections/*/light-colour*' }}
+{{ 'Disallow: /collections/*/light-option*' }}
+{{ 'Disallow: /collections/*/motor-type*' }}
+{{ 'Disallow: /collections/*/wattage*' }}
+{{ 'Disallow: /collections/*/handle-style*' }}
+{{ 'Disallow: /thank_you*'}}
+  {%- endif -%}
+
+  {%- if group.sitemap != blank -%}
+    {{ group.sitemap }}
+  {%- endif -%}
+{% endfor %}

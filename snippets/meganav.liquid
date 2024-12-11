@@ -1,0 +1,222 @@
+{% comment %}
+  @param menu: link_list
+  @param title?: string
+  @param collection?: collection
+  @param type?: type
+{% endcomment %}
+
+{% style %}
+  /* .meganav[data-menu='vanities-furniture'] .meganav__wrapper, */
+  .meganav[data-menu='{{ menu.handle }}']:hover .meganav__wrapper {
+    visibility: visible;
+  }
+{% endstyle %}
+
+{% assign title = title | default: menu.title %}
+
+<div class="meganav" data-menu="{{ menu.handle }}">
+  {% if collection != blank %}
+    <a href="{{ collection.url }}" class="meganav__link">
+      {{- title -}}
+    </a>
+  {% else %}
+    <span class="meganav__link">
+      {{- title -}}
+    </span>
+  {% endif %}
+
+  <div
+    data-menu="{{ menu.handle }}"
+    {{ type }}
+    class="meganav__wrapper{% if type == 'image' %} meganav__wrapper--image{% endif %}"
+  >
+    <div class="meganav__navlist" data-depth="1">
+      {% for link in menu.links %}
+        <div
+          class="meganav__navlist--item {% if forloop.index == 1 %}meganav__navlist--item-active{% endif %}"
+          data-menu="{{ link.handle }}"
+          data-depth="1"
+        >
+          <a href="{{ link.url }}">
+            <div class="meganav__navlist--item-content">
+              {% if link.object != blank %}
+                {% assign collection = link.object %}
+                {% if collection.metafields.meganav.icon != blank %}
+                  <img
+                    class="meganav__navlist--item-content--icon"
+                    src="{{ collection.metafields.meganav.icon | image_url }}"
+                    width="16"
+                    height="auto"
+                    alt="{{ collection.title }}"
+                  >
+                {% endif %}
+              {% endif %}
+              <span>{{- link.title -}}</span>
+            </div>
+            {% unless link.links.size == 0 %}
+              {% render 'icon-chevron-right' %}
+            {% endunless %}
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="meganav__navlist" data-depth="2">
+      {% for link in menu.links %}
+        {% unless link.links.size == 0 %}
+          {% assign parent_menu = link.handle %}
+          <div
+            class="meganav__navlist--item-wrapper {% if forloop.index == 1 %}meganav__navlist--item-wrapper--active{% endif %}"
+            data-parent-menu="{{ parent_menu }}"
+            data-depth="2"
+          >
+            {% for link in link.links %}
+              <div
+                class="meganav__navlist--item"
+                data-parent-menu="{{ parent_menu }}"
+                data-menu="{{ link.handle }}"
+                data-depth="2"
+              >
+                <a href="{{ link.url }}">
+                  <div class="meganav__navlist--item-content">
+                    {% if link.object != blank %}
+                      {% assign collection = link.object %}
+                      {% if collection.metafields.meganav.icon != blank %}
+                        <img
+                          class="meganav__navlist--item-content--icon"
+                          src="{{ collection.metafields.meganav.icon | image_url }}"
+                          width="16"
+                          height="auto"
+                          alt="{{ collection.title }}"
+                        >
+                      {% endif %}
+                    {% endif %}
+                    <span>{{- link.title -}}</span>
+                  </div>
+                  {% unless link.links.size == 0 %}
+                    {% render 'icon-chevron-right' %}
+                  {% endunless %}
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        {% endunless %}
+      {% endfor %}
+    </div>
+
+    <div class="meganav__navlist" data-depth="3">
+      {% for link in menu.links %}
+        {% unless link.links.size == 0 %}
+          {% for link in link.links %}
+            {% assign parent_menu = link.handle %}
+            {% unless link.links.size == 0 %}
+              <div
+                class="meganav__navlist--item-wrapper"
+                data-parent-menu="{{ parent_menu }}"
+                data-depth="3"
+              >
+                {% for link in link.links %}
+                  <div
+                    class="meganav__navlist--item"
+                    data-parent-menu="{{ parent_menu }}"
+                    data-menu="{{ link.handle }}"
+                    data-depth="3"
+                  >
+                    <a href="{{ link.url }}">
+                      <div class="meganav__navlist--item-content">
+                        {% if link.object != blank %}
+                          {% assign collection = link.object %}
+                          {% if collection.metafields.meganav.icon != blank %}
+                            <img
+                              class="meganav__navlist--item-content--icon"
+                              src="{{ collection.metafields.meganav.icon | image_url }}"
+                              width="16"
+                              height="auto"
+                              alt="{{ collection.title }}"
+                            >
+                          {% endif %}
+                        {% endif %}
+                        <span>{{- link.title -}}</span>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endunless %}
+          {% endfor %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    const meganav = document.querySelector('.meganav[data-menu="{{ menu.handle }}"]');
+    const meganavWrapper = meganav.querySelector('.meganav__wrapper');
+    const meganavNavlistItems = meganav.querySelectorAll('.meganav__navlist--item');
+    const meganavNavlistMenus = meganav.querySelectorAll('.meganav__navlist--item-wrapper');
+
+    let previousItem;
+
+    if (!meganavNavlistItems.length) return;
+
+    meganavNavlistItems.forEach(function (item) {
+      const newDepth = parseInt(item.dataset.depth);
+      const childMenu = meganavWrapper.querySelector(
+        `.meganav__navlist--item-wrapper[data-parent-menu="${item.dataset.menu}"][data-depth="${newDepth + 1}"]`
+      );
+
+      item.addEventListener('mouseenter', function () {
+        const previousDepth = parseInt(previousItem?.dataset.depth) || 0;
+
+        const isLowestDepth = newDepth === 1;
+        if (isLowestDepth) {
+          meganavNavlistItems.forEach(function (item) {
+            item.classList.remove('meganav__navlist--item-active');
+          });
+          meganavNavlistMenus.forEach(function (menu) {
+            menu.classList.remove('meganav__navlist--item-wrapper--active');
+          });
+        }
+
+        const isSameDepth = newDepth === previousDepth;
+        if (isSameDepth) {
+          const selector = `.meganav__navlist--item-wrapper[data-parent-menu="${
+            previousItem?.dataset.menu
+          }"][data-depth="${newDepth + 1}"]`;
+          const previousChildMenus = meganavWrapper.querySelectorAll(selector);
+          previousChildMenus.forEach(function (menu) {
+            menu.classList.remove('meganav__navlist--item-wrapper--active');
+          });
+          meganavNavlistItems.forEach(function (item) {
+            const itemDepth = parseInt(item.dataset.depth);
+            if (itemDepth === newDepth) {
+              item.classList.remove('meganav__navlist--item-active');
+            }
+          });
+        }
+
+        const isLessDepth = newDepth < previousDepth;
+        if (isLessDepth) {
+          meganavNavlistItems.forEach(function (item) {
+            const itemDepth = parseInt(item.dataset.depth);
+            if (itemDepth >= newDepth) {
+              item.classList.remove('meganav__navlist--item-active');
+            }
+          });
+          meganavNavlistMenus.forEach(function (menu) {
+            const menuDepth = parseInt(menu.dataset.depth);
+            if (menuDepth > newDepth) {
+              menu.classList.remove('meganav__navlist--item-wrapper--active');
+            }
+          });
+        }
+
+        item.classList.add('meganav__navlist--item-active');
+        if (childMenu) childMenu.classList.add('meganav__navlist--item-wrapper--active');
+        previousItem = item;
+      });
+    });
+  });
+</script>

@@ -1,0 +1,475 @@
+{% style %}
+  .collection-head--container {
+    background-color: #fafafa;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  .collection-head--container > * {
+    --layout-container-gutter: 25px;
+    --layout-container-max-width: 1400px;
+    max-width: var(--layout-container-max-width, 1400px);
+    margin: 1.75rem auto;
+    padding-right: var(--layout-container-gutter, 25px);
+    padding-left: var(--layout-container-gutter, 25px);
+  }
+
+  .collection-head--filter-container {
+    --left-element-width: 240px;
+    --gap: 25px;
+    display: grid;
+    grid-template-columns: var(--left-element-width) calc(100% - var(--left-element-width) - var(--gap));
+    grid-template-rows: auto auto;
+    column-gap: var(--gap);
+  }
+
+  @media screen and (max-width: 768px) {
+    .collection-head--filter-container {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .collection-head--filter-info {
+    max-width: 300px;
+  }
+
+  .collection-head--filter-info h1 {
+    margin: 0 0 10px 0;
+  }
+
+  .collection-head--filter-info p {
+    line-height: 1.5;
+  }
+
+  .collection-head--filter-options-container {
+    flex: 1; /* take up available space */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .collection-head--filter-tag-option-group {
+    height: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 160px;
+    gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+
+  .collection-head--filter-tag-option {
+    height: 100%;
+    min-height: 200px;
+    display: grid;
+    grid-template-rows: min-content;
+    background-color: #fff;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .filter-tag-option--selected {
+    border: 1px solid #000;
+  }
+
+  img[src=''] {
+    opacity: 0;
+  }
+
+  .collection-head--filter-tag-option .no-image,
+  .collection-head--filter-tag-option > img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    object-position: center;
+    background-color: #eee;
+  }
+
+  .collection-head--filter-tag-option:hover {
+    border: 1px solid #000;
+  }
+{% endstyle %}
+
+<div class="collection-head--container">
+  {% render 'breadcrumbs' %}
+  <div class="collection-head--filter-container">
+    <div class="collection-head--filter-info">
+      <h1>{{ collection.title }}</h1>
+      {% if collection.metafields.filter.description %}
+        <p>{{- collection.metafields.filter.description }}</p>
+      {% endif %}
+    </div>
+    <div class="collection-head--filter-options-container">
+      <span>
+        Filter by
+        <select name="filter" id="filter" data-filter></select>
+      </span>
+      <div class="collection-head--filter-tag-option-group" data-filter-options></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  {% assign pro_ids = blank | split: ',' %}
+
+  const data = [
+    {%- for tag in collection.all_tags -%} 
+      {% assign image_product_id = blank %}
+      {% assign product_image = blank %}
+
+      {% paginate collections[collection.handle].products by 300 %}
+        {% for p in collections[collection.handle].products %}
+          {% if p.tags contains tag and product_image == blank %}
+            {% if p.metafields.collection_filter.image != blank %}
+              {% assign product_image = p.metafields.collection_filter.image | image_url: width: 300 %}
+            {% else %}
+              {% assign product_image = p.images.first.src | image_url: width: 300 %}
+            {% endif %}
+            {% assign image_product_id = p.id %}
+          {% endif %}
+        {% endfor -%}
+      {% endpaginate %}
+
+      [
+        '{{ tag }}',
+        '{{ tag | split: '_' | first }}',
+        '{{ tag | split: '_' | last }}',
+        '{{ product_image }}',
+        '{{ image_product_id }}'
+      ],
+    {%- endfor -%}
+  ]
+
+  /* ---------------- /
+   * Global Variables *
+   * ---------------- */
+  const urlParameters = getUrlParameters()
+  const sortedUrlParameters = sortOptionsIntoCategories(urlParameters)
+  const collectionFilters = data
+  const [sortedCollectionFilters, collectionHandles] = sortCollectionData(collectionFilters)
+  const selectedFilter = getInitialFilter()
+  let selectedOption = sortedUrlParameters[selectedFilter]?.pop() ?? ''
+
+  /* -------- /
+   * Elements *
+   * -------- */
+  const filterSelect = document.querySelector("[data-filter]")
+  const filterOptionsElement = document.querySelector("[data-filter-options]")
+
+  console.log(sortedCollectionFilters)
+
+  /* ---------------- /
+   * Helper Functions *
+   * ---------------- */
+  function getUrlParameters() {
+    return location.pathname.split("/").slice(-1)[0].split("+")
+  }
+
+  function getInitialFilter() {
+    if (sortedUrlParameters['type']) {
+      return 'type'
+    }
+
+    if (Object.keys(sortedUrlParameters).length) {
+      return Object.keys(sortedUrlParameters)[0]
+    }
+
+    if (Object.keys(sortedCollectionFilters['type']).length) {
+      return 'type'
+    }
+
+    return Object.keys(sortedCollectionFilters)[0]
+  }
+
+  /*
+    [
+      ['Category', 'category-name', 'category_image'],
+      ['Category', 'category-name', 'category_image']
+    ]
+
+    return {
+      'Category': {
+        'category-name': category_image,
+        'category-name': category_image
+      }
+    }
+  */
+  function sortCollectionData(data) {
+    const sortedData = {}
+    // Replace spaces and forward slashes with dashes
+    const collectionHandles = data.map((item) => item[0].toLowerCase().replace(/\s/g, "-").replace(/\//g, "-"))
+
+    data.forEach((item) => {
+      const [handle, category, name, image, image_product_id] = item
+
+      // If category doesn't exist, create it
+      if (!sortedData[category.toLowerCase()] && name) {
+        sortedData[category.toLowerCase()] = {}
+      }
+
+      if (name) {
+        sortedData[category.toLowerCase()][name] = {
+          handle,
+          image,
+          image_product_id
+        }
+      }
+    })
+
+    // Remove categories with only one option
+    const filteredAndSortedData = Object.keys(sortedData).reduce((acc, key) => {
+      const category = sortedData[key];
+
+      if (Object.keys(category).length > 1) {
+        acc[key] = category
+      }
+
+      return acc
+    }, {})
+
+    if (filteredAndSortedData['Sub-Category']) {
+      Object.defineProperty(filteredAndSortedData, 'type', Object.getOwnPropertyDescriptor(filteredAndSortedData, 'Sub-Category'))
+      delete filteredAndSortedData['Sub-Category']
+    }
+
+    if (filteredAndSortedData['sub-category']) {
+      Object.defineProperty(filteredAndSortedData, 'type', Object.getOwnPropertyDescriptor(filteredAndSortedData, 'sub-category'))
+      delete filteredAndSortedData['sub-category']
+    }
+
+    return [filteredAndSortedData, collectionHandles]
+  }
+
+  /*
+    [
+      "Category_Clothing",
+      "Sub-Category_Tops",
+      "Sub-Category_Bottoms"
+    ]
+
+    return {
+      category: ["Clothing"],
+      sub-category: ["Tops", "Bottoms"]
+    }
+    */
+  function sortOptionsIntoCategories(options) {
+    const categories = {}
+
+    options.forEach((option) => {
+      const [category, filter] = option.split("_")
+
+      if (!categories[category.toLowerCase()] && filter) {
+        categories[category.toLowerCase()] = []
+      }
+
+      if (filter) categories[category.toLowerCase()].push(filter)
+    })
+
+    if (categories['sub-category']) {
+      categories['type'] = categories['sub-category']
+      delete categories['sub-category']
+    }
+
+    return categories
+  }
+
+  function updateSelectedOptions(options) {
+    filterOptionsElement.innerHTML = Object.entries(options).map((option) => {
+      const [optionName, optionData] = option
+      const { handle, image, image_product_id } = optionData
+
+      const selected = selectedOption === optionName.toLowerCase() ? "filter-tag-option--selected" : ""
+
+      if (!image) {
+        return `
+          <div 
+            id="${optionName}" 
+            class="collection-head--filter-tag-option ${selected}" 
+            data-option-handle="${handle}" 
+            data-option-name="${optionName}" 
+            data-option-product-id="${image_product_id}"
+          >
+            <div class="no-image"></div>
+            <p>${optionName}</p>
+          </div>
+        `
+      }
+
+      return `
+        <div 
+          id="${optionName}" 
+          class="collection-head--filter-tag-option ${selected}" 
+          data-option-handle="${handle}" 
+          data-option-name="${optionName}" 
+          data-option-product-id="${image_product_id}"
+        >
+          <img src="${image}" alt="${optionName}" loading="lazy" data-product-id="${image_product_id}">
+          <p>${optionName}</p>
+        </div>
+      `
+    }).join("")
+
+    const filterOptions = document.querySelectorAll("[data-option-name]")
+    filterOptions.forEach((option) => {
+      console.log(option)
+      option.addEventListener("click", updateUrlParamters)
+    })
+  }
+
+  filterSelect.innerHTML = Object.keys(sortedCollectionFilters).map((filter) => {
+    if (sortedCollectionFilters[filter]) {
+      return `<option value="${filter}">${filter.toLowerCase()}</option>`
+    }
+  }).join("")
+
+  filterSelect.addEventListener("change", (e) => {
+    const selectedFilter = e.target.value
+    updateSelectedOptions(sortedCollectionFilters[selectedFilter])
+  })
+
+  filterSelect.value = selectedFilter
+  updateSelectedOptions(sortedCollectionFilters[selectedFilter])
+
+  window.onload = () => {
+    const selectedOptionElement = document.getElementById(selectedOption)
+
+    // Fix this at some point
+    if (selectedOptionElement) {
+      selectedOptionElement.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center"
+      })
+    }
+  }
+
+  console.log(collectionHandles)
+
+  const addParam = (e) => {
+    const path = window.location.pathname.split('/');
+    const lastField = path.at(-1);
+    const select = e.currentTarget.dataset.optionHandle;
+    if(e.currentTarget.dataset.optionHandle === lastField){
+        return;
+    }
+
+    const handles = allHandles;
+
+    const hasUrl = handles.includes(select);
+    if(!hasUrl){
+        return;
+    }
+
+    const url = `${window.location.origin}/`
+    path.push(handles)
+    const pathname = path.join('/');
+    window.location.href = `${url}${pathname}`
+  }
+
+  const handleize = (string) => {
+    return string.toLowerCase().replace(/\s/g, "-").replace(/\//g, "-")
+  }
+
+  const singleSelectedCategory = [ "sub-category", "brand" ]
+
+  function updateUrlParamters(e) {
+    const path = location.pathname.split("/")
+    const isCollectionPage = path.includes("collections")
+    if (!isCollectionPage) {
+      console.log("not collection page")
+      return
+    }
+
+    const lastField = path.at(-1)
+    const handlesFromUrl = lastField.split("+")
+    const optionHandle = handleize(e.currentTarget.dataset.optionHandle)
+
+    if (handlesFromUrl.includes(optionHandle)) {
+      console.log("already in url")
+      return
+    }
+
+    let newUrlPathname = ""
+    const hasExistingParameters = handlesFromUrl.every((handle) => collectionHandles.includes(handle))
+    if (hasExistingParameters) {
+      if ((optionHandle.includes("brand") || optionHandle.includes("sub-category")) && handlesFromUrl.some((handle) => handle.includes("brand") || handle.includes("sub-category"))) {
+        newUrlPathname = handlesFromUrl.map((handle) => {
+          if (handle.includes("brand") || handle.includes("sub-category")) {
+            return optionHandle
+          }
+
+          return handle
+        }).join("+")
+        newUrlPathname = `${location.pathname.replace(lastField, newUrlPathname)}`
+      } else {
+        newUrlPathname = `${location.pathname}+${optionHandle}`
+      }
+    } else {
+      newUrlPathname = `${location.pathname}/${optionHandle}`
+    }
+
+    console.log(`${location.origin}/${newUrlPathname}`)
+
+    window.location.href = `${location.origin}/${newUrlPathname}`
+  }
+
+  const filterOptions = document.querySelectorAll("[data-option-name]")
+  filterOptions.forEach((option) => {
+    option.addEventListener("click", updateUrlParamters)
+  })
+
+
+
+
+
+</script>
