@@ -63,12 +63,14 @@
       <link rel="canonical" href="{{ canonical_url }}">
     {% endif %}
 
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
     {% assign twitter_handle = settings.social_twitter | split: 'twitter.com/' | last %}
     {% render 'social-meta-tags', twitter_handle: twitter_handle %}
 
-    <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous">
+    {% comment %} <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
     <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
 
     {{ content_for_header }}

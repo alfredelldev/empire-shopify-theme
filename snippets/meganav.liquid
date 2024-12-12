@@ -14,7 +14,7 @@
 
 {% assign title = title | default: menu.title %}
 
-<div class="meganav" data-menu="{{ menu.handle }}">
+<div class="meganav nav-collection__container" data-menu="{{ menu.handle }}" data-url="{{ collection.url }}">
   {% if collection != blank %}
     <a href="{{ collection.url }}" class="meganav__link">
       {{- title -}}
@@ -158,6 +158,17 @@
     const meganavNavlistMenus = meganav.querySelectorAll('.meganav__navlist--item-wrapper');
 
     let previousItem;
+
+    var currentPath = window.location.pathname; 
+    var navItems = document.querySelectorAll(".meganav.nav-collection__container"); 
+    // Loop through each nav item 
+    navItems.forEach(function(navItem) { 
+      // Check if the nav item's data-url matches the current path
+       if (navItem.getAttribute("data-url") === currentPath) { 
+        // Add the "page-active" class to the matching nav item 
+        navItem.classList.add("page-active"); 
+      } 
+    });
 
     if (!meganavNavlistItems.length) return;
 
