@@ -4287,6 +4287,8 @@ body .mdc-ripple-surface:hover:before {
 }
 .site-header-cart svg {
   transition: margin 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  height: 20px;
+  width: auto;
 }
 
 .site-header-cart--count {
@@ -24276,6 +24278,7 @@ body:not(.user-is-tabbing) .surface-pick-up-embed__modal-btn:focus {
   display: flex;
   align-items: center;
   padding: 0 0.5rem;
+  font-weight: 400;
 }
 .site-header-actions .site-header__account-links {
   display: flex;
