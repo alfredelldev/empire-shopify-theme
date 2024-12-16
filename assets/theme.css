@@ -64,6 +64,8 @@
 }
 @media screen and (max-width: 859px) {
   :root {
+    --font-heading-family: Poppins, sans-serif;
+    --font-body-family: Inter, sans-serif;
     --font-size-heading-medium: 1.7578125rem;
 
     --font-size-heading-1: 1.640625rem;
@@ -591,6 +593,10 @@ template {
 
 .mr-0 {
   margin-right: 0 !important;
+}
+
+.justify-content-between {
+  justify-content: space-between;
 }
 
 .disclosure {
@@ -1649,7 +1655,6 @@ h6 {
 .search-flydown__list-item a,
 .live-search-takeover-cancel,
 .collection__item-title,
-.breadcrumbs-container a,
 .article--excerpt-readmore,
 .account-page-content a,
 .tweet--content a,
@@ -1677,6 +1682,13 @@ h6 {
   text-decoration: none;
   transition: color 100ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+.breadcrumbs-container a {
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: color 100ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .spr-content .spr-pagination a:hover,
 .spr-content .spr-review .spr-review-footer a:hover,
 .spr-summary-caption a.spr-summary-actions-togglereviews:hover,
@@ -4507,9 +4519,8 @@ body .mdc-ripple-surface:hover:before {
   z-index: 500;
   padding-top: 0.75rem;
   padding-bottom: 1.75rem;
-  margin-top: 3.125rem;
   color: #1d1d1d;
-  background: rgb(245, 243, 237);
+  background: #f5f5f5;
 }
 .site-footer-wrapper .navmenu-link,
 .site-footer-wrapper .site-footer-credits a,
@@ -4537,7 +4548,7 @@ body .mdc-ripple-surface:hover:before {
   margin-top: 4.25rem;
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 24px;
 }
 @media screen and (max-width: 1023px) {
   .site-footer-item--information {
@@ -4569,7 +4580,7 @@ body .mdc-ripple-surface:hover:before {
 
 .site-footer__row {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: 40px;
 }
 @media screen and (min-width: 1024px) {
@@ -12499,12 +12510,6 @@ body .mdc-ripple-surface:hover:before {
   margin: 0;
 }
 
-.pxs-newsletter-form-fields {
-  display: flex;
-  align-items: stretch;
-  justify-content: center;
-}
-
 .pxs-newsletter-form-label {
   display: none;
 }
@@ -12895,14 +12900,6 @@ body .mdc-ripple-surface:hover:before {
 .pxs-newsletter-section .newsletter .newsletter-input {
   width: calc(60% - 10px);
   max-width: 22.5rem;
-}
-.pxs-newsletter-section .newsletter .newsletter-submit {
-  width: auto;
-  max-width: 40%;
-}
-.pxs-newsletter-section .newsletter .newsletter-submit .button-primary {
-  padding-right: 1rem;
-  padding-left: 1rem;
 }
 
 .pxs-newsletter-heading {
@@ -15286,8 +15283,8 @@ body .mdc-ripple-surface:hover:before {
 
 .site-footer-block-item {
   font-size: var(--font-size-body);
-  border-bottom: 1px solid rgba(29, 29, 29, 0.15);
 }
+
 @media screen and (min-width: 1024px) {
   .site-footer-block-item {
     flex-basis: auto;
@@ -15438,9 +15435,6 @@ body .mdc-ripple-surface:hover:before {
 .site-footer-block-newsletter .newsletter .newsletter-input {
   flex-basis: calc(67% - 20px);
   min-width: 190px;
-}
-.site-footer-block-newsletter .newsletter .newsletter-submit {
-  flex-basis: calc(33% - 20px);
 }
 
 .recipient-disclosure {
@@ -15659,8 +15653,16 @@ body .mdc-ripple-surface:hover:before {
 }
 .site-header .live-search {
   z-index: 1100;
-  max-width: 600px;
+  max-width: 900px;
 }
+
+@media screen  and (min-width: 768px) {
+  .site-header .live-search,
+  .live-search-form {
+    max-width: 500px;
+  }
+}
+
 @media screen and (min-width: 1024px) {
   .live-search {
     display: flex;
@@ -15670,14 +15672,29 @@ body .mdc-ripple-surface:hover:before {
     margin-top: 0;
     vertical-align: middle;
   }
+
+  .site-header .live-search,
+  .live-search-form {
+    max-width: 600px;
+  }
 }
 
+@media screen  and (min-width: 1200px) {
+  .site-header .live-search,
+  .live-search-form {
+    max-width: 700px;
+  }
+}
+.aa-MainContainer {
+  min-width: unset !important;
+}
 .live-search-form {
   position: absolute;
   top: -1px;
   right: -1px;
   left: -1px;
   border: 1px solid #f5f5f5;
+  min-width: unset !important;
 }
 .live-search-form .form-field {
   position: relative;
@@ -16745,14 +16762,6 @@ body .mdc-ripple-surface:hover:before {
 .newsletter .form-field {
   display: inline-block;
   vertical-align: middle;
-}
-.newsletter .newsletter-input {
-  width: calc(67% - 10px);
-  max-width: 245px;
-}
-.newsletter .newsletter-submit {
-  width: 33%;
-  margin-left: 10px;
 }
 .newsletter .button-primary {
   font-size: var(--font-size-button-large);
@@ -25728,12 +25737,13 @@ body:not(.user-is-tabbing)
 .social-link {
   font-size: var(--font-size-body-small);
   position: relative;
-  display: inline-block;
-  height: 28px;
-  width: 28px;
+  display: inline-flex;
+  height: 38px;
+  width: 38px;
   margin: 4px;
   color: #1d1d1d;
-  vertical-align: top;
+  align-items: center;
+  justify-content: center;
 }
 .social-link:before {
   content: "";
@@ -25743,8 +25753,9 @@ body:not(.user-is-tabbing)
   height: 100%;
   width: 100%;
   border-radius: 100%;
-  background-color: rgba(29, 29, 29, 0.15);
+  background-color: rgba(255, 255, 255, 0.1);
   transition: transform 125ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(29, 29, 31, 0.1);
 }
 .social-link svg {
   position: relative;

@@ -530,8 +530,8 @@
     {% endif %}
 
     {%- if template contains 'customer' -%}
-      {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
-      {{ 'customer_area.js' | shopify_asset_url | script_tag }}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
     {%- endif -%}
 
     {% unless settings.reduce_animations %}
@@ -571,9 +571,8 @@
       data-shopify-api-url="{{ 'api.jquery.js' | shopify_asset_url }}"
       data-shopify-countries="/services/javascripts/countries.js"
       data-shopify-common="{{ 'shopify_common.js' | shopify_asset_url }}"
-      data-shopify-cart="{{ 'jquery.cart.js' | asset_url }}"
       data-pxu-polyfills="{{ 'polyfills.min.js' | asset_url }}"
-    ></script>
+     defer></script>
 
     {% render 'structured-data' %}
 
