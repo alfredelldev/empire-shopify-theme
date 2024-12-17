@@ -45,6 +45,7 @@
     class="
       live-search-form
       form-fields-inline
+      border-radius-full
       {% unless filter == blank %}live-search-filter-active{% endunless %}
     "
     action="{{ routes.search_url }}"
@@ -109,7 +110,7 @@
         </span>
       {%- endunless -%}
       <input
-        class="form-field-input live-search-form-field"
+        class="form-field-input live-search-form-field borde-radius-full"
         type="text"
         name="q"
         aria-label="{{ 'search.form.label' | t }}"
@@ -140,6 +141,7 @@
         type="submit"
         aria-label="{{ 'general.accessibility.search' | t }}"
         data-live-search-submit
+        style="display:none;"
       >
         <span class="search-icon search-icon--inactive">
           {% render 'icon-search' %}

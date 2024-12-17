@@ -24,6 +24,8 @@
     'percentage' or 'money'
 {% endcomment %}
 
+{{ 'component-badge.css' | asset_url | stylesheet_tag }}
+
 {% if product.template_suffix contains 'pre-order' %}
   {% assign preorder_badge = true %}
 {% endif %}
@@ -105,9 +107,9 @@
 {% assign product_available = product_available | default: product.available %}
 
 {%- if product_available != true -%}
-  <span class="{{ class_root }}__badge {{ class_root }}__badge--soldout">
-    {{ 'product_price.badge.sold_out' | t }}
-  </span>
+  <div class="{{ class_root }}__badge {{ class_root }}__badge--soldout">
+    <span>{{ 'product_price.badge.sold_out' | t }}</span>
+  </div>
 {%- elsif on_sale and sales_badge -%}
   {% assign on_sale = on_sale | default: true %}
   {% assign saved_price_single = savings_money_single | money %}
@@ -116,7 +118,7 @@
     {% assign on_sale = false %}
   {% endif %}
 
-  <span class="{{ class_root }}__badge {{ class_root }}__badge--sale"
+  <div class="{{ class_root }}__badge {{ class_root }}__badge--sale"
     data-badge-sales
     {% if on_sale != true %}style="display: none;"{% endif %}
   >
@@ -146,10 +148,10 @@
         {{ 'product_price.badge.sale' | t }}
       {% endif %}
     </span>
-  </span>
+  </div>
 {%- elsif preorder_badge -%}
-  <span class="{{ class_root }}__badge {{ class_root }}__badge--pre-order">
-    {{ 'product_price.badge.pre_order' | t }}
-  </span>
+  <div class="{{ class_root }}__badge {{ class_root }}__badge--pre-order">
+    <span>{{ 'product_price.badge.pre_order' | t }}</span>
+  </div>
 {%- endif -%}
 {% comment %}Inject @pixelunion/shopify-price-ui/sale-badge end{% endcomment %}

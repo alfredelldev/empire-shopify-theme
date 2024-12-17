@@ -1,0 +1,33 @@
+.productitem__badge {
+  font-size: 10px;
+}
+
+.product__badge,
+.hotspot__badge,
+.productitem__badge {
+  font-style: normal;
+  font-weight: 700;
+  padding: 0.25rem 0.3125rem;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+.product__badge--soldout,
+.hotspot__badge--soldout,
+.productitem__badge--soldout {
+  color: rgb(255, 255, 255);
+  background-color: #1d1d1f;
+}
+
+.product__badge--sale,
+.productitem__badge--sale,
+.hotspot__badge--sale,
+.product__badge--pre-order,
+.productitem__badge--pre-order,
+.hotspot__badge--pre-order {
+  color: #fff;
+  background-color: #B3261E;
+  display: inline-flex;
+  border-radius: 25px;
+  padding: 2px 12px;
+}

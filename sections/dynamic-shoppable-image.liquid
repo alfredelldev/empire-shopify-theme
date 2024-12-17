@@ -436,7 +436,7 @@
                   {% assign include_tax_line = include_tax_line | default: false %}
                   {% assign include_compare_price = include_compare_price | default: true %}
                   
-                  <div class="price {{ class_root }}__price {% if compare_at_price_varies %}price--varies{% endif %}">
+                  <div class="price {{ class_root }}__price {% if compare_at_price_varies %}price--varies{% endif %} recentttt">
                     {% if include_compare_price %}
                       <div
                         class="price__compare-at {% if emphasize_price or on_sale and show_original %}visible{% endif %}"

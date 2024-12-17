@@ -12,6 +12,8 @@
     Render card in product compare style
 {% endcomment %}
 
+{{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
+
 {% assign recently_viewed = recently_viewed | default: null %}
 {% assign countdown_timer = countdown_timer | default: null %}
 {% assign product_compare = product_compare | default: null %}
@@ -117,8 +119,7 @@
   <!-- Swym Wishlist Plus EPI Button-->
   <button
     data-with-epi="true"
-    class="swym-wishlist-button productitem--action button-primary product_{{ product.id }}"
-    style="height: 38px; padding: 0;"
+    class="swym-wishlist-button productitem--action add-to-project-btn product_{{ product.id }}"
     data-swaction="addToWishlist"
     data-product-id="{{ product.id | json }}"
     data-variant-id="{{ product.variants[0].id }}"
@@ -347,6 +348,24 @@
     <div class="productitem__container">
       {{ recently_viewed_header }}
 
+      {%- capture product_item_price -%}
+        {%
+          render 'product-price',
+          product: product,
+          class_root: 'productitem',
+          price: price,
+          price_varies: price_varies,
+          compare_at_price: compare_at_price,
+          compare_at_price_varies: compare_at_price_varies,
+          on_sale: on_sale,
+          emphasize_price: emphasize_price,
+          show_original: true,
+          show_range: true,
+          include_unit_price: true,
+          include_hidden_price: false,
+        %}
+      {%- endcapture -%}
+
       <div class="productitem__image-container">
         <a
           class="productitem--image-link"
@@ -390,49 +409,23 @@
                 {{ 'product-' | append: index | placeholder_svg_tag: 'placeholder--image' }}
               {% endif %}
             {% endif %}
-
-            {% render 'product-badge',
-              product: product,
-              class_root: 'productitem',
-              product_available: product_available,
-              price: price,
-              price_varies: price_varies,
-              compare_at_price: compare_at_price,
-              compare_at_price_varies: compare_at_price_varies,
-              on_sale: on_sale,
-              show_saved: consistent_saved,
-              include_range: true
-            %}
           </figure>
         </a>
       </div>
 
-      {%- capture product_item_price -%}
-        {%
-          render 'product-price',
+      <div class="productitem--info">
+        {% render 'product-badge',
           product: product,
           class_root: 'productitem',
+          product_available: product_available,
           price: price,
           price_varies: price_varies,
           compare_at_price: compare_at_price,
           compare_at_price_varies: compare_at_price_varies,
           on_sale: on_sale,
-          emphasize_price: emphasize_price,
-          show_original: true,
-          show_range: true,
-          include_unit_price: true,
-          include_hidden_price: false,
+          show_saved: consistent_saved,
+          include_range: true
         %}
-      {%- endcapture -%}
-
-      <div class="productitem--info">
-        {% unless countdown_timer %}
-          {{ product_item_swatches }}
-        {% endunless %}
-
-        {% if emphasize_price %}
-          {{ product_item_price }}
-        {% endif %}
 
         <h2 class="productitem--title">
           <a href="{{ product_link }}" data-product-page-link>
@@ -448,9 +441,13 @@
           {% endif %}
         {% endunless %}
 
-        {% unless emphasize_price %}
-          {{ product_item_price }}
+        {% unless countdown_timer %}
+          {{ product_item_swatches }}
         {% endunless %}
+
+        {% if emphasize_price %}
+          {{ product_item_price }}
+        {% endif %}
 
         {% unless product_compare %}
           {% if settings.inventory_status %}
@@ -514,10 +511,6 @@
       {% unless recently_viewed or countdown_timer %}
         {% if is_configured %}
           <div class="productitem--actions" data-product-actions style="gap: 0.25rem;">
-            {% if enable_wishlist %}
-              {{ swym_wishlist_button }}
-            {% endif %}
-
             <div class="productitem--action">
               <a
                 href="{{ product.url | within: collection }}"
@@ -525,14 +518,21 @@
                 style="text-decoration: none;"
               >
                 <button
-                  class="productitem--action-trigger button-primary"
+                  class="productitem--action-trigger configure-btn"
                   type="button"
                   style="height: 38px;"
                 >
-                  {{ 'product.buttons.configure_product' | t }}
+                  <span class="atc-button--cart-icon">
+                    {% render 'icon-library', id: 'icon-cart-white', height: 16 %}
+                  </span>
+                  <span class="atc-button--text">{{ 'product.buttons.configure_product' | t }}</span>
                 </button>
               </a>
             </div>
+
+            {% if enable_wishlist %}
+              {{ swym_wishlist_button }}
+            {% endif %}
           </div>
         {% elsif enable_quickshop or atc_button %}
           {% comment %}
@@ -542,7 +542,7 @@
           {% assign quick_buy_text = 'product.buttons.add_to_cart' | t %}
 
           {% assign quick_shop_classes = 'productitem--action-trigger button-secondary' %}
-          {% assign quick_buy_classes = 'productitem--action-trigger productitem--action-atc button-primary' %}
+          {% assign quick_buy_classes = 'productitem--action-trigger productitem--action-atc add-to-cart-btn' %}
 
           {% if has_variants %}
             {% assign quick_buy_text = 'product.buttons.choose_options' | t %}
@@ -577,18 +577,8 @@
               %}
             </div>
 
-            {% if enable_wishlist %}
-              {{ swym_wishlist_button }}
-            {% endif %}
-
             {% if enable_quickshop %}
-              <div
-                class="
-                  productitem--action
-                  quickshop-button
-                  {% if quick_shop_display == 'desktop' %}productitem-action--desktop{% endif %}
-                "
-              >
+              <div class="productitem--action quickshop-button {% if quick_shop_display == 'desktop' %}productitem-action--desktop{% endif %}">
                 <button
                   class="{{ quick_shop_classes }}"
                   data-quickshop-full
@@ -614,7 +604,7 @@
                 "
               >
                 <button
-                  class="{{ quick_buy_classes }}"
+                  class="{% if has_variants %}has-variants {% endif %}{{ quick_buy_classes }}"
                   type="button"
                   aria-label="{{ quick_buy_text }}"
                   {% unless has_variants %}
@@ -626,19 +616,22 @@
                   {% if product == false or product_available == false %}
                     disabled
                   {% endif %}
-                  style="height: 38px; position: relative;"
                 >
+                  <span class="atc-button--cart-icon">
+                    {% render 'icon-library', id: 'icon-cart-white', height: 16 %}
+                  </span>
                   <span class="atc-button--text">
                     {{- quick_buy_text -}}
-                  </span>
-                  <span class="atc-button--cart-icon">
-                    {% render 'icon-library', id: 'icon-cart', height: 16 %}
                   </span>
                   <span class="atc-button--icon">
                     {%- render 'icon-spinner' -%}
                   </span>
                 </button>
               </div>
+            {% endif %}
+
+            {% if enable_wishlist %}
+              {{ swym_wishlist_button }}
             {% endif %}
           </div>
         {% endif %}
