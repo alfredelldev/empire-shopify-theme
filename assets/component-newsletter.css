@@ -50,7 +50,7 @@
 }
 
 .newsletter-submit button {
-  width: 6rem;
+  width: auto;
   margin: 0;
   right: 0;
   top: 0;
@@ -79,10 +79,15 @@
   color: #1d1d1f;
   text-transform: inherit;
   font-size: 14px;
+  font-weight: 400;
   height: 100%;
   padding: 16px 12px;
   border-radius: 0 4px 4px 0;
   border: 1px solid #faca51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 .newsletter__container .form-field-input {
@@ -92,8 +97,9 @@
 }
 
 .newsletter-submit button .icon {
-  width: 1.2rem;
+  width: 12px;
   rotate: -90deg;
+  margin-left: 8px;
 }
 
 .newsletter__container {
@@ -149,10 +155,10 @@
 
 @media screen and (min-width: 1359px) {
   .newsletter__container {
-    background-position: -15rem bottom;
+    background-position: -10rem bottom;
   }
 
   .newsletter__container .newsletter__content {
-    width: 40%;
+    width: fit-content;
   }
 }

@@ -35,5 +35,7 @@
 }
 
 @media screen and (min-width: 764px) {
-    
+    .site-footer__row--copyright > div.site-footer__row-inner-wrapper-left {
+        flex-direction: row;
+    }
 }
