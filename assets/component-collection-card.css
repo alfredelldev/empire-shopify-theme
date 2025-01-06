@@ -1,4 +1,4 @@
-.productitem--image {
+/* .productitem--image {
   height: 242px !important;
 }
 
@@ -12,7 +12,7 @@
   .productitem--image {
     height: 350px !important;
   }
-}
+} */
 
 .productgrid-listview .productitem--info {
   display: flex;
@@ -47,6 +47,7 @@
   z-index: 100;
   background-color: rgb(255, 255, 255);
   margin-top: 4px;
+  flex: 1;
 }
 
 .productitem--info .rating__star {
@@ -77,10 +78,10 @@
   text-transform: uppercase;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-line-clamp: 2;
   overflow: hidden;
-  text-overflow: ellipsis; /* Add "..." to indicate truncation */
-  max-height: 3.5em;
+  text-overflow: ellipsis;
+  max-height: 2.33em;
   line-height: 1.18em;
 }
 
@@ -89,6 +90,7 @@
   font-size: 0.8125rem;
   line-height: 1.38;
   color: #949494;
+  text-decoration: line-through;
 }
 
 .productitem__price {
@@ -101,7 +103,7 @@
 
 .productitem--emphasis .productitem__price .price__current {
   font-weight: bold;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   column-gap: 6px;
   flex-wrap: wrap;
@@ -115,10 +117,10 @@
   font-size: var(--font-size-body-medium);
 }
 
-.money::first-letter {
+/* .money::first-letter {
   font-size: 13px !important;
   font-weight: 500;
-}
+} */
 
 .productitem--emphasis .productitem__price .price__current p {
   margin: 0;
@@ -262,13 +264,45 @@ i.swym-wishlist--icon {
   opacity: 1;
 }
 
+.price__from-label {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 750px) {
+    .productgrid--item .productitem--action-atc:hover .atc-button--text,
+    .configure-btn:hover .atc-button--text,
+    .configure-btn:hover .atc-button--cart-icon,
+    .swym-wishlist-button:hover span.swym-wishlist--text,
+    .productitem--action-atc:hover .atc-button--cart-icon,
+    .swym-wishlist-button:hover i.swym-wishlist--icon svg {
+      font-size: 12px;
+    }
+  
+    .add-to-cart-btn, .configure-btn, .add-to-project-btn {
+      column-gap: 2px;
+    }
+  
+    .configure-btn:hover {
+      width: 97px;
+    }
+
+    .add-to-cart-btn.has-variants:hover {
+        width: 128px;
+    }
+
+    .add-to-cart-btn:hover {
+        width: 105px;
+    }
+  }
+
 /* Recently Viewed */
 @media screen and (min-width: 990px) {
   .recently-viewed--section .productitem--image {
-    height: 280px !important;
+    /* height: 280px !important; */
   }
   .product-recently-viewed-card {
     width: 230px !important;
+    min-height: 100%;
   }
 }
 

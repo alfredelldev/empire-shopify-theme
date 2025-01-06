@@ -106,8 +106,8 @@
       "tax_line_html": " "
     },
     "badge": {
-      "sale_percentage_range_html": "Save up to <span data-price-percent-saved>{{ savings }}</span>%",
-      "sale_percentage_single_html": "Save <span data-price-percent-saved>{{ savings }}</span>%",
+      "sale_percentage_range_html": "UP TO <span data-price-percent-saved>{{ savings }}</span>% OFF",
+      "sale_percentage_single_html": "<span data-price-percent-saved>{{ savings }}</span>% OFF",
       "sale_money_range_html": "Save up to <span class=\"money\" data-price-money-saved>{{ savings }}</span>",
       "sale_money_single_html": "Save <span class=\"money\" data-price-money-saved>{{ savings }}</span>",
       "sold_out": "Sold out",

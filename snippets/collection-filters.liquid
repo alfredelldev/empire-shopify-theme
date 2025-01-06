@@ -48,7 +48,7 @@
     --layout-container-gutter: 25px;
     --layout-container-max-width: 1400px;
     max-width: var(--layout-container-max-width, 1400px);
-    margin: 1.75rem auto;
+    margin: 1.75rem auto 0;
     padding-right: var(--layout-container-gutter, 25px);
     padding-left: var(--layout-container-gutter, 25px);
   }
@@ -325,7 +325,7 @@
 
     {% assign most_recent_group = current_tags.last | split: '_' | first %}
 
-    <div class="collection-head--filter-options-container">
+    {% comment %} <div class="collection-head--filter-options-container">
       <label class="d-none">
         Filter by
         <select name="filter" id="filter">
@@ -423,7 +423,7 @@
                   width="120"
                   height="auto"
                 >
-                <p class="d-none">{{ option_name }}</p>
+                <p>{{ option_name }}</p>
                 {% if is_disabled %}
                 {% elsif is_active %}
                   {%- liquid
@@ -480,7 +480,7 @@
           </div>
         </div>
       {% endfor %}
-    </div>
+    </div> {% endcomment %}
   </div>
 </div>
 

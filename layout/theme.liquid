@@ -5,7 +5,7 @@
       window.Store = window.Store || {};
       window.Store.id = {{ shop.id }};
     </script>
-    <meta name="google-site-verification" content="GeP4_vebinUEtellr9CHeD6Hd1F7v1VVZ-_R6MFes54" />
+    <meta name="google-site-verification" content="GeP4_vebinUEtellr9CHeD6Hd1F7v1VVZ-_R6MFes54">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
 
@@ -13,7 +13,10 @@
     <link rel="preconnect" href="https://fonts.shopifycdn.com">
     <link rel="preconnect" href="https://v.shopify.com">
     <link rel="preconnect" href="https://cdn.shopifycloud.com">
-    <link rel="icon" href="https://cdn.shopify.com/s/files/1/0507/4822/7764/files/FAVICON_48x48_b7c3781e-ce4b-4c28-a7a6-23e12fe22180.png">
+    <link
+      rel="icon"
+      href="https://cdn.shopify.com/s/files/1/0507/4822/7764/files/FAVICON_48x48_b7c3781e-ce4b-4c28-a7a6-23e12fe22180.png"
+    >
 
     <title>
       {{- page_title -}}
@@ -71,11 +74,11 @@
     {% comment %} <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous"> {% endcomment %}
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
-    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
 
     {{ content_for_header }}
 
-    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'styles.css' | asset_url | stylesheet_tag }}
+    {{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
 
     {% comment %}Inject theme-object begin{% endcomment %}
     <script>
@@ -101,7 +104,8 @@
       };
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
-  {% include 'pagefly-app-header' %}</head>
+    {% render 'pagefly-app-header' %}
+  </head>
 
   {% render 'swymSnippet' %}
 
@@ -146,11 +150,7 @@
     {% sections 'header-group' %}
 
     <div style="--background-color: {{ settings.color_background }}">
-      {%
-        render 'age-gate',
-        id: 'page',
-        sections: content_for_layout,
-      %}
+      {% render 'age-gate', id: 'page', sections: content_for_layout %}
     </div>
 
     <div class="intersection-target" data-header-intersection-target></div>
@@ -193,10 +193,7 @@
             <div class="atc-banner--product">
               <h2 class="atc-banner--product-title">
                 <span class="atc-banner--product-title--icon">
-                  {%
-                    render 'icon-library',
-                    id: 'icon-checkmark',
-                  %}
+                  {% render 'icon-library', id: 'icon-checkmark' %}
                 </span>
                 {{ 'add_to_cart_banner.general.product_added' | t }}
               </h2>
@@ -452,11 +449,7 @@
                 </div>
                 <a class="product-compare-drawer__item-title" data-product-compare-drawer-title></a>
                 <button class="product-compare-drawer__remove" data-product-compare-drawer-remove>
-                  {%
-                    render 'icon-library',
-                    id: 'icon-remove',
-                    icon_class: 'product-compare-drawer__remove-icon',
-                  %}
+                  {% render 'icon-library', id: 'icon-remove', icon_class: 'product-compare-drawer__remove-icon' %}
                 </button>
               </div>
             </template>
@@ -572,7 +565,8 @@
       data-shopify-countries="/services/javascripts/countries.js"
       data-shopify-common="{{ 'shopify_common.js' | shopify_asset_url }}"
       data-pxu-polyfills="{{ 'polyfills.min.js' | asset_url }}"
-     defer></script>
+      defer
+    ></script>
 
     {% render 'structured-data' %}
 

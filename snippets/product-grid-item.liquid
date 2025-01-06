@@ -12,8 +12,6 @@
     Render card in product compare style
 {% endcomment %}
 
-{{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
-
 {% assign recently_viewed = recently_viewed | default: null %}
 {% assign countdown_timer = countdown_timer | default: null %}
 {% assign product_compare = product_compare | default: null %}
@@ -413,99 +411,105 @@
         </a>
       </div>
 
-      <div class="productitem--info">
-        {% render 'product-badge',
-          product: product,
-          class_root: 'productitem',
-          product_available: product_available,
-          price: price,
-          price_varies: price_varies,
-          compare_at_price: compare_at_price,
-          compare_at_price_varies: compare_at_price_varies,
-          on_sale: on_sale,
-          show_saved: consistent_saved,
-          include_range: true
-        %}
+      <div class="productitem--info d-flex justify-content-between flex-col">
+        <div class="badges__container">{% render 'product-custom-badge', product: product %}</div>
 
-        <h2 class="productitem--title">
-          <a href="{{ product_link }}" data-product-page-link>
-            {{ product_title }}
-          </a>
-        </h2>
+        <div>
+          {% render 'product-badge',
+            product: product,
+            class_root: 'productitem',
+            product_available: product_available,
+            price: price,
+            price_varies: price_varies,
+            compare_at_price: compare_at_price,
+            compare_at_price_varies: compare_at_price_varies,
+            on_sale: on_sale,
+            show_saved: consistent_saved,
+            include_range: true
+          %}
 
-        {% unless product_compare %}
-          {% if settings.product_show_vendor and product.vendor != blank %}
-            <span class="productitem--vendor">
-              {{ product_vendor | link_to_vendor }}
-            </span>
-          {% endif %}
-        {% endunless %}
+          <h2 class="productitem--title">
+            <a href="{{ product_link }}" data-product-page-link>
+              {{ product_title }}
+            </a>
+          </h2>
 
-        {% unless countdown_timer %}
-          {{ product_item_swatches }}
-        {% endunless %}
-
-        {% if emphasize_price %}
-          {{ product_item_price }}
-        {% endif %}
-
-        {% unless product_compare %}
-          {% if settings.inventory_status %}
-            <div class="productitem__stock-level">
-              {% render 'product-stock-level',
-                inventory_display: settings.inventory_display,
-                inventory_transfer: settings.inventory_transfer_notice,
-                variant: product.selected_or_first_available_variant,
-                verbose: false
-              %}
-            </div>
-          {% endif %}
-
-          {% unless countdown_timer %}
-            {% if settings.product_ratings_star_display and product.metafields.reviews.rating.value != blank %}
-              <div class="product__rating rating">
-                {% render 'rating-stars',
-                  value: product.metafields.reviews.rating.value.rating,
-                  scale_max: product.metafields.reviews.rating.value.scale_max
-                %}
-
-                <p class="rating__text">
-                  <span aria-hidden="true">
-                    {{ product.metafields.reviews.rating.value }} /
-                    {{ product.metafields.reviews.rating.value.scale_max }}
-                  </span>
-                </p>
-
-                <p class="rating__count">
-                  <span aria-hidden="true">
-                    {{ product.metafields.reviews.rating_count }}
-                    {% if product.metafields.reviews.rating_count > 1 %}
-                      {{ 'general.accessibility.star_reviews_text' | t }}
-                    {% else %}
-                      {{ 'general.accessibility.star_review_text' | t }}
-                    {% endif %}
-                  </span>
-                </p>
-              </div>
+          {% unless product_compare %}
+            {% if settings.product_show_vendor and product.vendor != blank %}
+              <span class="productitem--vendor">
+                {{ product_vendor | link_to_vendor }}
+              </span>
             {% endif %}
           {% endunless %}
-        {% endunless %}
+        </div>
 
-        {% if product_description %}
-          <div class="productitem--description">
-            <p>{{ product_description | truncate: 150 }}</p>
+        <div>
+          {% unless countdown_timer %}
+            {{ product_item_swatches }}
+          {% endunless %}
 
-            {% if product_description_size > 150 and product_link %}
-              <a
-                href="{{ product_link }}"
-                class="productitem--link"
-                data-product-page-link
-              >
-                {{ 'product.buttons.view_details' | t }}
-              </a>
+          {% if emphasize_price %}
+            {{ product_item_price }}
+          {% endif %}
+
+          {% unless product_compare %}
+            {% if settings.inventory_status %}
+              <div class="productitem__stock-level">
+                {% render 'product-stock-level',
+                  inventory_display: settings.inventory_display,
+                  inventory_transfer: settings.inventory_transfer_notice,
+                  variant: product.selected_or_first_available_variant,
+                  verbose: false
+                %}
+              </div>
             {% endif %}
-          </div>
-        {% endif %}
+
+            {% unless countdown_timer %}
+              {% if settings.product_ratings_star_display and product.metafields.reviews.rating.value != blank %}
+                <div class="product__rating rating">
+                  {% render 'rating-stars',
+                    value: product.metafields.reviews.rating.value.rating,
+                    scale_max: product.metafields.reviews.rating.value.scale_max
+                  %}
+
+                  <p class="rating__text">
+                    <span aria-hidden="true">
+                      {{ product.metafields.reviews.rating.value }} /
+                      {{ product.metafields.reviews.rating.value.scale_max }}
+                    </span>
+                  </p>
+
+                  <p class="rating__count">
+                    <span aria-hidden="true">
+                      {{ product.metafields.reviews.rating_count }}
+                      {% if product.metafields.reviews.rating_count > 1 %}
+                        {{ 'general.accessibility.star_reviews_text' | t }}
+                      {% else %}
+                        {{ 'general.accessibility.star_review_text' | t }}
+                      {% endif %}
+                    </span>
+                  </p>
+                </div>
+              {% endif %}
+            {% endunless %}
+          {% endunless %}
+
+          {% if product_description %}
+            <div class="productitem--description">
+              <p>{{ product_description | truncate: 150 }}</p>
+
+              {% if product_description_size > 150 and product_link %}
+                <a
+                  href="{{ product_link }}"
+                  class="productitem--link"
+                  data-product-page-link
+                >
+                  {{ 'product.buttons.view_details' | t }}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
       </div>
 
       {% unless recently_viewed or countdown_timer %}
