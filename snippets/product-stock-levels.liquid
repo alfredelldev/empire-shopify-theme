@@ -1,69 +1,27 @@
 {% style %}
-  .stock-level {
-    display: flex;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
-    flex-direction: column-reverse;
-    align-items: center;
-    background-color: #F5F5F5;
-    border-radius: 6px;
-    padding: 0.75rem;
-    gap: 0.5rem;
+  .stocks-container hr {
+    border-color: rgba(157, 157, 157, 0.2);
+    margin: 24px 0;
   }
 
-  @media (max-width: 767px) {
-    .stock-level {
-      max-width: 100%;
-    }
-  }
-
-  .stock-level--details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .stock-level {
-      text-align: right;
-      flex-direction: row;
-      align-items: center;
-    }
-
-    .stock-level--details {
-      align-items: flex-end;
-    }
-  }
-
-  .stock-level--details p {
+  .stocks-container p {
     margin: 0;
   }
 
-  .stock-level img {
-    aspect-ratio: 1;
-    object-fit: contain;
+  .stocks-container .stock-level--availability {
+    margin-bottom: 8px;
   }
 
-  .stock-level--availability {
-    font-weight: bold;
-  }
-
-  .colour-stock {
-    color: green;
-  }
-
-  .colour-stock--low {
-    color: {{ block.settings.colour_stock_low | default: red }};
+  .stocks-container .stock-level--availability,
+  .stocks-container .express-ship {
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
 {% endstyle %}
 
-
-
 {% assign variant_selected = product.first_available_variant %}
-{% if product.selected_variant != nil %}
+{% if product.selected_variant != null %}
   {% assign variant_selected = product.selected_variant %}
 {% endif %}
 
@@ -76,31 +34,48 @@
 
 {% assign selected_variant = variant_selected.inventory_quantity %}
 
+<div class="stocks-container">
+  {% if lowest_stock > 0 %}
+    <hr>
+    <div class="stock-level" style="{% if selected_variant <= 0 %}display:none;{% endif %}}">
+      <div class="stock-level--details">
+        <p class="stock-level--availability">
+          <svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0 11.5683C0 11.972 0.242738 12.3361 0.615385 12.4913L6.66874 15.0136V7.18535L3.03439 5.6434L0 4.37907V11.5683ZM0.739039 3.51539L3.23951 4.55725L9.57274 1.80367L7.97918 1.13969C7.48687 0.934558 6.93303 0.934558 6.44072 1.13969L0.739039 3.51539ZM10.9578 2.38077L4.61418 5.13885L7.20573 6.23838L13.5381 3.45589L10.9578 2.38077ZM14.4199 4.2497L7.75023 7.18041V15.014L13.8045 12.4913C14.1772 12.3361 14.4199 11.972 14.4199 11.5683V4.2497Z" fill="#0B4C80"/>
+          </svg>
 
-{% if lowest_stock > 0 %}
-  <div class="stock-level" style="{% if selected_variant <= 0 %}display:none;{% endif %}}">
-    <div class="stock-level--details">
-      <p class="stock-level--availability">
-        Available Quantity:
-        <span class="colour-stock{% if stock < 5 %} colour-stock--low{% endif %}">
-          {{ selected_variant }}
-        </span>
-      </p>
-      <p>This item is available and ready for same day dispatch.</p>
+          <span>
+            Available Quantity:
+            <span class="colour-stock{% if stock < 5 %} colour-stock--low{% endif %}">
+              {{ selected_variant }}
+            </span>
+          </span>
+        </p>
+        <p class="express-ship">
+          <svg width="13" height="18" viewBox="0 0 13 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.0923 7.73689C7.98184 7.73689 7.8923 7.64735 7.8923 7.53689V1.60384C7.8923 1.41125 7.64681 1.32993 7.53184 1.48445L1.59411 9.46463C1.34868 9.79449 1.58411 10.2631 1.99525 10.2631H5.1077C5.21816 10.2631 5.3077 10.3527 5.3077 10.4631V16.3962C5.3077 16.5888 5.55319 16.6701 5.66816 16.5156L11.6059 8.53536C11.8513 8.20551 11.6159 7.73689 11.2047 7.73689H8.0923Z" fill="#FACA51" stroke="#FACA51" stroke-width="1.5"/>
+          </svg>
+          <span>Express Ship: This item is available and ready for same day dispatch.</span>
+        </p>
+      </div>
+      {% comment %} <img src="{{ 'Express-Ship.webp' | asset_url }}" width="65" height="auto" loading="eager"> {% endcomment %}
     </div>
-    <img src="{{ 'Express-Ship.webp' | asset_url }}" width="65" height="auto" loading="eager">
-  </div>
-{% endif %}
+    <br />
+  {% endif %}
 
-           {% assign is_low_stock = false %}
-            {% for tag in product.tags %}
-              {% if tag == 'LOWSTOCK' %}
-                  {% assign is_low_stock = true %}
-              {% endif %}
-            {% endfor %}
-            
-            {% if is_low_stock == true %}
-              <div style="color:red; padding:0.5em 0;">
-                <b>This product is currently low in stock, please call us on </b><a href="tel:(02) 9160 3988">(02) 9160 3988</a> <b>to confirm availability.</b>
-              </div>
-            {% endif %}
+  {% assign is_low_stock = false %}
+  {% for tag in product.tags %}
+    {% if tag == 'LOWSTOCK' %}
+      {% assign is_low_stock = true %}
+    {% endif %}
+  {% endfor %}
+
+  {% if is_low_stock == true %}
+    <hr>
+    <div style="color:red; padding:0.5em 0;">
+      <b>This product is currently low in stock, please call us on </b><a href="tel:(02) 9160 3988">(02) 9160 3988</a>
+      <b>to confirm availability.</b>
+    </div>
+    <hr>
+  {% endif %}
+</div>

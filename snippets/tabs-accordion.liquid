@@ -1,0 +1,88 @@
+{% style %}
+  /* General Styles */
+  .tabs-container {
+    width: 100%;
+    margin-top: 64px;
+  }
+
+  .tab-headers {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
+  .tab-header {
+    padding: 15px 24px;
+    background: #fff;
+    border: 1px solid #1d1d1f;
+    border-radius: 50px; /* Pill shape */
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+    font-size: 14px;
+    font-family: var(--font-heading-family);
+  }
+
+  .tab-header.active {
+    background: #1d1d1f; /* Your primary blue color */
+    color: #fff;
+    font-weight: bold;
+    border-color: #1d1d1f;
+  }
+
+  .tab-content-container {
+    padding: 0 10px 10px 10px;
+    background: #fff;
+  }
+
+  .tab-content {
+    display: none;
+    width: 100%;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .tab-content.complementary-products--no-recommendations {
+    display: none;
+  }
+
+  .complimentary-header {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .tab-headers {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.5rem;
+    }
+
+    .tab-header {
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .tab-content-container {
+      padding: 0;
+      background: #fff;
+    }
+  }
+{% endstyle %}
+
+<div class="tabs-container">
+  <div class="tab-headers"></div>
+  <div class="tab-content-container">
+    <!-- Dynamic tab contents will be added here -->
+    {% comment %}
+      <div class="tab-content" id="addons">
+        <div id="addons-container" class="addons-container">
+          {% render 'complementary-products', product: product %}
+        </div>
+      </div>
+    {% endcomment %}
+
+    {% render 'complementary-products', product: product %}
+  </div>
+</div>

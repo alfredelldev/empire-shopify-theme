@@ -32649,7 +32649,7 @@ class ProductDetails {
 
     const hasComparePrice = !!variant.compare_at_price && variant.compare_at_price > variant.price;
     this.variantFields.$compareAtPrice.toggleClass('visible', hasComparePrice);
-    this.variantFields.$compareAtPriceMoney.text(Shopify.formatMoney(variant.compare_at_price, this.settings.money_format)); // Update price
+    // this.variantFields.$compareAtPriceMoney.text(Shopify.formatMoney(variant.compare_at_price, this.settings.money_format)); // Update price
 
     this.variantFields.$priceMoney.text(Shopify.formatMoney(variant.price, this.settings.money_format));
   }
@@ -33640,11 +33640,15 @@ class ProductGridItem {
       } // $scripts checks existence of script in header before attempting to inject
 
 
-      script_default()(jquery_default()('[data-scripts]').data('shopify-api-url'), () => {
-        this.events.register(this.quickBuyEl, 'click', e => this._addToCart(e));
-        this.events.register(this.quickshopSlimEl, 'click', e => this._openQuickShop(e));
-        this.events.register(this.quickshopFullEl, 'click', e => this._openQuickShop(e));
-      });
+      
+
+      
+        script_default()(jquery_default()('[data-scripts]').data('shopify-api-url'), () => {
+          this.events.register(this.quickBuyEl, 'click', e => this._addToCart(e));
+          this.events.register(this.quickshopSlimEl, 'click', e => this._openQuickShop(e));
+          this.events.register(this.quickshopFullEl, 'click', e => this._openQuickShop(e));
+        });
+
     }
 
     this.expandAnimation = transition({
@@ -42150,7 +42154,72 @@ class StaticProductRecommendations {
 }
 ;// CONCATENATED MODULE: ./source/scripts/sections/StaticRecentlyViewed.js
 
+class StaticProductComplementary {
+  constructor(section) {
+    this.section = section;
+    this.productId = section.data.productId;
+    this.limit = section.data.settings.limit;
+    this.recommendedProducts = [];
+    this.productsScroller = null;
+    this.sectionId = section.data.sectionId;
+    this.recommendationContainer = document.querySelector('[data-complementary-products]');
+    this.recommendUrl = `${window.Theme.routes.product_recommendations_url}?section_id=${this.sectionId}&limit=${this.limit}&product_id=${this.productId}&&intent=complementary`;
+    this._loadRecommendations = this._loadRecommendations.bind(this);
+    this._resizeRowScroller = this._resizeRowScroller.bind(this);
 
+    this._loadRecommendations();
+  }
+
+  _loadRecommendations() {
+    shopify_asyncview_dist_index_es.load(this.recommendUrl, {
+      view: ''
+    }).then((_ref) => {
+      let {
+        html
+      } = _ref;
+      this.recommendationContainer.innerHTML = html;
+      dist_index_es.watch(this.recommendationContainer);
+      const productItems = this.recommendationContainer.querySelectorAll('[data-product-item]');
+      const productItemLazyLoad = Layout.isGreaterThanBreakpoint('L', true);
+
+      if (productItems.length) {
+        productItems.forEach(productItem => {
+          this.recommendedProducts.push(new ProductGridItem({
+            el: productItem,
+            id: this.section.id,
+            lazy: productItemLazyLoad
+          }));
+        });
+        initShopifyProductReviews();
+
+        if (window.Shopify && Shopify.PaymentButton) {
+          Shopify.PaymentButton.init();
+        }
+
+        this.recommendationContainer.addEventListener('rimg:load', this._resizeRowScroller);
+        this.productsScroller = new ProductRowScroller(this.section.el.querySelector('[data-product-row]'));
+      }
+    });
+  }
+
+  _resizeRowScroller() {
+    if (this.productsScroller && this.productsScroller.flickity) {
+      this.productsScroller.flickity.resize();
+    }
+  }
+
+  onSectionUnload() {
+    if (this.productsScroller) {
+      this.productsScroller.unload();
+    }
+
+    this.recommendedProducts.forEach(productItem => {
+      productItem.unload();
+    });
+    this.recommendationContainer.removeEventListener('rimg:load', this._resizeRowScroller);
+  }
+
+}
 
 class StaticRecentlyViewed {
   constructor(section) {
@@ -50283,6 +50352,7 @@ const initEmpire = () => {
   sections.register('static-product', section => new StaticProduct(section));
   sections.register('static-product-compare', section => new StaticProductCompare(section));
   sections.register('static-product-recommendations', section => new StaticProductRecommendations(section));
+  sections.register('static-product-complementary', section => new StaticProductComplementary(section));
   sections.register('static-recently-viewed', section => new StaticRecentlyViewed(section));
   sections.register('static-search', section => new StaticSearch(section));
   sections.register('static-search-faceted-filters', section => new FacetedFilterSearch(section));

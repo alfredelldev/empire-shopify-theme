@@ -16,7 +16,7 @@
       "select_variant": "Please select a variant",
       "by_vendor": "by {{ vendor }}",
       "by_vendor_html": "by {{ vendor_link }}",
-      "sku_html": "<strong>SKU</strong> <span data-product-sku>{{ sku }}</span>",
+      "sku_html": "<span>SKU:</span> <span data-product-sku>{{ sku }}</span>",
       "customer_reviews_title": "Customer Reviews",
       "zoom": "Click to expand",
       "zoomTap": "Tap or pinch to zoom",

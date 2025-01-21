@@ -5,6 +5,9 @@
   @param recently_viewed {Boolean}
     Render card in recently viewed style
 
+  @param complementary {Boolean}
+    Render card in recently viewed style
+
   @param countdown_timer {Boolean}
     Render card in countdown timer style
 
@@ -15,6 +18,7 @@
 {% assign recently_viewed = recently_viewed | default: null %}
 {% assign countdown_timer = countdown_timer | default: null %}
 {% assign product_compare = product_compare | default: null %}
+{% assign complementary = complementary | default: null %}
 
 {% assign product_grid_show_second_image = settings.product_grid_show_second_image %}
 {% assign emphasize_price = settings.product_grid_emphasize_price %}

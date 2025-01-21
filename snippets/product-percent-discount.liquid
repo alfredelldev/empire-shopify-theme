@@ -123,9 +123,9 @@
     </span>
     <span data-badge-sales-single style="display: none;">
       {% if sales_badge_style == 'percent' %}
-        {{ 'product_price.badge.sale_percentage_single_html' | t: savings: savings_percentage_single | strip_newlines }}
+        ({{ 'product_price.badge.sale_percentage_single_html' | t: savings: savings_percentage_single | strip_newlines }})
       {% else %}
-        {{ 'product_price.badge.sale' | t }}
+        ({{ 'product_price.badge.sale' | t }})
       {% endif %}
     </span>
   </div>

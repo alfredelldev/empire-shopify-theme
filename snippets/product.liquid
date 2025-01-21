@@ -36,7 +36,38 @@
     This is the click to zoom setting, which is either 'disabled', 'mobile', 'desktop', or 'always'
 {% endcomment %}
 
+{{ 'component-product-tabs.css' | asset_url | stylesheet_tag }}
+
+<script src="{{ 'complimentary-products.js' | asset_url }}" defer="defer"></script>
+
+
 {% style %}
+  .trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  .trust-badge__icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .trust-badge__icon {
+    fill: #1c83c4;
+  }
+
+  .trust-badge__icon #svg207 path {
+    stroke: #1c83c4 !important;
+  }
+
+  .trust-badge__text {
+    font-size: 1rem;
+    color: #333333;
+    margin: 2px 0 0 0;
+  }
   .product-description .station-tabs-tabset {
     display: none !important;
   }
@@ -56,6 +87,27 @@
   }
   .swym-btn-container[data-position='default'] .swym-add-to-wishlist.swym-icontext:after {
     width: 30px;
+  }
+
+  .swym-btn-container[data-position=default] .swym-add-to-wishlist.swym-icontext {
+    border-radius: 25px !important;
+    color: #1d1d1f !important;
+    background-color: #fff !important;
+    border: 1px solid #1d1d1f;
+    font-weight: bold;
+    text-indent: unset;
+    height: 54.69px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .swym-btn-container .swym-add-to-wishlist.swym-custom:after {
+    display: none !important;
+  }
+  .swym-btn-container[data-position=default] .swym-add-to-wishlist.swym-icontext .swym-wishlist-cta {
+    font-size: 14px;
   }
 {% endstyle %}
 
@@ -140,8 +192,13 @@
     gallery_hover_zoom: gallery_hover_zoom
   %}
 
+  <div class="breadcrumbs-mobile">
+    {% render 'breadcrumbs' %}
+  </div>
+
   <div class="product-main">
     <div class="product-details" data-product-details>
+      <div class="badges__container product-page">{% render 'product-custom-badge', product: product %}</div>
       {% for block in section.blocks %}
         <div
           class="
@@ -154,9 +211,6 @@
           {{ block.shopify_attributes }}
         >
           {% case block.type %}
-            {% when 'complementary_products' %}
-              {% render 'complementary-products', product: product, block: block %}
-
             {% when 'title' %}
               {% if is_product_modal %}
                 <h2 class="product-title">
@@ -184,8 +238,11 @@
               {% if product.vendor != blank or onboarding %}
                 <div class="product-vendor">
                   {% unless onboarding %}
+                    {%- capture vendor_handle -%}
+                      {{ product.vendor | handle }}
+                    {%- endcapture -%}
                     {%- capture vendor_link -%}
-                      {{ product.vendor | link_to_vendor }}
+                      <a href="/collections/{{ vendor_handle }}">{{ product.vendor }}</a>
                     {%- endcapture -%}
                     {{ 'product.general.by_vendor_html' | t: vendor_link: vendor_link }}
                   {% else %}
@@ -327,23 +384,26 @@
               {% endunless %}
 
             {% when 'sku_price_stock' %}
-              <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                <div style="display: flex; flex-direction: column;">
-                  <div
+              <div>
+
+                {% render 'product-stock-levels' %}
+
+                <div>
+                  {% comment %} <div
                     class="
                       product-sku
                       {% if sku == empty %}product-sku--empty{% endif %}
                     "
                   >
                     {{ 'product.general.sku_html' | t: sku: sku | strip_newlines }}
-                  </div>
+                  </div> {% endcomment %}
                   <div
-                    class="product-pricing"
+                    class="product-pricing d-none"
                     style="margin: 0;"
                     aria-live="polite"
                     data-product-pricing
                   >
-                    {% render 'product-badge',
+                    {% comment %} {% render 'product-badge',
                       product: product,
                       class_root: 'product',
                       product_available: product_available,
@@ -355,7 +415,7 @@
                       show_saved: true,
                       include_range: false,
                       selected_variant: selected_variant
-                    %}
+                    %} {% endcomment %}
 
                     {% render 'product-price',
                       product: product,
@@ -376,7 +436,6 @@
                     <form data-payment-terms-target style="display: none;"></form>
                   </div>
                 </div>
-                {% render 'product-stock-levels' %}
               </div>
 
             {% when 'description' %}
@@ -477,6 +536,20 @@
                 selected_variant: selected_variant,
                 sku: sku
               %}
+            {% when 'trust_badges' %}
+              <div class="trust-badge">
+                {% comment %} {% if block.settings.badge_icon %}
+                  <img src="{{ block.settings.badge_icon | image_url: width: 52, height: 52 }}" alt="Trust Badge Icon" width="" height="44px" />
+                {% endif %} {% endcomment %}
+                {% if block.settings.badge_svg_icon %}
+                  <span class="trust-badge__icon">
+                    {{ block.settings.badge_svg_icon }}
+                  </span>
+                {% endif %}
+                <p class="trust-badge__text">{{ block.settings.badge_text }}</p>
+              </div>
+            {% when 'divider' %}
+              {% render 'divider' %}
           {% endcase %}
         </div>
       {% endfor %}
@@ -534,6 +607,9 @@
     {{ readmore_split[1] }}
   </div>
 {% endif %}
+
+{% render 'tabs-accordion', product: product %}
+
 
 <script>
   const inventoryCheckData = {

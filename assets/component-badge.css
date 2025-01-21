@@ -50,12 +50,21 @@
 }
 
 .badges__container {
-  height: 34px;
+  height: 55px;
   gap: 4px;
   display: inline-flex;
   flex-wrap: wrap;
 }
 
+@media screen and (min-width: 1024px) {
+  .badges__container {
+    height: 34px;
+  }
+}
+
+.badges__container.product-page {
+  height: 16px;
+}
 
 .badges__container:empty {
   display: none;

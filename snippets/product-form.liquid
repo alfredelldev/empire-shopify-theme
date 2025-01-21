@@ -5,7 +5,99 @@
 
   @param show_dynamic_checkout_button {Boolean}
     If true, show dynamic checkout button
+    {% render 'icon-library', id: 'icon-cart' %}
 {% endcomment %}
+
+{% style %}
+  .product-form--atc-button .atc-button--text::before {
+    content: '';
+    display: inline-block;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2224%22%20height%3D%2220%22%20viewBox%3D%220%200%2019%2017%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.10938%201L1.8209%201.1423C2.6829%201.3147%203.33127%202.02975%203.41874%202.90446L3.531%204.02703M3.531%204.02703L4.35743%2010.914C4.47805%2011.9192%205.33078%2012.6757%206.34318%2012.6757H13.5118C15.1178%2012.6757%2016.5178%2011.5826%2016.9073%2010.0246L17.6922%206.88486C18.0551%205.43322%2016.9572%204.02703%2015.4609%204.02703H3.531Z%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10.623%2010.0811H7.16357%22%20stroke%3D%22%23FFFFFF%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%226.73089%22%20cy%3D%2215.7026%22%20r%3D%221.2973%22%20fill%3D%22%23FFFFFF%22%2F%3E%3Ccircle%20cx%3D%2214.5146%22%20cy%3D%2215.7026%22%20r%3D%221.2973%22%20fill%3D%22%23FFFFFF%22%2F%3E%3C%2Fsvg%3E');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 24px;
+    height: 20px;
+    margin-right: 8px;
+    margin-bottom: 2px;
+    position: relative;
+    top: 50%;
+  }
+
+  .product-add-to-project span.swym-wishlist-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-add-to-project span.swym-wishlist-cta::before {
+    content: '';
+    display: inline-block;
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20viewBox%3D%220%200%2023%2018%22%20fill%3D%22none%22%20class%3D%22icon%20icon-project%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1.19995%207.93841C1.19995%206.71422%201.76053%205.55744%202.72137%204.79888L6.32137%201.95677C7.77461%200.809479%209.82529%200.80948%2011.2785%201.95677L14.8785%204.79888C15.8394%205.55744%2016.4%206.71422%2016.4%207.93841V12C16.4%2014.2091%2014.6091%2016%2012.4%2016H12.2C11.6477%2016%2011.2%2015.5523%2011.2%2015V13.2C11.2%2012.0954%2010.3045%2011.2%209.19995%2011.2H8.39995C7.29538%2011.2%206.39995%2012.0954%206.39995%2013.2V15C6.39995%2015.5523%205.95224%2016%205.39995%2016H5.19995C2.99081%2016%201.19995%2014.2091%201.19995%2012L1.19995%207.93841Z%22%20stroke%3D%22%231D1D1F%22%20stroke-width%3D%221.5%22%2F%3E%3Ccircle%20cx%3D%225%22%20cy%3D%225%22%20r%3D%225%22%20transform%3D%22matrix%28-1%200%200%201%2022.1091%208%29%22%20fill%3D%22white%22%2F%3E%3Cpath%20d%3D%22M14.0935%2013L20.0935%2013%22%20stroke%3D%22%231D1D1F%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M17.0935%2010V16%22%20stroke%3D%22%231D1D1F%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 25.55px;
+    height: 20px;
+    margin-right: 6px;
+    margin-bottom: 2px;
+    position: relative;
+    top: 50%;
+  }
+
+  .swym-btn-container[data-position=default] .swym-add-to-wishlist.swym-icontext:hover {
+    background-color: #f4f4f4 !important;
+  }
+
+  .product-form__action-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .checkout-btn-container {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .checkout-btn-container .swym-wishlist-button-bar {
+    width: 50%;
+  }
+
+  .checkout-btn-container .shopify-payment-button {
+    width: 50%;
+  }
+
+  @media screen and (min-width: 768px) {
+    .checkout-btn-container {
+      width: 100%;
+      gap: 15px;
+    }
+
+    .checkout-btn-container .swym-wishlist-button-bar {
+      width: 50%;
+    }
+
+    .checkout-btn-container .shopify-payment-button {
+      width: 50%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .checkout-btn-container {
+      width: 100%;
+      gap: 15px;
+    }
+
+    .checkout-btn-container .swym-wishlist-button-bar {
+      width: 194px;
+    }
+
+    .checkout-btn-container .shopify-payment-button {
+      width: auto;
+      flex-grow: 1;
+    }
+  }
+{% endstyle %}
 
 {% if is_product_modal and show_dynamic_checkout_button %}
   {% assign quickshop_smart_buttons = true %}
@@ -103,13 +195,13 @@
   {% comment %}Inject @pixelunion/shopify-variants-ui/variant-selection begin{% endcomment %}
   {% comment %}
     Display variant options for a product
-  
+
     @param product
     @param selected_variant
     @param variant_selection_id
     @param sold_out_options
     @param style
-  
+
     @param enable_swatches
     @param swatches_shape
     @param swatches_option_trigger
@@ -117,9 +209,11 @@
     @param swatches_product_page_size
     @param swatches_custom_colors
   {% endcomment %}
-  
+
   <variant-selection
-    {% if variant_selection_id != blank %}id="{{ variant_selection_id }}"{% endif %}
+    {% if variant_selection_id != blank %}
+      id="{{ variant_selection_id }}"
+    {% endif %}
     class="variant-selection"
     product-url="{{ product.url }}.js"
     variant="{% if selected_variant %}{{ selected_variant.id }}{% else %}not-selected{% endif %}"
@@ -150,31 +244,37 @@
         <option
           value="not-selected"
           disabled
-          {% if selected_variant == blank %}selected{% endif %}
+          {% if selected_variant == blank %}
+            selected
+          {% endif %}
         >
           {{ 'product.variants.choose_variant' | t }}
         </option>
         {% for variant in product.variants %}
           <option
-            {% if selected_variant and selected_variant.id == variant.id %}selected{% endif %}
+            {% if selected_variant and selected_variant.id == variant.id %}
+              selected
+            {% endif %}
             value="{{ variant.id }}"
-            {% unless variant.available %}disabled{% endunless %}
+            {% unless variant.available %}
+              disabled
+            {% endunless %}
           >
             {{ variant.title }} - {{ variant.price | money }}
           </option>
         {% endfor %}
       </select>
-  
+
       {% comment %}Inject @pixelunion/shopify-variants-ui/options-selection begin{% endcomment %}
       {% comment %}
         Display variant options for a product
-      
+
         @param product
         @param selected_variant
         @param variant_selection_id
         @param sold_out_options
         @param style
-      
+
         @param enable_swatches
         @param swatches_shape
         @param swatches_option_trigger
@@ -183,47 +283,51 @@
         @param swatches_custom_colors
         @param swatch_file_type
       {% endcomment %}
-      
+
       <options-selection
-        {% if variant_selection_id != blank %}variant-selection="{{ variant_selection_id }}"{% endif %}
+        {% if variant_selection_id != blank %}
+          variant-selection="{{ variant_selection_id }}"
+        {% endif %}
         style="display: none;"
-        {% if sold_out_options == 'disabled' %}disable-unavailable{% endif %}
-        {% if sold_out_options == 'hidden' %}remove-unavailable{% endif %}
+        {% if sold_out_options == 'disabled' %}
+          disable-unavailable
+        {% endif %}
+        {% if sold_out_options == 'hidden' %}
+          remove-unavailable
+        {% endif %}
         data-options-selection
       >
         <script>
-          (function() {
+          (function () {
             const scriptTag = document.scripts[document.scripts.length - 1];
             const parentTag = scriptTag.parentNode;
-      
+
             parentTag.style.display = '';
-          })()
+          })();
         </script>
-      
+
         {% for option in product.options_with_values %}
           {% assign option_index = forloop.index0 %}
           {% assign show_swatches = false %}
           {% if enable_swatches %}
             {%- assign swatches_option_trigger = swatches_option_trigger | strip | downcase -%}
             {%- assign option_name = option.name | strip | downcase -%}
-      
+
             {% if option_name == swatches_option_trigger %}
               {% assign show_swatches = true %}
               {% assign swatch_option_key = 'option' | append: forloop.index %}
             {% endif %}
           {% endif %}
-      
+
           {% if style == 'select' and show_swatches == false %}
-            {%
-              render 'options-select',
+            {% render 'options-select',
               product: product,
               selected_variant: selected_variant,
               option: option,
               option_index: option_index
             %}
           {% elsif style == 'radio' or show_swatches == true %}
-            {%
-              render 'options-radios',
+            {% render 'options-radios',
               product: product,
               selected_variant: selected_variant,
               option: option,
@@ -234,54 +338,52 @@
               swatches_option_style: swatches_option_style,
               swatch_file_type: swatch_file_type,
               swatches_custom_colors: swatches_custom_colors,
-              swatches_shape: swatches_shape,
+              swatches_shape: swatches_shape
             %}
           {% endif %}
         {% endfor %}
       </options-selection>
       {% comment %}Inject @pixelunion/shopify-variants-ui/options-selection end{% endcomment %}
-  
     {% endif %}
   </variant-selection>
   {% comment %}Inject @pixelunion/shopify-variants-ui/variant-selection end{% endcomment %}
-
 
   {% comment %}Inject @pixelunion/pxs-gift-card-recipient-form/recipient-form begin{% endcomment %}
   {% comment %}
     @param form {Object}
       The form object
-  
+
     @param section {Object}
       The section object
-  
+
     @param show_recipient_form {Boolean}
       If true, show the gift card recipient form
-  
+
     @param show_recipient_form_placeholders {Boolean}
       If true, show recipient form placeholder attributes
-  
+
     @param show_recipient_form_labels {Boolean}
       If true, show recipient form input labels
-  
+
     @param show_recipient_form_max_characters_message {Boolean}
       If true, show the recipient form max characters message
-  
+
     @param recipient_form_textarea_rows {Number}
       A numerical value to specify the number of textarea rows
-  
+
     @param recipient_form_textarea_classes {String}
       A space separated list of class names added to recipient form textarea
-  
+
     @param recipient_form_input_classes {String}
       A space separated list of class names added to recipient form inputs
-  
+
     @param recipient_form_label_classes {String}
       A space separated list of class names added to recipient form labels
-  
+
     @param recipient_form_label_position {String}
       The recipient form input label position, either 'top', or 'bottom'
   {% endcomment %}
-  
+
   {% liquid
     assign show_recipient_form_placeholders = show_recipient_form_placeholders | default: false
     assign show_recipient_form_labels = show_recipient_form_labels | default: true, allow_false: true
@@ -289,7 +391,7 @@
     assign recipient_form_textarea_rows = recipient_form_textarea_rows | default: 5
     assign recipient_form_label_position = recipient_form_label_position | default: 'top'
   %}
-  
+
   {%- if show_recipient_form and product.gift_card? -%}
     <details class="recipient-disclosure" data-recipient-disclosure>
       <summary class="recipient-disclosure__summary">
@@ -305,15 +407,15 @@
             tabindex="-1"
             data-recipient-disclosure-checkbox
           >
-  
+
           {%- render 'recipient-form-disclosure-icon' -%}
-  
+
           <span class="recipient-disclosure__checkbox-label-text">
             {{- 'recipient.form.checkbox_label' | t -}}
           </span>
         </label>
       </summary>
-  
+
       <div class="recipient-form" data-recipient-form>
         <div class="recipient-form__field">
           {%- if show_recipient_form_labels -%}
@@ -330,7 +432,7 @@
               </label>
             {%- endcapture -%}
           {%- endif -%}
-  
+
           {%- capture recipient_email_input -%}
             <input
               class="
@@ -352,13 +454,13 @@
               data-recipient-form-email-input
             >
           {%- endcapture -%}
-  
+
           {%- capture recipient_error_message -%}
             <span class="recipient-form__error-message" data-recipient-form-error-message>
               {{- 'recipient.form.error_message' | t -}}
             </span>
           {%- endcapture -%}
-  
+
           {%- if recipient_form_label_position == 'top' -%}
             <div class="recipient-form__input-wrapper">
               {{- recipient_email_label -}}
@@ -373,7 +475,7 @@
             {{- recipient_error_message -}}
           {%- endif -%}
         </div>
-  
+
         <div class="recipient-form__field">
           <div class="recipient-form__input-wrapper">
             {%- if show_recipient_form_labels -%}
@@ -389,7 +491,7 @@
                 </label>
               {%- endcapture -%}
             {%- endif -%}
-  
+
             {%- capture recipient_name_input -%}
               <input
                 class="
@@ -410,7 +512,7 @@
                 data-recipient-form-input
               >
             {%- endcapture -%}
-  
+
             {%- if recipient_form_label_position == 'top' -%}
               {{ recipient_name_label }}
               {{ recipient_name_input }}
@@ -420,17 +522,17 @@
             {%- endif -%}
           </div>
         </div>
-  
+
         <div class="recipient-form__field">
           <div class="recipient-form__input-wrapper">
             {%- liquid
               assign max_characters_length = 200
-  
+
               if show_recipient_form_max_characters_message
                 assign max_characters_message = 'recipient.form.max_characters' | t: max_characters: max_characters_length
               endif
             -%}
-  
+
             {%- if show_recipient_form_labels -%}
               {%- capture recipient_message_label -%}
                 <label
@@ -444,7 +546,7 @@
                 </label>
               {%- endcapture -%}
             {%- endif -%}
-  
+
             {%- capture recipient_message_input -%}
               <textarea
                 class="
@@ -470,7 +572,7 @@
                 {{- form.message -}}
               </textarea>
             {%- endcapture -%}
-  
+
             {%- if recipient_form_label_position == 'top' -%}
               {{ recipient_message_label }}
               {{ recipient_message_input }}
@@ -479,7 +581,7 @@
               {{ recipient_message_label }}
             {%- endif -%}
           </div>
-  
+
           {%- if show_recipient_form_max_characters_message -%}
             <span class="recipient-form__max-characters-message">
               <small>
@@ -493,13 +595,9 @@
   {%- endif -%}
   {% comment %}Inject @pixelunion/pxs-gift-card-recipient-form/recipient-form end{% endcomment %}
 
-
   <div class="product-form--atc">
     <div class="product-form__action-wrapper">
-      {%
-        render 'quantity-selector',
-        context: 'product',
-      %}
+      {% render 'quantity-selector', context: 'product' %}
 
       <button
         class="
@@ -517,9 +615,9 @@
           data-product-atc-preorder
         {% endif %}
       >
-        <span class="atc-button--text">
+        <span class="atc-button--text align-items-center justify-content-center">
           {% unless selected_variant and selected_variant.available == false %}
-          {% if product.template_suffix contains 'pre-order' %}
+            {% if product.template_suffix contains 'pre-order' %}
               {{ 'product.buttons.pre_order' | t }}
             {% else %}
               {{ 'product.buttons.add_to_cart' | t }}
@@ -533,9 +631,15 @@
         </span>
       </button>
 
-      {% if show_dynamic_checkout_button %}
-        {{ form | payment_button }}
-      {% endif %}
+      <div class="checkout-btn-container d-flex w-100">
+        <!-- Swym button on product pages -->
+        <div class="swym-wishlist-button-bar product-add-to-project"></div>
+        <!-- Swym button on product pages -->
+
+        {% if show_dynamic_checkout_button %}
+          {{ form | payment_button }}
+        {% endif %}
+      </div>
     </div>
   </div>
 
