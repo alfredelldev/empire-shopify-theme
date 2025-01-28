@@ -24,10 +24,6 @@
           "type": "sku",
           "settings": {}
         },
-        "divider_kq3TMN": {
-          "type": "divider",
-          "settings": {}
-        },
         "sku_price_stock_KY4JQc": {
           "type": "sku_price_stock",
           "settings": {}
@@ -88,7 +84,6 @@
         "title",
         "vendor",
         "sku_TKyE7g",
-        "divider_kq3TMN",
         "sku_price_stock_KY4JQc",
         "price_KMnUhN",
         "description",
