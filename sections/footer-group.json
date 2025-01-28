@@ -34,19 +34,28 @@
             "heading": "Shop",
             "menu": "footer-shop"
           }
+        },
+        "link_list_Ejfm8j": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer-quick-links"
+          }
         }
       },
       "block_order": [
         "1532b7a6-9130-4dfe-a9be-18759eefccdf",
         "794715bc-ab55-421f-b021-79e3d170b44e",
-        "link_list_f9VQd8"
+        "link_list_f9VQd8",
+        "link_list_Ejfm8j"
       ],
       "settings": {
         "show_follow_on_shop": false,
         "payment_icons": true,
-        "show_locale_selector": true,
-        "show_currency_selector": true,
-        "additional_menu": "footer"
+        "show_locale_selector": false,
+        "show_currency_selector": false,
+        "additional_menu": "footer-copyright-links",
+        "newsletter_img": "shopify://shop_images/newsletterbg.png"
       }
     }
   },
