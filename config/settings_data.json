@@ -68,7 +68,7 @@
     "swatches_option_style": "color_swatch",
     "swatches_custom_colors": "",
     "product_show_vendor": true,
-    "product_ratings_star_display": true,
+    "product_ratings_star_display": false,
     "product_grid_emphasize_price": true,
     "product_grid_show_atc_button": true,
     "product_grid_show_atc": "always",
