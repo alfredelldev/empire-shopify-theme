@@ -32649,7 +32649,7 @@ class ProductDetails {
 
     const hasComparePrice = !!variant.compare_at_price && variant.compare_at_price > variant.price;
     this.variantFields.$compareAtPrice.toggleClass('visible', hasComparePrice);
-    // this.variantFields.$compareAtPriceMoney.text(Shopify.formatMoney(variant.compare_at_price, this.settings.money_format)); // Update price
+    this.variantFields.$compareAtPriceMoney.text(Shopify.formatMoney(variant.compare_at_price, this.settings.money_format)); // Update price
 
     this.variantFields.$priceMoney.text(Shopify.formatMoney(variant.price, this.settings.money_format));
   }
