@@ -39,7 +39,9 @@
   }
 </script>
 
-{% render 'breadcrumbs' %}
+<div class="breadcrumbs-desktop">
+  {% render 'breadcrumbs' %}
+</div>
 
 <section
   class="
@@ -187,6 +189,38 @@
   "blocks": [
     {
       "type": "@app"
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust Badges",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "badge_icon",
+          "label": "Badge Icon"
+        },
+        {
+          "type": "textarea",
+          "id": "badge_svg_icon",
+          "label": "Badge Icon (SVG)",
+          "default": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'><path d='M12 2L15 8H9L12 2ZM12 22C6.48 22 2 17.52 2 12H4C4 16.41 7.59 20 12 20C16.41 20 20 16.41 20 12H22C22 17.52 17.52 22 12 22ZM12 12C10.34 12 9 10.66 9 9C9 7.34 10.34 6 12 6C13.66 6 15 7.34 15 9C15 10.66 13.66 12 12 12Z' fill='blue'/></svg>"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text",
+          "default": "Industry experts delivering trusted solutions and product information you can count on."
+        },
+        {
+          "type": "text",
+          "id": "badge_class",
+          "label": "Badge Class"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
     },
     {
       "type": "simple_configurator",

@@ -1,12 +1,3 @@
-{% liquid
-  assign heading = block.settings.heading
-  assign products_per_slide = block.settings.products_per_slide
-
-  if settings.product_grid_emphasize_price
-    assign wrapper_class = 'complementary-products--emphasized'
-  endif
-%}
-
 {% comment %}Inject @pixelunion/pxs-complementary-products/complementary-product-block begin{% endcomment %}
 {% comment %}
   @param block {Object}
@@ -19,14 +10,35 @@
 {% endcomment %}
 
 {% liquid
-  assign products_per_slide = products_per_slide | default: 2
+  if settings.product_grid_emphasize_price
+    assign wrapper_class = 'complementary-products--emphasized'
+  endif
+
   assign format_currency = format_currency | default: false
   assign wrap_heading = wrap_heading | default: false
   assign crop_thumbnails = crop_thumbnails | default: false
+  assign product_limit = 10
 %}
+
+<script
+  type="application/json"
+  data-section-type="static-product-complementary"
+  data-section-id="{{ section.id }}__complementary"
+  data-section-data
+>
+  {
+  "settings": {
+    "limit": {{ product_limit }}
+  },
+    "productId": {{ product.id | json }},
+    "sectionId": {{ section.id | json }}
+  }
+</script>
 
 <div
   class="
+    tab-content
+    addons-container
     complementary-products
     {{ wrapper_class }}
   "
@@ -34,72 +46,25 @@
   data-complementary-products
   data-html
 >
-{% if recommendations.performed and recommendations.products_count > 0 %}
-    {% assign slider = false %}
-
-    {% if recommendations.products_count > products_per_slide %}
-      {% assign slider = true %}
-    {% endif %}
-
-    {% if heading != blank %}
-      {%- if wrap_heading -%}
-        <div class="complementary-products__title-wrapper">
-      {%- endif -%}
-      <h3 class="complementary-products__title">
-        {{ heading | escape }}
-      </h3>
-      {%- if wrap_heading -%}
-        </div>
-      {%- endif -%}
-    {% endif %}
-
-    <div
-        class="
-          complementary-products__container
-          {% if slider %}
-            complementary-products__container--slider
-          {% else %}
-            complementary-products__container--grid
-          {% endif %}
-        "
-      data-slider-wrapper
-    >
-      <div
-        class="complementary-products__slider"
-        data-slider
+  {% if recommendations.performed and recommendations.products_count > 0 %}
+    <div class="addons-wrapper">
+      <ul
+        class="product-section--content product-row"
+        data-product-row
       >
-      {% for product in recommendations.products %}
-          {% assign slide_index_remainder = forloop.index | modulo: products_per_slide %}
-          {% if slide_index_remainder == 1 or products_per_slide == 1 %}
-            <div
-              class="
-                {% if slider %}
-                  complementary-products__slide
-                {% else %}
-                  complementary-products__grid
-                {% endif %}
-              "
-              {% if slider %}
-                data-slide
-              {% endif %}
-            >
-          {% endif %}
-
-          <div data-slide-item>
-            {%
-              render 'complementary-product',
-              product: product,
-              format_currency: format_currency,
-              crop_thumbnails: crop_thumbnails,
-            %}
-          </div>
-
-          {% if forloop.last or slide_index_remainder == 0 or products_per_slide == 1 %}
-            </div>
-          {% endif %}
+        {% for product in recommendations.products %}
+          {% render 'product-grid-item', product: product %}
         {% endfor %}
-      </div>
+      </ul>
     </div>
+
+    <style>
+      .complimentary-header {
+        display: flex !important;
+      }
+    </style>
   {% endif %}
+
+  {% render 'quick-shop' %}
 </div>
 {% comment %}Inject @pixelunion/pxs-complementary-products/complementary-product-block end{% endcomment %}

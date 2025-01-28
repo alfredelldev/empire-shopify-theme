@@ -1,0 +1,23 @@
+.station-tabs .station-tabs-tabcontent {
+    background-color: #fff !important;
+}
+
+.station-tabs-tabset .station-tabs-tabtitle {
+    margin-right: 12px !important;
+}
+
+.station-tabs-tabset .station-tabs-tab,
+.station-tabs-tabset .station-tabs-tab:hover {
+    background-color: #fff !important;
+    color: #1d1d1f !important;
+    border-radius: 25px !important;
+    border: 1px solid #1d1d1f !important;
+    margin-right: 12px;
+}
+
+.station-tabs .station-tabs-tab.is-active,
+.station-tabs .station-tabs-tab.is-active:hover {
+    background-color: #1d1d1f !important;
+    color: #fff !important;
+    border-radius: 25px !important;
+}

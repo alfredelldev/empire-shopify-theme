@@ -64,38 +64,6 @@
       data-site-header-mobile-search-button
     {% endif %}
   >
-    <button class="site-header-menu-toggle" data-menu-toggle>
-      <div class="site-header-menu-toggle--button" tabindex="-1">
-        <span class="toggle-icon--bar toggle-icon--bar-top"></span>
-        <span class="toggle-icon--bar toggle-icon--bar-middle"></span>
-        <span class="toggle-icon--bar toggle-icon--bar-bottom"></span>
-        <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
-      </div>
-    </button>
-
-    {% unless section.settings.show_mobile_search_bar %}
-      {% capture search_button %}
-        <div class="site-header-mobile-search-button--button" tabindex="-1">
-          {% render 'icon-search' %}
-        </div>
-      {% endcapture %}
-      {% if section.settings.enable_live_search %}
-        <button
-          class="site-header-mobile-search-button"
-          data-mobile-search-button
-        >
-          {{ search_button }}
-        </button>
-      {% else %}
-        <a
-          class="site-header-mobile-search-button"
-          href="{{ routes.search_url }}"
-        >
-          {{ search_button }}
-        </a>
-      {% endif %}
-    {% endunless %}
-
     <div
       class="
         site-header-main-content
@@ -219,6 +187,38 @@
           <span class="visually-hidden">{{ 'general.accessibility.cart' | t }}</span>
         </a>
       </div>
+
+      <button class="site-header-menu-toggle" data-menu-toggle>
+        <div class="site-header-menu-toggle--button" tabindex="-1">
+          <span class="toggle-icon--bar toggle-icon--bar-top"></span>
+          <span class="toggle-icon--bar toggle-icon--bar-middle"></span>
+          <span class="toggle-icon--bar toggle-icon--bar-bottom"></span>
+          <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+        </div>
+      </button>
+
+      {% unless section.settings.show_mobile_search_bar %}
+        {% capture search_button %}
+          <div class="site-header-mobile-search-button--button" tabindex="-1">
+            {% render 'icon-search' %}
+          </div>
+        {% endcapture %}
+        {% if section.settings.enable_live_search %}
+          <button
+            class="site-header-mobile-search-button"
+            data-mobile-search-button
+          >
+            {{ search_button }}
+          </button>
+        {% else %}
+          <a
+            class="site-header-mobile-search-button"
+            href="{{ routes.search_url }}"
+          >
+            {{ search_button }}
+          </a>
+        {% endif %}
+      {% endunless %}
     </div>
   </div>
 

@@ -1,0 +1,18 @@
+{% comment %}
+  @param product {Product}
+
+  @param product_available {Boolean}
+
+  @param on_sale {Boolean}
+    If a product, or one of it's variants is on sale
+{% endcomment %}
+
+{% assign badge_tags = 'Badge_Australian Made,Badge_Express Ship,Badge_Clearance' | split: ',' %}
+
+{% for tag in product.tags %}
+  {% if badge_tags contains tag %}
+    <div class="productitem__badge productitem__{{ tag | handleize }}">
+      <span class="badge">{{ tag | remove: 'Badge_' }}</span>
+    </div>
+  {% endif %}
+{% endfor %}

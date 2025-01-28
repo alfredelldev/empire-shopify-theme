@@ -746,14 +746,7 @@
         }
       }
     },
-    "custom_html": {
-      "name": "Custom HTML",
-      "title": { "label": "Heading" },
-      "custom_html": { "label": "HTML" },
-      "presets": {
-        "custom_html": { "name": "Custom HTML", "category": "Advanced" }
-      }
-    },
+    "custom_html": "",
     "image_with_text": {
       "name": "Image with Text",
       "section_heading": { "label": "Section Heading" },

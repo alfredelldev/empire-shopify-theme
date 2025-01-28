@@ -63,12 +63,13 @@
 
     <meta name="viewport" content="width=device-width">
 
-    <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous">
-    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
+    {% comment %} <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
 
     {{ content_for_header }}
 
-    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'styles.css' | asset_url | stylesheet_tag }}
 
     {% comment %}Inject theme-object begin{% endcomment %}
     <script>
@@ -409,9 +410,8 @@
       data-shopify-api-url="{{ 'api.jquery.js' | shopify_asset_url }}"
       data-shopify-countries="/services/javascripts/countries.js"
       data-shopify-common="{{ 'shopify_common.js' | shopify_asset_url }}"
-      data-shopify-cart="{{ 'jquery.cart.js' | asset_url }}"
       data-pxu-polyfills="{{ 'polyfills.min.js' | asset_url }}"
-    >
+     defer>
     </script>
 
     <script>
