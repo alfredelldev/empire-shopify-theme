@@ -32,10 +32,6 @@
           "type": "price",
           "settings": {}
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
         "form": {
           "type": "form",
           "settings": {
@@ -74,6 +70,10 @@
             "badge_class": ""
           }
         },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
         "share": {
           "type": "share",
           "disabled": true,
@@ -86,12 +86,12 @@
         "sku_TKyE7g",
         "sku_price_stock_KY4JQc",
         "price_KMnUhN",
-        "description",
         "form",
         "divider_c6pHrP",
         "trust_badges_hMz6rb",
         "trust_badges_eXQCRi",
         "trust_badges_xp3HQJ",
+        "description",
         "share"
       ],
       "settings": {
