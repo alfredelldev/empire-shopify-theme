@@ -1,1 +1,162 @@
-{"sections":{"main":{"type":"static-product","blocks":{"title":{"type":"title","settings":{}},"vendor":{"type":"vendor","settings":{}},"89939ce7-a3a6-450c-8568-cbbbc2394485":{"type":"sku","settings":{}},"price":{"type":"price","settings":{}},"5e6ce68e-58f8-4a44-8202-877b404dfc9b":{"type":"stock_level","settings":{"colour_stock_low":"#ff0000"}},"basic_configurator_xLMEGa":{"type":"basic_configurator","settings":{}},"description":{"type":"description","settings":{}},"form":{"type":"form","disabled":true,"settings":{"enable_local_pickup":true,"show_gift_card_recipient_form":false}},"share":{"type":"share","disabled":true,"settings":{}}},"block_order":["title","vendor","89939ce7-a3a6-450c-8568-cbbbc2394485","price","5e6ce68e-58f8-4a44-8202-877b404dfc9b","basic_configurator_xLMEGa","description","form","share"],"settings":{"gallery_aspect_ratio":"natural","gallery_image_crop":false,"gallery_thumbnail_position":"below","gallery_video_autoplay":true,"gallery_video_looping":true,"gallery_hover_zoom":"disabled","gallery_click_to_zoom":"always"}},"1694063103f42b80e8":{"type":"apps","blocks":{"bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9":{"type":"shopify:\/\/apps\/tabs-studio\/blocks\/product_tabs_block\/19980fb9-f2ca-4ada-ad36-c0364c3318b8","settings":{"start_tab_element":"h5","default_tab":"none","default_tab_title":"Description","pro_tabs":false,"layout":"breakpoint","layout_breakpoint":750,"open_first_tab":true,"allow_multiple_open":false,"initialize_tabs":"immediate","custom_scripts":""}}},"block_order":["bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"],"settings":{"include_padding":true}},"recommendations":{"type":"static-product-recommendations","settings":{"show_product_recommendations":true,"product_recommendations_heading":"You may also like"}},"recently-viewed":{"type":"static-recently-viewed","settings":{"enable_recently_viewed_products":true}}},"order":["main","1694063103f42b80e8","recommendations","recently-viewed"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "static-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "89939ce7-a3a6-450c-8568-cbbbc2394485": {
+          "type": "sku",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "5e6ce68e-58f8-4a44-8202-877b404dfc9b": {
+          "type": "stock_level",
+          "settings": {
+            "colour_stock_low": "#ff0000"
+          }
+        },
+        "basic_configurator_xLMEGa": {
+          "type": "basic_configurator",
+          "settings": {}
+        },
+        "divider_zgfzMd": {
+          "type": "divider",
+          "settings": {}
+        },
+        "trust_badges_PTXwXm": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Industry_Expert_1.png",
+            "badge_svg_icon": "",
+            "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
+            "badge_class": "expert"
+          }
+        },
+        "trust_badges_mxErzR": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Best_Service3.png",
+            "badge_svg_icon": "",
+            "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
+            "badge_class": ""
+          }
+        },
+        "trust_badges_TaNm8c": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Australian_Owned.png",
+            "badge_svg_icon": "",
+            "badge_text": "Support local - buy from a proudly Australian-owned and operated business.",
+            "badge_class": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "disabled": true,
+          "settings": {
+            "enable_local_pickup": true,
+            "show_gift_card_recipient_form": false
+          }
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "vendor",
+        "89939ce7-a3a6-450c-8568-cbbbc2394485",
+        "price",
+        "5e6ce68e-58f8-4a44-8202-877b404dfc9b",
+        "basic_configurator_xLMEGa",
+        "divider_zgfzMd",
+        "trust_badges_PTXwXm",
+        "trust_badges_mxErzR",
+        "trust_badges_TaNm8c",
+        "description",
+        "form",
+        "share"
+      ],
+      "settings": {
+        "gallery_aspect_ratio": "natural",
+        "gallery_image_crop": false,
+        "gallery_thumbnail_position": "below",
+        "gallery_video_autoplay": true,
+        "gallery_video_looping": true,
+        "gallery_hover_zoom": "disabled",
+        "gallery_click_to_zoom": "always"
+      }
+    },
+    "1694063103f42b80e8": {
+      "type": "apps",
+      "blocks": {
+        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
+          "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
+          "disabled": true,
+          "settings": {
+            "start_tab_element": "h5",
+            "default_tab": "none",
+            "default_tab_title": "Description",
+            "pro_tabs": false,
+            "layout": "breakpoint",
+            "layout_breakpoint": 750,
+            "open_first_tab": true,
+            "allow_multiple_open": false,
+            "initialize_tabs": "immediate",
+            "custom_scripts": ""
+          }
+        }
+      },
+      "block_order": [
+        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"
+      ],
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "recommendations": {
+      "type": "static-product-recommendations",
+      "settings": {
+        "show_product_recommendations": true,
+        "product_recommendations_heading": "You may also like"
+      }
+    },
+    "recently-viewed": {
+      "type": "static-recently-viewed",
+      "settings": {
+        "enable_recently_viewed_products": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1694063103f42b80e8",
+    "recommendations",
+    "recently-viewed"
+  ]
+}
