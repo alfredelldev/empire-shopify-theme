@@ -68,6 +68,15 @@
     color: #333333;
     margin: 2px 0 0 0;
   }
+
+  .trust-badge.expert img {
+    margin-left: 6px;
+  }
+
+  .trust-badge.expert .trust-badge__text {
+    margin-left: -6px;
+  }
+
   .product-description .station-tabs-tabset {
     display: none !important;
   }
@@ -537,15 +546,15 @@
                 sku: sku
               %}
             {% when 'trust_badges' %}
-              <div class="trust-badge">
-                {% comment %} {% if block.settings.badge_icon %}
-                  <img src="{{ block.settings.badge_icon | image_url: width: 52, height: 52 }}" alt="Trust Badge Icon" width="" height="44px" />
-                {% endif %} {% endcomment %}
-                {% if block.settings.badge_svg_icon %}
+              <div class="trust-badge{% if block.settings.badge_class %} {{ block.settings.badge_class }}{% endif %}">
+                {% if block.settings.badge_icon %}
+                  <img src="{{ block.settings.badge_icon | image_url: width: 52, height: 52 }}" alt="Trust Badge Icon" width="44px" height="44px" />
+                {% endif %}
+                {% comment %} {% if block.settings.badge_svg_icon %}
                   <span class="trust-badge__icon">
                     {{ block.settings.badge_svg_icon }}
                   </span>
-                {% endif %}
+                {% endif %} {% endcomment %}
                 <p class="trust-badge__text">{{ block.settings.badge_text }}</p>
               </div>
             {% when 'divider' %}

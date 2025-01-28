@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabHeaders = document.querySelector(".tab-headers");
   const tabContentContainer = document.querySelector(".tab-content-container");
   const addonsContainer = document.querySelector(".addons-container");
+  const elementToCopy = document.querySelector('.icon-caret-container .icon-caret');
   const noRecommendationsClass = "complementary-products--no-recommendations";
 
   if (description) {
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (index === 0) tabHeader.classList.add("active");
       tabHeader.textContent = heading.textContent;
       tabHeader.setAttribute("data-tab", tabId);
-      tabHeaders.appendChild(tabHeader);
+      tabContentContainer.appendChild(tabHeader);
 
       // Create the tab content
       const tabContent = document.createElement("div");
@@ -50,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     //   addonsTabHeader.classList.add("d-none");
       addonsTabHeader.textContent = "Optional Additions";
       addonsTabHeader.setAttribute("data-tab", "addons");
-      tabHeaders.appendChild(addonsTabHeader);
+      tabContentContainer.appendChild(addonsTabHeader);
 
       addonsContainer.classList.add("tab-content");
       addonsContainer.id = "addons"; // Ensure ID matches tab
@@ -58,6 +59,31 @@ document.addEventListener("DOMContentLoaded", () => {
         addonsTabHeader.classList.add("active");
         addonsContainer.classList.add("active");
       }
+
+      tabContentContainer.appendChild(addonsContainer);
+    }
+
+    const shortDescription = document.querySelector('.product-block--description');
+    const tabsContainer = document.querySelector('.tabs-container');
+    const productTitle = document.querySelector('.product-title');
+
+    if (shortDescription && tabsContainer && productTitle) {
+      const newDiv = document.createElement('div');
+      newDiv.classList.add('new-description-wrapper');
+
+      // Copy the product title and create an h3
+      const productTitleCopy = document.createElement('h5');
+      productTitleCopy.classList.add('product-title-copied'); // Optional: Add a new class for styling
+      productTitleCopy.textContent = productTitle.textContent.trim(); // Copy text content
+
+      // Add the copied product title to the new div
+      newDiv.appendChild(productTitleCopy);
+
+      // Append the description into the new div
+      newDiv.appendChild(shortDescription);
+
+      // Insert the new div above the tabs-container
+      tabsContainer.parentNode.insertBefore(newDiv, tabsContainer);
     }
 
     // Add tab functionality
@@ -65,6 +91,38 @@ document.addEventListener("DOMContentLoaded", () => {
     const contents = document.querySelectorAll(".tab-content");
 
     tabs.forEach((tab) => {
+      const clonedElement = elementToCopy.cloneNode(true); // Clone the element (deep clone)
+      clonedElement.classList.remove('d-none');
+      tab.appendChild(clonedElement); // Append the cloned element to the tab header
+
+      // tab.addEventListener("click", () => {
+      //   const target = tab.getAttribute("data-tab");
+
+      //   if (window.screen.width <= 1024) {
+      //     // Tablet and below: Toggle active class on tab and content
+      //     tab.classList.toggle("active");
+
+      //     contents.forEach((content) => {
+      //       if (content.id === target) {
+      //         content.classList.toggle("active");
+      //       }
+      //     });
+      //   } else {
+      //     // Update active tab header
+      //     tabs.forEach((t) => t.classList.remove("active"));
+      //     tab.classList.add("active");
+
+      //     // Update active tab content
+      //     contents.forEach((content) => {
+      //       if (content.id === target) {
+      //         content.classList.add("active");
+      //       } else {
+      //         content.classList.remove("active");
+      //       }
+      //     });
+      //   }
+      // });
+
       tab.addEventListener("click", () => {
         const target = tab.getAttribute("data-tab");
 

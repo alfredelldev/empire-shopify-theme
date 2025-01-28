@@ -441,7 +441,8 @@
           {% unless product_compare %}
             {% if settings.product_show_vendor and product.vendor != blank %}
               <span class="productitem--vendor">
-                {{ product_vendor | link_to_vendor }}
+                {% comment %} {{ product_vendor | link_to_vendor }} {% endcomment %}
+                <a href="/collections/{{ product.vendor | handle }}">{{ product.vendor }}</a>
               </span>
             {% endif %}
           {% endunless %}

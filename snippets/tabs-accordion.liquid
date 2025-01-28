@@ -2,7 +2,9 @@
   /* General Styles */
   .tabs-container {
     width: 100%;
-    margin-top: 64px;
+    margin-top: 24px;
+    padding-left: 6px;
+    padding-right: 6px;
   }
 
   .tab-headers {
@@ -12,21 +14,38 @@
   }
 
   .tab-header {
-    padding: 15px 24px;
+    padding: 15px 0;
     background: #fff;
-    border: 1px solid #1d1d1f;
-    border-radius: 50px; /* Pill shape */
     cursor: pointer;
     transition: background 0.3s ease, color 0.3s ease;
     font-size: 14px;
     font-family: var(--font-heading-family);
+    border: unset;
+    border-top: 1px solid rgba(157, 157, 157, 0.2);
+    border-radius: 0;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .tab-header .icon-caret {
+    width: auto;
+    height: 8px;
+    transition: transform 0.3s ease;
   }
 
   .tab-header.active {
-    background: #1d1d1f; /* Your primary blue color */
-    color: #fff;
+    background: #fff; /* Your primary blue color */
+    color: #1d1d1f;
     font-weight: bold;
-    border-color: #1d1d1f;
+    border-color: #fff;
+    border-top: 1px solid rgba(157, 157, 157, 0.2);
+  }
+
+  .tab-header.active .icon-caret {
+    transform: rotate(180deg);
   }
 
   .tab-content-container {
@@ -35,12 +54,27 @@
   }
 
   .tab-content {
-    display: none;
     width: 100%;
+    max-height: 0; /* Collapsed height */
+    overflow: hidden; /* Hide overflowing content */
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .tab-content:not(.addons-container) {
+    line-height: 1.8;
+  }
+
+  .tab-content:not(.addons-container) a {
+    color: var(--color-primary)
+  }
+
+  .tab-content a:hover {
+    text-decoration: underline;
   }
 
   .tab-content.active {
     display: block;
+    max-height: 1000px;
   }
 
   .tab-content.complementary-products--no-recommendations {
@@ -51,15 +85,16 @@
     display: none;
   }
 
+  .new-description-wrapper {
+    margin-top: 64px;
+    padding: 0 10px;
+  }
+
   @media (max-width: 767px) {
     .tab-headers {
       flex-direction: column;
       align-items: stretch;
       gap: 0.5rem;
-    }
-
-    .tab-header {
-      text-align: center;
     }
   }
 
@@ -68,6 +103,55 @@
       padding: 0;
       background: #fff;
     }
+
+    .tabs-container {
+      margin-top: 32px;
+    }
+  }
+
+  @media (min-width: 1025px) {
+    .new-description-wrapper {
+        padding: 0;
+    }
+
+    .tab-header .icon-caret {
+      display: none;
+    }
+
+    .tabs-container {
+      margin-top: 40px;
+    }
+
+    .tab-header {
+      text-align: center;
+      grid-row: 1;
+      border-top: 0;
+      border-radius: 25px;
+      padding: 15px 24px;
+      justify-content: center;
+      border: 1px solid #4F6A8A;
+    }
+
+    .tab-header.active {
+      background: #4F6A8A;
+      color: #fff;
+      font-weight: bold;
+      border-color: #4F6A8A;
+      border-top: 0;
+    }
+
+    .tab-content {
+      grid-row: 2;
+      grid-column: 1 / -1;
+      display: none;
+    }
+
+    .tab-content-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
   }
 {% endstyle %}
 
@@ -75,14 +159,13 @@
   <div class="tab-headers"></div>
   <div class="tab-content-container">
     <!-- Dynamic tab contents will be added here -->
-    {% comment %}
-      <div class="tab-content" id="addons">
-        <div id="addons-container" class="addons-container">
-          {% render 'complementary-products', product: product %}
-        </div>
-      </div>
-    {% endcomment %}
 
     {% render 'complementary-products', product: product %}
+  </div>
+
+  <div class="d-none icon-caret-container">
+    <span class="svg-wrapper">
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+    </span>
   </div>
 </div>

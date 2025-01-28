@@ -159,9 +159,9 @@
 
 .add-to-cart-btn,
 .configure-btn {
-  background-color: #0b4c80;
+  background-color: var(--color-primary);
   color: #fff;
-  border: 1px solid #0b4c80;
+  border: 1px solid var(--color-primary);
 }
 
 .add-to-project-btn {

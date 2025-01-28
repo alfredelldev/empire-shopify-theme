@@ -313,7 +313,7 @@
         <span class="utility-bar__mobile__border"></span>
       {% endif %}
       {% if show_menu_mobile %}
-        <div class="utility-bar__mobile-nav {% if section.settings.mobile_layout == 'below' %} utility-bar__mobile-nav--below {% endif %}">
+        <div class="utility-bar__mobile-nav order-4 {% if section.settings.mobile_layout == 'below' %} utility-bar__mobile-nav--below {% endif %}">
           {% include 'navlist',
             menu_list: linklists[section.settings.menu].links,
             depth: 1,
@@ -336,7 +336,7 @@
     {% endif %}
 
     {% if country_selector or locale_selector %}
-      <span class="utility-bar__mobile__border"></span>
+      <span class="utility-bar__mobile__border  order-3"></span>
 
       <div class="utility-bar__disclosure--mobile">
         {% comment %}Inject @pixelunion/shopify-cross-border/cross-border begin{% endcomment %}

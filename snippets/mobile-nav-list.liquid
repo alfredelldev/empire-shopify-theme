@@ -6,7 +6,6 @@
 
   @param blocks Array
     Array of blocks possibly containing meganav information
-
 {% endcomment %}
 
 {% assign menu_list = linklists[menu].links %}
@@ -15,7 +14,9 @@
 <ul
   class="navmenu navmenu-depth-2 navmenu-submenu"
   data-navmenu
-  {% if menu_title %}aria-label="{{ menu_title }}"{% endif %}
+  {% if menu_title %}
+    aria-label="{{ menu_title }}"
+  {% endif %}
 >
   {% for menu_item in menu_list %}
     {% assign show_subnav = true %}
@@ -47,7 +48,9 @@
 
     <li
       class="{{ navmenu_item_classes | strip_newlines }}"
-      {% if show_subnav %}data-navmenu-parent{% endif %}
+      {% if show_subnav %}
+        data-navmenu-parent
+      {% endif %}
     >
       <a
         class="navmenu-link {% if show_subnav %}navmenu-link-parent{% endif %} {% if menu_item.active %}navmenu-link-active{% endif %}"
@@ -57,30 +60,34 @@
           aria-expanded="false"
         {% endif %}
       >
+        {% if menu_item.object != blank %}
+          {% assign collection = menu_item.object %}
+          {% if collection.metafields.meganav.icon != blank %}
+            <img
+              class="meganav__navlist--item-content--icon"
+              src="{{ collection.metafields.meganav.icon | image_url }}"
+              width="24"
+              height="auto"
+              alt="{{ collection.title }}"
+            >
+          {% endif %}
+        {% endif %}
         {{ menu_item.title }}
       </a>
 
       {% if show_subnav %}
-        {%
-          render 'mobile-navmenu-button',
-          button_label: menu_item.title,
-        %}
+        {% render 'mobile-navmenu-button', button_label: menu_item.title %}
       {% endif %}
 
       {% assign accordion_level = 2 %}
       {% if meganav_block %}
         {% assign accordion_level = 3 %}
         <div class="navmenu-submenu navmenu-meganav" data-navmenu-submenu data-accordion-content>
-        {%
-          render 'meganav-promo',
-          block: meganav_block,
-          position: 'first'
-        %}
+          {% render 'meganav-promo', block: meganav_block, position: 'first' %}
       {% endif %}
 
       {% if show_subnav %}
-        {%
-          render 'navlist',
+        {% render 'navlist',
           menu_list: linklists[menu_item.handle].links,
           menu_title: menu_title,
           depth: 3,
@@ -88,16 +95,12 @@
           show_arrows: true,
           aria_expanded: false,
           is_mobile: true,
-          accordion_level: accordion_level,
+          accordion_level: accordion_level
         %}
       {% endif %}
 
       {% if meganav_block %}
-        {%
-          render 'meganav-promo',
-          block: meganav_block,
-          position: 'last'
-        %}
+        {% render 'meganav-promo', block: meganav_block, position: 'last' %}
         </div>
       {% endif %}
     </li>
