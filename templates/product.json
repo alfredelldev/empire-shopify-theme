@@ -135,7 +135,7 @@
       "type": "static-product-recommendations",
       "settings": {
         "show_product_recommendations": true,
-        "product_recommendations_heading": "You may also like"
+        "product_recommendations_heading": "Recommended products"
       }
     },
     "recently-viewed": {
