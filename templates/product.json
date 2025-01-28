@@ -20,20 +20,20 @@
           "type": "vendor",
           "settings": {}
         },
-        "sku_price_stock_KY4JQc": {
-          "type": "sku_price_stock",
-          "settings": {}
-        },
         "sku_TKyE7g": {
           "type": "sku",
           "settings": {}
         },
-        "price_KMnUhN": {
-          "type": "price",
-          "settings": {}
-        },
         "divider_kq3TMN": {
           "type": "divider",
+          "settings": {}
+        },
+        "sku_price_stock_KY4JQc": {
+          "type": "sku_price_stock",
+          "settings": {}
+        },
+        "price_KMnUhN": {
+          "type": "price",
           "settings": {}
         },
         "description": {
@@ -87,10 +87,10 @@
       "block_order": [
         "title",
         "vendor",
-        "sku_price_stock_KY4JQc",
         "sku_TKyE7g",
-        "price_KMnUhN",
         "divider_kq3TMN",
+        "sku_price_stock_KY4JQc",
+        "price_KMnUhN",
         "description",
         "form",
         "divider_c6pHrP",
@@ -114,6 +114,7 @@
       "blocks": {
         "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
           "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
+          "disabled": true,
           "settings": {
             "start_tab_element": "h5",
             "default_tab": "none",
