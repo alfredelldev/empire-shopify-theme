@@ -125,33 +125,33 @@
 {% assign include_tax_line = include_tax_line | default: false %}
 {% assign include_compare_price = include_compare_price | default: true %}
 
-<div class="price {{ class_root }}__price {% if compare_at_price_varies %}price--varies{% endif %}">
+<div class="price {{ class_root }}__price {% if compare_at_price_varies %}price--varies{% endif %} aaaaaa">
   {% if include_compare_price %}
     <div
       class="price__compare-at {% if emphasize_price or on_sale and show_original %}visible{% endif %}"
       data-price-compare-container
     >
       {%- capture compare_at_price_html -%}
-        <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
+        {% comment %} <span>Previous price</span> {% endcomment %}
         <span class="money price__compare-at--single" data-price-compare>
-          {{ compare_at_price | money }}
+          {{ compare_at_price | money_without_trailing_zeros }}
         </span>
       {%- endcapture -%}
 
       {% if compare_at_price_varies %}
         {%- capture compare_at_price_range_html -%}
           {% if price_range_format == 'range' %}
-            <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
+            {% comment %} <span>Previous price</span> {% endcomment %}
             <span class="money price__compare-at--min" data-price-compare-min>
-              {{ compare_at_price_min | money }}
+              From {{ compare_at_price_min | money_without_trailing_zeros }}
             </span>
-            -
+            {% comment %} -
             <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
             <span class="money price__compare-at--max" data-price-compare-max>
               {{ compare_at_price_max | money }}
-            </span>
+            </span> {% endcomment %}
           {% else %}
-            {{ 'product_price.item.price.range_html' | t: price: compare_at_price_html | strip_newlines }}
+            {{ 'product_price.price.range_html' | t: price: compare_at_price_html | strip_newlines }}
           {% endif %}
         {% endcapture %}
       {% endif %}
@@ -176,39 +176,39 @@
         {% if price_range_format == 'range' %}
           <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
           <span class="money price__compare-at--min" data-price-compare-min>
-            {{ compare_at_price_min | money }}
+            {{ compare_at_price_min | money_without_trailing_zeros }}
           </span>
           -
           <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
           <span class="money price__compare-at--max" data-price-compare-max>
-            {{ compare_at_price_max | money }}
+            {{ compare_at_price_max | money_without_trailing_zeros }}
           </span>
         {% else %}
-          {{ 'product_price.item.price.range_html' | t: price: compare_at_price_html | strip_newlines }}
+          {{ 'product_price.price.range_html' | t: price: compare_at_price_html | strip_newlines }}
         {% endif %}
       </div>
       <div class="price__compare-at--hidden" data-compare-price-hidden>
         <span class="visually-hidden">{{ 'product_price.price.original' | t }}</span>
         <span class="money price__compare-at--single" data-price-compare>
-          {{ compare_at_price | money }}
+          {{ compare_at_price | money_without_trailing_zeros }}
         </span>
       </div>
     {% endif %}
   {% endif %}
-
+  
   <div class="price__current {% if emphasize_price %}price__current--emphasize{% endif %} {% if on_sale %}price__current--on-sale{% endif %}" data-price-container>
     {%- capture price_html -%}
-      <span class="money" data-price>
-        {{ price | money }}
-      </span>
+      <p class="money" data-price>
+        {{ price | money_without_trailing_zeros }}
+      </p>
     {%- endcapture -%}
 
     {% capture current_price_range_html %}
       {% if price_varies %}
         {% if price_range_format == 'range' %}
-          <span class="money price__current--min" data-price-min>{{ price_min | money}}</span>
-          -
-          <span class="money price__current--max" data-price-max>{{ price_max | money }}</span>
+          <p class="money price__current--min" data-price-min><span class="price__from-label">From</span> {{ price_min | money_without_trailing_zeros}}</p>
+          {% comment %} -
+          <p class="money price__current--max" data-price-max>{{ price_max | money }}</p> {% endcomment %}
         {% else %}
           {{ 'product_price.price.range_html' | t: price: price_html | strip_newlines }}
         {% endif %}
@@ -217,7 +217,7 @@
 
     {% capture current_price_html %}
       {% if on_sale and show_original %}
-        <span class="visually-hidden">{{ 'product_price.price.current' | t }}</span>
+        <p class="visually-hidden">{{ 'product_price.price.current' | t }}</p>
       {% endif %}
       {{ price_html }}
     {% endcapture %}
@@ -227,6 +227,19 @@
     {% else %}
       {{ current_price_html }}
     {% endif %}
+
+    {% render 'product-percent-discount',
+      product: product,
+      class_root: 'discount-label',
+      product_available: product_available,
+      price: price,
+      price_varies: price_varies,
+      compare_at_price: compare_at_price,
+      compare_at_price_varies: compare_at_price_varies,
+      on_sale: on_sale,
+      show_saved: consistent_saved,
+      include_range: true
+    %}
   </div>
 
   {% if include_hidden_price %}
@@ -235,24 +248,24 @@
     {% endcomment %}
     <div class="price__current--hidden" data-current-price-range-hidden>
       {% if price_range_format == 'range' %}
-        <span class="money price__current--min" data-price-min>{{ price_min | money}}</span>
-        -
-        <span class="money price__current--max" data-price-max>{{ price_max | money }}</span>
+        <p class="money price__current--min" data-price-min>From {{ price_min | money_without_trailing_zeros}}</p>
+        {% comment %} - {% endcomment %}
+        {% comment %} <p class="money price__current--max" data-price-max>{{ price_max | money }}</p> {% endcomment %}
       {% else %}
         {{ 'product_price.price.range_html' | t: price: price_html | strip_newlines }}
       {% endif %}
     </div>
     <div class="price__current--hidden" data-current-price-hidden>
-      <span class="visually-hidden">{{ 'product_price.price.current' | t }}</span>
+      <p class="visually-hidden">{{ 'product_price.price.current' | t }}</p>
       {{ price_html }}
     </div>
   {% endif %}
 
   {% if include_unit_price %}
     {% assign variant = product.selected_or_first_available_variant %}
-    {% capture total_quantity %}<span class="{{ class_root }}__total-quantity" data-total-quantity>{{ variant.unit_price_measurement.quantity_value }}{{ variant.unit_price_measurement.quantity_unit }}</span>{% endcapture %}
-    {% capture unit_price %}<span class="{{ class_root }}__unit-price--amount money" data-unit-price-amount>{{ variant.unit_price | money }}</span>{% endcapture %}
-    {% capture unit_measure %}<span class="{{ class_root }}__unit-price--measure" data-unit-price-measure>{%- if variant.unit_price_measurement.reference_value != 1 -%}{{ variant.unit_price_measurement.reference_value }}{%- endif %}{{ variant.unit_price_measurement.reference_unit }}</span>{% endcapture %}
+    {% capture total_quantity %}<p class="{{ class_root }}__total-quantity" data-total-quantity>{{ variant.unit_price_measurement.quantity_value }}{{ variant.unit_price_measurement.quantity_unit }}</p>{% endcapture %}
+    {% capture unit_price %}<p class="{{ class_root }}__unit-price--amount money" data-unit-price-amount>{{ variant.unit_price | money_without_trailing_zeros }}</p>{% endcapture %}
+    {% capture unit_measure %}<p class="{{ class_root }}__unit-price--measure" data-unit-price-measure>{%- if variant.unit_price_measurement.reference_value != 1 -%}{{ variant.unit_price_measurement.reference_value }}{%- endif %}{{ variant.unit_price_measurement.reference_unit }}</p>{% endcapture %}
 
     <div
       class="

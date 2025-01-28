@@ -1,0 +1,36 @@
+{% comment %}
+  Renders announcement contact information for mobile and desktop.
+
+  Usage:
+  {% render 'utility-bar-contact' %}
+{% endcomment %}
+
+{{ 'component-utility-bar-contact.css' | asset_url | stylesheet_tag }}
+
+<ul class="list-unstyled announcement-bar__contact-info{% if class %} {{ class}}{% endif %}" role="list">
+  <li class="announcement-bar__contact-item">
+    <a
+      href="mailto:{{ section.settings.email }}"
+      class="announcement-bar__contact-link utility-bar__menu-link d-flex align-items-center mr-0"
+    >
+      <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M0 4.77143C0 2.41238 1.91238 0.5 4.27143 0.5H11.7C14.059 0.5 15.9714 2.41238 15.9714 4.77143V9.22857C15.9714 11.5876 14.059 13.5 11.7 13.5H4.27143C1.91238 13.5 0 11.5876 0 9.22857V4.77143ZM3.9785 4.17144C3.64713 3.92292 3.17703 3.99007 2.9285 4.32144C2.67998 4.65281 2.74713 5.12292 3.0785 5.37144L6.33564 7.8143C7.31342 8.54763 8.65787 8.54763 9.63565 7.8143L12.8928 5.37144C13.2242 5.12292 13.2913 4.65281 13.0428 4.32144C12.7943 3.99007 12.3242 3.92292 11.9928 4.17144L8.73565 6.6143C8.2912 6.94763 7.68009 6.94763 7.23565 6.6143L3.9785 4.17144Z" fill="white"/>
+      </svg>
+      {{- section.settings.email -}}
+    </a>
+  </li>
+  <li class="announcement-bar__contact-item">
+    <span class="announcement-bar__contact-divider">|</span>
+  </li>
+  <li class="announcement-bar__contact-item">
+    <a
+      href="tel:1800882583"
+      class="announcement-bar__contact-link utility-bar__menu-link d-flex align-items-center mr-0"
+    >
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M11.6797 12.4789C10.3768 13.7817 7.04023 12.5575 4.22719 9.74448C1.41416 6.93145 0.18994 3.59485 1.49282 2.29197L2.35066 1.43412C2.94288 0.841904 3.91871 0.857558 4.53024 1.46909L5.85896 2.79781C6.47049 3.40934 6.48615 4.38517 5.89393 4.97739L5.70967 5.16165C5.38993 5.48139 5.35864 5.99721 5.65575 6.35725C5.94232 6.70452 6.25128 7.05043 6.58626 7.38542C6.92125 7.7204 7.26716 8.02936 7.61443 8.31593C7.97447 8.61304 8.49029 8.58175 8.81003 8.26201L8.99429 8.07775C9.58651 7.48553 10.5623 7.50119 11.1739 8.11272L12.5026 9.44144C13.1141 10.053 13.1298 11.0288 12.5376 11.621L11.6797 12.4789Z" fill="white" stroke="white" stroke-width="1.5"/>
+      </svg>
+      {{- section.settings.phone -}}
+    </a>
+  </li>
+</ul>

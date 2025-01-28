@@ -1,0 +1,19 @@
+.announcement-bar__contact-info {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 12px;
+}
+
+.announcement-bar__contact-info .announcement-bar__contact-divider {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.announcement-bar__contact-info .announcement-bar__contact-link svg {
+    margin-right: 4px;
+}
+
+.announcement-bar__contact-info .announcement-bar__contact-link {
+    text-decoration: underline;
+}
