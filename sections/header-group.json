@@ -14,7 +14,7 @@
     "announcement-bar": {
       "type": "static-announcement",
       "settings": {
-        "show_announcement": true,
+        "show_announcement": false,
         "homepage_announcement": false,
         "announcement_text": "Official Retailer of the Best Australian Brands - 1000's of in-stock products - SHOP NOW!",
         "announcement_text_mobile": "",
@@ -48,7 +48,7 @@
         "d43bf0af-1f8c-4fd1-b633-a91b0c4170f6": {
           "type": "meganav",
           "settings": {
-            "menu": "brands",
+            "menu": "",
             "title": "",
             "collection": "",
             "type": "default"
@@ -57,7 +57,7 @@
         "4557eb4d-453e-4248-889b-8a1bd4e98686": {
           "type": "meganav",
           "settings": {
-            "menu": "bathroom-new",
+            "menu": "",
             "title": "",
             "collection": "all-bathroom-products",
             "type": "default"
@@ -66,7 +66,7 @@
         "ad6023fc-4b24-4de1-aab1-e883dc61eab1": {
           "type": "meganav",
           "settings": {
-            "menu": "kitchen-laundry",
+            "menu": "",
             "title": "",
             "collection": "kitchen-laundry",
             "type": "default"
@@ -75,7 +75,7 @@
         "b8accc06-83f1-4bcf-ab0e-9aeef1d5e166": {
           "type": "meganav",
           "settings": {
-            "menu": "fans-lighting",
+            "menu": "",
             "title": "",
             "collection": "fans-lighting",
             "type": "default"
@@ -84,7 +84,7 @@
         "cce09304-e497-48c0-a712-962624847044": {
           "type": "meganav",
           "settings": {
-            "menu": "vanities-furniture",
+            "menu": "",
             "title": "",
             "collection": "australian-made-vanity",
             "type": "default"
@@ -93,7 +93,7 @@
         "8ec0966d-7268-4156-8f6b-f03211fce8db": {
           "type": "meganav",
           "settings": {
-            "menu": "colours",
+            "menu": "",
             "title": "Shop by Colour",
             "collection": "",
             "type": "image"
@@ -113,7 +113,6 @@
         "enable_mega_menu": true,
         "sticky_header": false,
         "full_width_header": false,
-        "logo": "shopify://shop_images/Blue-Leaf-Bathware-Tiles-Logo-Web-600x173_600x_07824216-1965-47f9-9411-301f8514037a.png",
         "logo_height": 76,
         "logo_width": 192,
         "filter_search_by": "disabled",
