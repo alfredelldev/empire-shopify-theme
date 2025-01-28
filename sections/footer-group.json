@@ -1,1 +1,65 @@
-{"type":"footer","name":"Footer","sections":{"footer":{"type":"static-footer","blocks":{"1532b7a6-9130-4dfe-a9be-18759eefccdf":{"type":"rich_text","settings":{"title":"Australia's No.1 Online Bathware Store","text":"<p>Blue Leaf Bathware & Tiles is <strong>Australia's<\/strong> most trusted online supplier for everything vanities, toilets, baths, tapware and tiles. Select from our range of great Australian brands such as Caroma, Abey, Phoenix, Decina, ADP, Timberline and Oliveri for your next bathroom or kitchen renovation.<\/p>"}},"794715bc-ab55-421f-b021-79e3d170b44e":{"type":"rich_text","settings":{"title":"Visit our Showroom","text":"<p>Prefer to touch and feel the product?<\/p><p><a href=\"https:\/\/g.page\/Blue-Leaf-Bathware?share\" title=\"https:\/\/g.page\/Blue-Leaf-Bathware?share\">5\/9 Ladbroke St, Milperra NSW 2214<\/a><\/p>"}},"1493171899575":{"type":"social_accounts","settings":{}},"static-footer-1":{"type":"newsletter","settings":{"title":"Have $25 on us!","text":"<p>Sign up to our newsletter for a <strong>$25 voucher<\/strong> off your first order.<\/p>"}}},"block_order":["1532b7a6-9130-4dfe-a9be-18759eefccdf","794715bc-ab55-421f-b021-79e3d170b44e","1493171899575","static-footer-1"],"settings":{"show_follow_on_shop":false,"payment_icons":true,"show_locale_selector":true,"show_currency_selector":true,"additional_menu":"footer"}}},"order":["footer"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer": {
+      "type": "static-footer",
+      "blocks": {
+        "1532b7a6-9130-4dfe-a9be-18759eefccdf": {
+          "type": "rich_text",
+          "settings": {
+            "title": "Australia's No.1 Online Bathware Store",
+            "text": "<p>Blue Leaf Bathware & Tiles is <strong>Australia's</strong> most trusted online supplier for everything vanities, toilets, baths, tapware and tiles. Select from our range of great Australian brands such as Caroma, Abey, Phoenix, Decina, ADP, Timberline and Oliveri for your next bathroom or kitchen renovation.</p>"
+          }
+        },
+        "794715bc-ab55-421f-b021-79e3d170b44e": {
+          "type": "rich_text",
+          "settings": {
+            "title": "Visit our Showroom",
+            "text": "<p>Prefer to touch and feel the product?</p><p><a href=\"https://g.page/Blue-Leaf-Bathware?share\" title=\"https://g.page/Blue-Leaf-Bathware?share\">5/9 Ladbroke St, Milperra NSW 2214</a></p><p></p><h5>Need Help?</h5><p><a href=\"tel:1800882583\" title=\"tel:1800882583\">1800-88-BLUE</a></p><p><a href=\"mailto:sales@blueleafbath.com.au\" title=\"mailto:sales@blueleafbath.com.au\">sales@blueleafbath.com.au</a></p>"
+          }
+        },
+        "link_list_xBJxqH": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Shop",
+            "menu": "footer-shop"
+          }
+        },
+        "link_list_k6LVUe": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick Links",
+            "menu": "footer-quick-links"
+          }
+        }
+      },
+      "block_order": [
+        "1532b7a6-9130-4dfe-a9be-18759eefccdf",
+        "794715bc-ab55-421f-b021-79e3d170b44e",
+        "link_list_xBJxqH",
+        "link_list_k6LVUe"
+      ],
+      "settings": {
+        "show_follow_on_shop": false,
+        "payment_icons": true,
+        "show_locale_selector": false,
+        "show_currency_selector": false,
+        "additional_menu": "footer-copyright-links",
+        "newsletter_img": "shopify://shop_images/newsletterbg.png"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}
