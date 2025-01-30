@@ -20,10 +20,9 @@
           "default": "Card Title"
         },
         {
-          "type": "textarea",
+          "type": "richtext",
           "id": "description",
-          "label": "Description",
-          "default": "This is a description for the card."
+          "label": "Description"
         },
         {
           "type": "color",
@@ -42,6 +41,12 @@
           "id": "image_height",
           "label": "Image Height (px)",
           "default": 400,
+          "info": "Set the height of the image in pixels. Width will adjust automatically."
+        },
+        {
+          "type": "number",
+          "id": "content_height",
+          "label": "Content Minimum Height (px)",
           "info": "Set the height of the image in pixels. Width will adjust automatically."
         },
         {
@@ -96,7 +101,7 @@
         {% endif %}
         <div
           class="card-content"
-          style="background-color: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
+          style="background-color: {{ block.settings.background_color }}; color: {{ block.settings.text_color }}; min-height: {{ block.settings.content_height }}"
         >
           <h3 class="card-title">{{ block.settings.title }}</h3>
           <p class="card-description">{{ block.settings.description }}</p>
