@@ -155,7 +155,7 @@
       {%- endform -%}
 
       <div class="contact-form-content">
-        <p>
+        {% comment %} <p>
           We are proudly; a family owned and operated company, from right here in Australia. Our local touch gives us
           that edge, when combined with our extensive range and most importantly our commitment to providing excellent
           service.
@@ -174,7 +174,9 @@
 
           <span>Monday - Saturday: By Appointment</span>
           <span>Sunday: Closed</span>
-        </p>
+        </p> {% endcomment %}
+
+        {{ section.settings.description }}
       </div>
     </div>
   </div>
@@ -189,6 +191,11 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Contact Content"
+    },
     {
       "type": "inline_richtext",
       "id": "heading",

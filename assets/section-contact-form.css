@@ -1,13 +1,3 @@
-.container {
-  --layout-container-max-width: 1400px;
-  --layout-container-gutter: 10px;
-  max-width: var(--layout-container-max-width);
-  padding-right: 10px;
-  padding-left: 10px;
-  margin-right: auto;
-  margin-left: auto;
-}
-
 .contact-form-container a {
     color: var(--color-primary);
 }
@@ -35,20 +25,10 @@
 }
 
 @media screen and (min-width: 720px) {
-  .container {
-    --layout-container-gutter: 15px;
-    padding-right: 15px;
-    padding-left: 15px;
-  }
+  
 }
 
 @media screen and (min-width: 1024px) {
-  .container {
-    --layout-container-gutter: 25px;
-    padding-right: 25px;
-    padding-left: 25px;
-  }
-
   .contact-form-container {
     flex-direction: row;
 }
