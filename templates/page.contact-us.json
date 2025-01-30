@@ -14,16 +14,6 @@
       "disabled": true,
       "settings": {}
     },
-    "contact_form_MBPnUn": {
-      "type": "contact-form",
-      "settings": {
-        "description": "<p>We are proudly; a family owned and operated company, from right here in Australia. Our local touch gives us that edge, when combined with our extensive range and most importantly our commitment to providing excellent service.</p><p><br/>Phone: <a href=\"tel:1800882583\" title=\"tel:1800882583\">1800-88-BLUE</a></p><p>Email: <a href=\"mailto:sales@blueleafbath.com.au\" title=\"mailto:sales@blueleafbath.com.au\">sales@blueleafbath.com.au</a></p><p>24/7 Online Chat<br/><br/></p><p><strong>Showroom opening hours<br/><br/></strong>Monday - Saturday: By Appointment</p><p>Sunday: Closed</p>",
-        "heading": "Contact us",
-        "heading_size": "h1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "three_cards_wge3DU": {
       "type": "three-cards",
       "blocks": {
@@ -62,6 +52,16 @@
       ],
       "settings": {}
     },
+    "contact_form_MBPnUn": {
+      "type": "contact-form",
+      "settings": {
+        "description": "<p>We are proudly; a family owned and operated company, from right here in Australia. Our local touch gives us that edge, when combined with our extensive range and most importantly our commitment to providing excellent service.</p><p><br/>Phone: <a href=\"tel:1800882583\" title=\"tel:1800882583\">1800-88-BLUE</a></p><p>Email: <a href=\"mailto:sales@blueleafbath.com.au\" title=\"mailto:sales@blueleafbath.com.au\">sales@blueleafbath.com.au</a></p><p>24/7 Online Chat<br/><br/></p><p><strong>Showroom opening hours<br/><br/></strong>Monday - Friday : 8:30 am - 4:30pm</p><p>Saturday: Appointment Only</p><p>Sunday: Closed</p>",
+        "heading": "Contact us",
+        "heading_size": "h1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "dynamic_image_with_text_VJRP8R": {
       "type": "dynamic-image-with-text",
       "settings": {
@@ -91,8 +91,8 @@
   },
   "order": [
     "main",
-    "contact_form_MBPnUn",
     "three_cards_wge3DU",
+    "contact_form_MBPnUn",
     "dynamic_image_with_text_VJRP8R",
     "google_maps_7XwRcg"
   ]
