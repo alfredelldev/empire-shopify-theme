@@ -13,9 +13,87 @@
       "type": "page",
       "disabled": true,
       "settings": {}
+    },
+    "contact_form_MBPnUn": {
+      "type": "contact-form",
+      "settings": {
+        "description": "<p>We are proudly; a family owned and operated company, from right here in Australia. Our local touch gives us that edge, when combined with our extensive range and most importantly our commitment to providing excellent service.</p><p><br/>Phone: <a href=\"tel:1800882583\" title=\"tel:1800882583\">1800-88-BLUE</a></p><p>Email: <a href=\"mailto:sales@blueleafbath.com.au\" title=\"mailto:sales@blueleafbath.com.au\">sales@blueleafbath.com.au</a></p><p>24/7 Online Chat<br/><br/></p><p><strong>Showroom opening hours<br/><br/></strong>Monday - Saturday: By Appointment</p><p>Sunday: Closed</p>",
+        "heading": "Contact us",
+        "heading_size": "h1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "three_cards_wge3DU": {
+      "type": "three-cards",
+      "blocks": {
+        "card_dLTwTF": {
+          "type": "card",
+          "settings": {
+            "title": "With many payment options",
+            "description": "With many payment options - You can feel safe buying from Blue Leaf as we use only the safest and most trusted methods. All payments are made via encrypted and secure checkout.",
+            "background_color": "#1c83c3",
+            "text_color": "#ffffff"
+          }
+        },
+        "card_YmaxKh": {
+          "type": "card",
+          "settings": {
+            "title": "Delivering all over our beautiful land",
+            "description": "Delivering all over our beautiful land Blue Leaf guarantees all our packages are thoroughly checked and safely packed using strict methods to ensure you receive your items safe & sound.",
+            "background_color": "#0b4c80",
+            "text_color": "#ffffff"
+          }
+        },
+        "card_gXyxmT": {
+          "type": "card",
+          "settings": {
+            "title": "Easy Returns",
+            "description": "We're so confident you'll love your product that we offer a 30 day returns policy* - no questions asked. ",
+            "background_color": "#0b4c80",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "card_dLTwTF",
+        "card_YmaxKh",
+        "card_gXyxmT"
+      ],
+      "settings": {}
+    },
+    "dynamic_image_with_text_VJRP8R": {
+      "type": "dynamic-image-with-text",
+      "settings": {
+        "section_heading": "",
+        "image": "shopify://shop_images/12982910_5124556.jpg",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "desktop_image_alignment": "left",
+        "mobile_image_alignment": "top",
+        "heading": "After sales care",
+        "subheading": "<p>At Blue Leaf we stand by our brand and we believe our success is reliant not only on being competitively priced but to provide a before and after sales service that really stands out. </p><p><br/>We genuinely care for each one of our clients whether its replacing a part, getting some installation instructions or lodging a product service or warranty claim we're here to help.</p>",
+        "text_alignment": "left",
+        "button_label": "Button",
+        "button_link": ""
+      }
+    },
+    "google_maps_7XwRcg": {
+      "type": "google-maps",
+      "custom_css": [
+        "div {margin-top: 0px; margin-bottom: -60px !important;}"
+      ],
+      "settings": {
+        "map_embed_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.3000458470005!2d150.99421857568117!3d-33.933410173202!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12be6112e5337f%3A0x1cf4f740ac25d121!2s5%2F9%20Ladbroke%20St%2C%20Milperra%20NSW%202214%2C%20Australia!5e0!3m2!1sen!2sph!4v1738207420605!5m2!1sen!2sph",
+        "map_height": 500
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "contact_form_MBPnUn",
+    "three_cards_wge3DU",
+    "dynamic_image_with_text_VJRP8R",
+    "google_maps_7XwRcg"
   ]
 }
