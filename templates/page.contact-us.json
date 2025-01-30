@@ -22,9 +22,11 @@
           "settings": {
             "image": "shopify://shop_images/123_1.png",
             "title": "Safe & Secure",
-            "description": "With many payment options - You can feel safe buying from Blue Leaf as we use only the safest and most trusted methods. All payments are made via encrypted and secure checkout.",
+            "description": "<p>With many payment options - You can feel safe buying from Blue Leaf as we use only the safest and most trusted methods. All payments are made via encrypted and secure checkout.</p>",
             "background_color": "#1c83c3",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "image_height": 150,
+            "spacing": 24
           }
         },
         "card_YmaxKh": {
@@ -32,9 +34,11 @@
           "settings": {
             "image": "shopify://shop_images/123_2.png",
             "title": "Reliable & Efficient",
-            "description": "Delivering all over our beautiful land. Blue Leaf guarantees all our packages are thoroughly checked and safely packed using strict methods to ensure you receive your items safe & sound.",
+            "description": "<p>Delivering all over our beautiful land. Blue Leaf guarantees all our packages are thoroughly checked and safely packed using strict methods to ensure you receive your items safe & sound.</p>",
             "background_color": "#0b4c80",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "image_height": 174,
+            "spacing": 0
           }
         },
         "card_gXyxmT": {
@@ -42,9 +46,12 @@
           "settings": {
             "image": "shopify://shop_images/123_3.png",
             "title": "Easy Returns",
-            "description": "We're so confident you'll love your product that we offer a 30 day returns policy* - no questions asked. ",
+            "description": "<p>We're so confident you'll love your product that we offer a 30 day returns policy* - no questions asked. </p>",
             "background_color": "#0b4c80",
-            "text_color": "#ffffff"
+            "text_color": "#ffffff",
+            "image_height": 150,
+            "content_height": 180,
+            "spacing": 24
           }
         }
       },
