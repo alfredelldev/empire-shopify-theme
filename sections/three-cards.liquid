@@ -1,0 +1,138 @@
+{% schema %}
+{
+  "name": "Three Cards",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended size: 432x400"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Card Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "This is a description for the card."
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Background Color",
+          "default": "#f9f9f9"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text Color",
+          "default": "#333333"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Three Cards",
+      "blocks": [
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        },
+        {
+          "type": "card"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<div class="three-cards-section container">
+  <div class="cards-container">
+    {% for block in section.blocks %}
+      <div class="card" {{ block.shopify_attributes }} style="background-color: {{ block.settings.background_color }};">
+        {% if block.settings.image != blank %}
+          <div class="card-image">
+            <img
+              src="{{ block.settings.image | img_url: '432x400' }}"
+              alt="{{ block.settings.title | escape }}"
+              width="432"
+              height="400"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        <div class="card-content" style="color: {{ block.settings.text_color }};">
+          <h3 class="card-title">{{ block.settings.title }}</h3>
+          <p class="card-description">{{ block.settings.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .three-cards-section {
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+  }
+
+  .card {
+    flex: 1 1 calc(33.333% - 48px);
+    overflow: hidden;
+    text-align: left;
+  }
+
+  .card-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .card-content {
+    padding: 32px 20px;
+  }
+
+  .card-title {
+    font-size: 18px;
+    margin: 0 0 10px;
+  }
+
+  .card-description {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      flex: 1 1 calc(50% - 24px);
+      max-width: calc(50% - 24px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .card {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
+</style>

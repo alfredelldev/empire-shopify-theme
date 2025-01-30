@@ -755,6 +755,18 @@
         }
       }
     },
+    "contact-form": {
+      "name": "Contact Form",
+      "presets": {
+        "name": "Contact form"
+      },
+      "settings": {
+        "title": {
+          "default": "Contact form",
+          "label": "Heading"
+        }
+      }
+    },
     "custom_html": "",
     "image_with_text": {
       "name": "Image with Text",

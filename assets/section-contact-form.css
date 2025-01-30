@@ -1,0 +1,40 @@
+.contact-form-container a {
+    color: var(--color-primary);
+}
+
+.contact-form-container {
+    gap: 32px;
+    flex-direction: column;
+}
+
+.contact-form-container .contact-form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 15px;
+}
+
+.contact-form-container .contact-form .form-fields-inline {
+    display: flex;
+    gap: 15px;
+}
+
+.contact-form-container .contact-form,
+.contact-form-container .contact-form-content {
+  width: 100%;
+}
+
+@media screen and (min-width: 720px) {
+  
+}
+
+@media screen and (min-width: 1024px) {
+  .contact-form-container {
+    flex-direction: row;
+}
+
+  .contact-form-container .contact-form,
+  .contact-form-container .contact-form-content {
+    width: 50%;
+  }
+}
