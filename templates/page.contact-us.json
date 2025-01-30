@@ -30,7 +30,8 @@
         "card_YmaxKh": {
           "type": "card",
           "settings": {
-            "title": "Delivering all over our beautiful land",
+            "image": "shopify://shop_images/123_2.png",
+            "title": "",
             "description": "Delivering all over our beautiful land Blue Leaf guarantees all our packages are thoroughly checked and safely packed using strict methods to ensure you receive your items safe & sound.",
             "background_color": "#0b4c80",
             "text_color": "#ffffff"
@@ -39,6 +40,7 @@
         "card_gXyxmT": {
           "type": "card",
           "settings": {
+            "image": "shopify://shop_images/123_3.png",
             "title": "Easy Returns",
             "description": "We're so confident you'll love your product that we offer a 30 day returns policy* - no questions asked. ",
             "background_color": "#0b4c80",
