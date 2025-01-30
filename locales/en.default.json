@@ -321,13 +321,35 @@
   },
   "contact": {
     "form": {
-      "name": "Name",
+      "first_name": "First Name",
+      "last_name": "Last Name",
       "email": "Email",
       "phone": "Phone Number",
       "message": "Message",
-      "send": "Send",
-      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible."
+      "send": "Send message",
+      "post_success": "Thanks for contacting us. We'll get back to you as soon as possible.",
+      "title": "Contact form",
+      "comment": "Comment",
+      "error_heading": "Please adjust the following:"
     }
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "skip_to_product_info": "Skip to product information",
+    "close": "Close",
+    "unit_price_separator": "per",
+    "vendor": "Vendor:",
+    "error": "Error",
+    "refresh_page": "Choosing a selection results in a full page refresh.",
+    "link_messages": {
+      "new_window": "Opens in a new window.",
+      "external": "Opens external website."
+    },
+    "loading": "Loading...",
+    "total_reviews": "total reviews",
+    "star_reviews_info": "{{ rating_value }} out of {{ rating_max }} stars",
+    "collapsible_content_title": "Collapsible content",
+    "complementary_products": "Complementary products"
   },
   "customers": {
     "forms": {
