@@ -20,7 +20,8 @@
         "card_dLTwTF": {
           "type": "card",
           "settings": {
-            "title": "With many payment options",
+            "image": "shopify://shop_images/123_1.png",
+            "title": "",
             "description": "With many payment options - You can feel safe buying from Blue Leaf as we use only the safest and most trusted methods. All payments are made via encrypted and secure checkout.",
             "background_color": "#1c83c3",
             "text_color": "#ffffff"
