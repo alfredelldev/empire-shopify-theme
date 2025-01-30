@@ -36,6 +36,20 @@
           "id": "text_color",
           "label": "Text Color",
           "default": "#333333"
+        },
+        {
+          "type": "number",
+          "id": "image_height",
+          "label": "Image Height (px)",
+          "default": 400,
+          "info": "Set the height of the image in pixels. Width will adjust automatically."
+        },
+        {
+          "type": "number",
+          "id": "spacing",
+          "label": "Spacing Between Image and Title (px)",
+          "default": 0,
+          "info": "Set the spacing between the image and title in pixels."
         }
       ]
     }
@@ -62,19 +76,28 @@
 <div class="three-cards-section container">
   <div class="cards-container">
     {% for block in section.blocks %}
-      <div class="card" {{ block.shopify_attributes }} style="background-color: {{ block.settings.background_color }};">
+      <div class="card" {{ block.shopify_attributes }}>
         {% if block.settings.image != blank %}
-          <div class="card-image">
+          {% assign image_height = block.settings.image_height | default: 400 %}
+          {% assign image_url = block.settings.image | image_url: width: 432 %}
+          {% comment %} {% assign image_aspect_ratio = block.settings.image.aspect_ratio %} {% endcomment %}
+          {% comment %} {% assign image_width = image_height | times: image_aspect_ratio %} {% endcomment %}
+
+          <div class="card-image" style="margin-bottom: {{ block.settings.spacing }}px;">
             <img
-              src="{{ block.settings.image | img_url: '432x400' }}"
+              src="{{ image_url }}"
               alt="{{ block.settings.title | escape }}"
-              width="432"
-              height="400"
+              style="height: {{ image_height }}px; width: auto;"
               loading="lazy"
+              height=""
+              width=""
             >
           </div>
         {% endif %}
-        <div class="card-content" style="color: {{ block.settings.text_color }};">
+        <div
+          class="card-content"
+          style="background-color: {{ block.settings.background_color }}; color: {{ block.settings.text_color }};"
+        >
           <h3 class="card-title">{{ block.settings.title }}</h3>
           <p class="card-description">{{ block.settings.description }}</p>
         </div>
@@ -103,9 +126,8 @@
   }
 
   .card-image img {
-    width: 100%;
-    height: auto;
     display: block;
+    margin: 0 auto;
   }
 
   .card-content {
