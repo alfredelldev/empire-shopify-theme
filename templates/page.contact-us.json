@@ -26,6 +26,7 @@
             "background_color": "#1c83c3",
             "text_color": "#ffffff",
             "image_height": 150,
+            "content_height": 180,
             "spacing": 24
           }
         },
@@ -38,6 +39,7 @@
             "background_color": "#0b4c80",
             "text_color": "#ffffff",
             "image_height": 174,
+            "content_height": 180,
             "spacing": 0
           }
         },
