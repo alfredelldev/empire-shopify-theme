@@ -24,6 +24,29 @@
   width: 100%;
 }
 
+.contact-form-container .field__input.focus-visible + .field__label,
+.contact-form-container .text-area.field__input.focus-visible + .field__label {
+    font-size: 13px;
+}
+
+.contact-form-container .field__input.filled + .field__label {
+    top: 20%;
+    transform: translateY(-20%);
+    font-size: 13px;
+}
+
+.contact-form-container .text-area.field__input.filled + .field__label,
+.contact-form-container .text-area.field__input.focus-visible + .field__label  {
+    top: 5%;
+    transform: translateY(-20%);
+    font-size: 13px;
+}
+
+.contact-form-container .text-area.field__input + .field__label {
+    top: 10%;
+    transform: translateY(-10%);
+}
+
 @media screen and (min-width: 720px) {
   
 }
