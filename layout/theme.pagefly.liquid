@@ -9,6 +9,7 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
       window.Store = window.Store || {};
       window.Store.id = {{ shop.id }};
     </script>
+    <meta name="google-site-verification" content="GeP4_vebinUEtellr9CHeD6Hd1F7v1VVZ-_R6MFes54">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="IE=edge">
 
@@ -16,6 +17,10 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
     <link rel="preconnect" href="https://fonts.shopifycdn.com">
     <link rel="preconnect" href="https://v.shopify.com">
     <link rel="preconnect" href="https://cdn.shopifycloud.com">
+    <link
+      rel="icon"
+      href="https://cdn.shopify.com/s/files/1/0507/4822/7764/files/FAVICON_48x48_b7c3781e-ce4b-4c28-a7a6-23e12fe22180.png"
+    >
 
     <title>
       {{- page_title -}}
@@ -65,17 +70,19 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
       <link rel="canonical" href="{{ canonical_url }}">
     {% endif %}
 
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
 
     {% assign twitter_handle = settings.social_twitter | split: 'twitter.com/' | last %}
     {% render 'social-meta-tags', twitter_handle: twitter_handle %}
 
-    <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous">
-    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
+    {% comment %} <link rel="preload" href="{{ settings.type_menu | font_url }}" as="font" crossorigin="anonymous"> {% endcomment %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap">
 
     {{ content_for_header }}
 
-    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'styles.css' | asset_url | stylesheet_tag }}
+    {{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
 
     {% comment %}Inject theme-object begin{% endcomment %}
     <script>
@@ -101,6 +108,7 @@ If you plan to remove PageFly, please see the guide in our help center first: ht
       };
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
+    {% render 'pagefly-app-header' %}
   {% include 'pagefly-app-header' %}</head>
 
   {% render 'swymSnippet' %}
