@@ -155,32 +155,35 @@
       {%- endform -%}
 
       <div class="contact-form-content">
-        {% comment %} <p>
-          We are proudly; a family owned and operated company, from right here in Australia. Our local touch gives us
-          that edge, when combined with our extensive range and most importantly our commitment to providing excellent
-          service.
-        </p>
-
-        <p class="d-flex flex-col gap-10">
-          <span>Phone: <a href="tel:1800882583">1800-88-BLUE</a></span>
-          <span>Email: <a href="mailto:sales@blueleafbath.com.au">sales@blueleafbath.com.au</a></span>
-          <span>24/7 Online Chat</span>
-        </p>
-
-        <br>
-
-        <p class="d-flex flex-col gap-10">
-          <strong>Showroom opening hours</strong>
-
-          <span>Monday - Saturday: By Appointment</span>
-          <span>Sunday: Closed</span>
-        </p> {% endcomment %}
-
         {{ section.settings.description }}
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Select all input and textarea fields within the contact form
+    const inputs = document.querySelectorAll('#ContactForm .field__input');
+
+    // Function to check if an input has a value and add/remove the 'filled' class
+    function handleInput(event) {
+      const input = event.target;
+      if (input.value.trim() !== '') {
+        input.classList.add('filled');
+      } else {
+        input.classList.remove('filled');
+      }
+    }
+
+    // Add event listeners to all inputs
+    inputs.forEach((input) => {
+      input.addEventListener('input', handleInput); // Trigger on input change
+      input.addEventListener('blur', handleInput); // Trigger when leaving the field
+      input.dispatchEvent(new Event('input')); // Trigger on page load for pre-filled values
+    });
+  });
+</script>
 
 {% schema %}
 {
