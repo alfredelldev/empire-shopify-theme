@@ -43,6 +43,10 @@
           "type": "divider",
           "settings": {}
         },
+        "shipping_calculator_kQVKa8": {
+          "type": "shipping_calculator",
+          "settings": {}
+        },
         "trust_badges_hMz6rb": {
           "type": "trust_badges",
           "settings": {
@@ -88,6 +92,7 @@
         "price_KMnUhN",
         "form",
         "divider_c6pHrP",
+        "shipping_calculator_kQVKa8",
         "trust_badges_hMz6rb",
         "trust_badges_eXQCRi",
         "trust_badges_xp3HQJ",
