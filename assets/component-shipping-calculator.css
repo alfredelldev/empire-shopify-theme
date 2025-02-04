@@ -24,6 +24,7 @@
 .shipping-calculator button {
     background-color: #4f6a8a;
     border-color: #4f6a8a;
+    width: 100%;
 }
 
 .shipping-calculator button:hover {
@@ -44,6 +45,48 @@
 
 .shipping-calculator .loading-icon.d-none {
     display: none !important;
+}
+
+.shipping-calculator .d-flex {
+    flex-direction: column;
+}
+
+@media screen and (min-width: 425px) {
+    .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .shipping-calculator button {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .shipping-calculator .d-flex {
+        flex-direction: column;
+    }
+
+    .shipping-calculator button {
+        width: 100%;
+    }
+
+    .cart-total .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .cart-total .shipping-calculator button {
+        width: unset;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .shipping-calculator button {
+        width: unset;
+    }
 }
 
 @keyframes spin {
