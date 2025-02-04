@@ -24695,7 +24695,7 @@ body:not(.user-is-tabbing) .surface-pick-up-embed__modal-btn:focus {
 } */
 
 .site-navigation .meganav.nav-collection__container.page-active .meganav__link {
-  color: #1d1d1f;
+  color: #fff;
 }
 
 .site-navigation .meganav:first-child .meganav__link {

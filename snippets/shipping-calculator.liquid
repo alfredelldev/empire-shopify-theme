@@ -1,0 +1,137 @@
+{{ 'component-shipping-calculator.css' | asset_url | stylesheet_tag }}
+
+<div id="shipping-calculator" class="shipping-calculator">
+  <div class="d-flex gap-10">
+    <div class="form-field">
+      <input
+        class="field__input form-field-input form-field-text"
+        type="text"
+        id="zip-code"
+        name="zipcode"
+        value=""
+      >
+      <label class="field__label form-field-title" for="zip-code">Zip Code</label>
+    </div>
+
+    <button id="calculate-shipping" class="button-primary">Calculate Shipping</button>
+  </div>
+
+  <div class="shipping-results-container">
+    <div id="shipping-results" class="shipping-results d-none"></div>
+    <div class="loading-icon d-none">
+      {%- render 'icon-spinner' -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Select all input and textarea fields within the contact form
+    const inputs = document.querySelectorAll('#shipping-calculator .field__input');
+
+    // Function to check if an input has a value and add/remove the 'filled' class
+    function handleInput(event) {
+      const input = event.target;
+      if (input.value.trim() !== '') {
+        input.classList.add('filled');
+      } else {
+        input.classList.remove('filled');
+      }
+    }
+
+    // Add event listeners to all inputs
+    inputs.forEach((input) => {
+      input.addEventListener('input', handleInput); // Trigger on input change
+      input.addEventListener('blur', handleInput); // Trigger when leaving the field
+      input.dispatchEvent(new Event('input')); // Trigger on page load for pre-filled values
+    });
+
+    const zipToStateMap = [
+      { state: 'New South Wales', range: [1000, 1999, 2000, 2999] },
+      { state: 'Australian Capital Territory', range: [200, 299, 2600, 2639] },
+      { state: 'Victoria', range: [3000, 3999, 8000, 8999] },
+      { state: 'Queensland', range: [4000, 4999, 9000, 9999] },
+      { state: 'South Australia', range: [5000, 5999] },
+      { state: 'Western Australia', range: [6000, 6999] },
+      { state: 'Tasmania', range: [7000, 7999] },
+      { state: 'Northern Territory', range: [800, 999] },
+    ];
+
+    function findStateByZip(zip) {
+      zip = parseInt(zip);
+      for (let entry of zipToStateMap) {
+        for (let i = 0; i < entry.range.length; i += 2) {
+          if (zip >= entry.range[i] && zip <= entry.range[i + 1]) {
+            return entry.state;
+          }
+        }
+      }
+      return null;
+    }
+
+    const calculateBtn = document.querySelector('#calculate-shipping');
+    const resultContainer = document.querySelector('#shipping-results');
+    const loadingIcon = document.querySelector('.shipping-results-container .loading-icon');
+
+    calculateBtn.addEventListener('click', function () {
+      let zipCode = document.querySelector('#zip-code').value.trim();
+
+      if (!zipCode) {
+        alert('Please enter a ZIP code');
+        return;
+      }
+
+      resultContainer.classList.add('d-none');
+      loadingIcon.classList.remove('d-none');
+      calculateBtn.textContent = 'Calculating...';
+      calculateBtn.disabled = true;
+      resultContainer.innerHTML = '';
+
+      let state = findStateByZip(zipCode);
+
+      if (!state) {
+        resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+        calculateBtn.textContent = 'Calculate Shipping';
+        calculateBtn.disabled = false;
+        return;
+      }
+
+      let apiUrl = `/cart/shipping_rates.json?shipping_address%5Bcountry%5D=Australia&shipping_address%5Bprovince%5D=${encodeURIComponent(
+        state
+      )}&shipping_address%5Bzip%5D=${zipCode}`;
+
+      fetch(apiUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          let rates = data.shipping_rates;
+          let resultContainer = document.querySelector('#shipping-results');
+          resultContainer.innerHTML = '';
+
+          if (rates.length > 0) {
+            let message = `We found ${rates.length} shipping rate(s) available for ${zipCode}, ${state}, Australia.`;
+            let messageElement = document.createElement('p');
+            messageElement.textContent = message;
+            resultContainer.appendChild(messageElement);
+
+            rates.forEach((rate) => {
+              let rateElement = document.createElement('p');
+              rateElement.textContent = `${rate.name} at $${rate.price}`;
+              resultContainer.appendChild(rateElement);
+            });
+          } else {
+            resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+          }
+        })
+        .catch((error) => {
+          console.error('Error fetching shipping rates:', error);
+          resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+        })
+        .finally(() => {
+          calculateBtn.textContent = 'Calculate Shipping';
+          calculateBtn.disabled = false;
+          loadingIcon.classList.add('d-none');
+          resultContainer.classList.remove('d-none');
+        });
+    });
+  });
+</script>
