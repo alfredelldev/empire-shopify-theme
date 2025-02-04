@@ -1,0 +1,56 @@
+.shipping-calculator {
+    margin: 24px 0;
+    background: #f5f5f7;
+    padding: 24px;
+}
+
+.shipping-calculator .field__input.focus-visible + .field__label,
+.shipping-calculator .text-area.field__input.focus-visible + .field__label {
+    font-size: 13px;
+}
+
+.shipping-calculator .field__input.filled + .field__label {
+    top: 20%;
+    transform: translateY(-20%);
+    font-size: 13px;
+}
+
+.shipping-calculator .shipping-results,
+.shipping-calculator .loading-icon {
+    padding: 12px 0;
+    margin-top: 12px;
+}
+
+.shipping-calculator button {
+    background-color: #4f6a8a;
+    border-color: #4f6a8a;
+}
+
+.shipping-calculator button:hover {
+    background-color: #6a87a8 !important;
+    border-color: #6a87a8 !important;
+}
+
+.shipping-calculator .loading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 26px;
+}
+
+.shipping-calculator .loading-icon svg {
+    animation: spin 1s linear infinite;
+}
+
+.shipping-calculator .loading-icon.d-none {
+    display: none !important;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
