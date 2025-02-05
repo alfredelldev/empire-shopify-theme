@@ -73,7 +73,9 @@
     const resultContainer = document.querySelector('#shipping-results');
     const loadingIcon = document.querySelector('.shipping-results-container .loading-icon');
 
-    calculateBtn.addEventListener('click', function () {
+    calculateBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      
       let zipCode = document.querySelector('#zip-code').value.trim();
 
       if (!zipCode) {
@@ -90,7 +92,9 @@
       let state = findStateByZip(zipCode);
 
       if (!state) {
-        resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+        loadingIcon.classList.add('d-none');
+        resultContainer.classList.remove('d-none');
+        resultContainer.innerHTML = `Please email us at <a href="mailto:sales@blueleafbath.com.au">sales@blueleafbath.com.au</a> or <a href="tel:0291603988">call (02) 9160 3988</a> to discuss delivery options.`; // Make the email and number clickable
         calculateBtn.textContent = 'Calculate Shipping';
         calculateBtn.disabled = false;
         return;
@@ -119,12 +123,12 @@
               resultContainer.appendChild(rateElement);
             });
           } else {
-            resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+            resultContainer.innerHTML = `Please email us at <a href="mailto:sales@blueleafbath.com.au">sales@blueleafbath.com.au</a> or <a href="tel:0291603988">call (02) 9160 3988</a> to discuss delivery options.`; // Make the email and number clickable
           }
         })
         .catch((error) => {
           console.error('Error fetching shipping rates:', error);
-          resultContainer.textContent = "Sorry, we're not able to calculate your shipping at this time.";
+          resultContainer.innerHTML = `Please email us at <a href="mailto:sales@blueleafbath.com.au">sales@blueleafbath.com.au</a> or <a href="tel:0291603988">call (02) 9160 3988</a> to discuss delivery options.`; // Make the email and number clickable
         })
         .finally(() => {
           calculateBtn.textContent = 'Calculate Shipping';
