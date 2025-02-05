@@ -1,0 +1,112 @@
+.shipping-calculator {
+    margin: 24px 0;
+    background: #f5f5f7;
+    padding: 24px;
+}
+
+.shipping-calculator .field__input.focus-visible + .field__label,
+.shipping-calculator .text-area.field__input.focus-visible + .field__label {
+    font-size: 13px;
+}
+
+.shipping-calculator .field__input.filled + .field__label {
+    top: 20%;
+    transform: translateY(-20%);
+    font-size: 13px;
+}
+
+.shipping-calculator .shipping-results,
+.shipping-calculator .loading-icon {
+    padding: 12px 0 0 0;
+    margin-top: 12px;
+}
+
+.shipping-calculator button {
+    background-color: #4f6a8a;
+    border-color: #4f6a8a;
+    width: 100%;
+}
+
+.shipping-calculator button:hover {
+    background-color: #6a87a8 !important;
+    border-color: #6a87a8 !important;
+}
+
+.shipping-calculator .loading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 26px;
+}
+
+.shipping-calculator .loading-icon svg {
+    animation: spin 1s linear infinite;
+}
+
+.shipping-calculator .loading-icon.d-none {
+    display: none !important;
+}
+
+.shipping-calculator .d-flex {
+    flex-direction: column;
+}
+
+.shipping-calculator a {
+    color: var(--color-primary);
+}
+
+.shipping-calculator p {
+    padding: 0;
+    margin: 0;
+}
+
+.shipping-calculator p:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+@media screen and (min-width: 425px) {
+    .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .shipping-calculator button {
+        width: 50%;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    .shipping-calculator .d-flex {
+        flex-direction: column;
+    }
+
+    .shipping-calculator button {
+        width: 100%;
+    }
+
+    .cart-total .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .cart-total .shipping-calculator button {
+        width: unset;
+    }
+}
+
+@media screen and (min-width: 990px) {
+    .shipping-calculator .d-flex {
+        flex-direction: row;
+    }
+
+    .shipping-calculator button {
+        width: unset;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
