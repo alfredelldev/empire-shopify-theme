@@ -47,21 +47,21 @@
     });
 
     const zipToStateMap = [
-      { state: 'New South Wales', range: [1000, 1999, 2000, 2999] },
-      { state: 'Australian Capital Territory', range: [200, 299, 2600, 2639] },
-      { state: 'Victoria', range: [3000, 3999, 8000, 8999] },
-      { state: 'Queensland', range: [4000, 4999, 9000, 9999] },
-      { state: 'South Australia', range: [5000, 5999] },
-      { state: 'Western Australia', range: [6000, 6999] },
-      { state: 'Tasmania', range: [7000, 7999] },
-      { state: 'Northern Territory', range: [800, 999] },
+      { state: 'New South Wales', range: [[1000, 1999], [2000, 2599], [2640, 2999]] },
+      { state: 'Australian Capital Territory', range: [[200, 299], [2600, 2639]] },
+      { state: 'Victoria', range: [[3000, 3999], [8000, 8999]] },
+      { state: 'Queensland', range: [[4000, 4999], [9000, 9999]] },
+      { state: 'South Australia', range: [[5000, 5999]] },
+      { state: 'Western Australia', range: [[6000, 6999]] },
+      { state: 'Tasmania', range: [[7000, 7999]] },
+      { state: 'Northern Territory', range: [[800, 999]] },
     ];
 
     function findStateByZip(zip) {
       zip = parseInt(zip);
       for (let entry of zipToStateMap) {
-        for (let i = 0; i < entry.range.length; i += 2) {
-          if (zip >= entry.range[i] && zip <= entry.range[i + 1]) {
+        for (let range of entry.range) {
+          if (zip >= range[0] && zip <= range[1]) {
             return entry.state;
           }
         }
