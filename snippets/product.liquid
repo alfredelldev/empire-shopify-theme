@@ -561,6 +561,8 @@
               {% render 'divider' %}
             {% when 'shipping_calculator' %}
               {% render 'shipping-calculator' %}
+            {% when 'color_swatch' %}
+              {% render 'color-swatch-product' product: product, is_product_page: true %}
           {% endcase %}
         </div>
       {% endfor %}
