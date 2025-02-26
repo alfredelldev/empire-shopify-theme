@@ -11,7 +11,6 @@
     <p><strong>Color</strong></p>
   {% endif %}
 
-  {%- assign current_color_name = '' -%}
   {%- assign current_color_tag = '' -%}
 
   {%- comment %}
@@ -19,19 +18,9 @@
   {%- endcomment %}
   {%- for tag in product.tags -%}
     {%- if tag contains 'Colour_' -%}
-      {%- assign current_color_name = tag | replace: 'Colour_', '' | capitalize -%}
       {%- assign current_color_tag = tag | replace: 'Colour_', '' | replace: ' ', '-' | downcase -%}
     {%- endif -%}
   {%- endfor -%}
-
-  {%- comment %}
-    Show the current selected color dynamically
-  {%- endcomment %}
-  {% if is_product_page %}
-    <p class="current-selected-color">
-      {{ current_color_name | default: 'No Color Selected' }}
-    </p>
-  {%- endif -%}
 
   <div class="color-options">
     {%- if current_color_tag != '' -%}

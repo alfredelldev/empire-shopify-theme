@@ -28,6 +28,7 @@
 .color-swatch-product__container .color-options {
   display: flex;
   gap: 6px;
+  margin-top: 8px;
 }
 
 .color-swatch-product__container p {
@@ -37,7 +38,7 @@
 .color-swatch-product__container .color-swatch__circle {
   width: 47px;
   height: 47px;
-  border-radius: 4px;
+  border-radius: 2;
   display: inline-block;
   border: 2px solid transparent;
   transition: transform 0.2s, border 0.2s;
@@ -47,11 +48,6 @@
   outline: 1px solid #1d1d1f;
   outline-offset: 1px;
   border: 1px solid white;
-}
-
-.color-swatch-product__container .current-selected-color {
-  margin-top: 8px;
-  margin-bottom: 8px;
 }
 
 .color-swatch__circle.swatch-img {
