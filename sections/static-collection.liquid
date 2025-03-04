@@ -443,10 +443,30 @@
       {% render 'pagination', paginate: paginate, grid_list: true %}
 
       {%- unless collection.description == blank -%}
+        {% assign description = collection.description %}
+        {% assign parts = description | split: "<h5>" %}
+        
         <div class="collection--description">
-          {{- collection.description -}}
+          {% for part in parts %}
+            {% if part contains "</h5>" %}
+              {% assign title_and_content = part | split: "</h5>" %}
+              
+              <!-- Remove extracted content -->
+              {% assign title = "<h5>" | append: title_and_content[0] | append: "</h5>" %}
+              {% assign content = title_and_content[1] %}
+              {% assign description = description | remove: title | remove: content %}
+            {% endif %}
+          {% endfor %}
+          
+          <!-- Show remaining description after removing accordion content -->
+          <div class="collection--description-content">
+            {{- description -}}
+          </div>
+      
+          {% render 'accordion' %}
         </div>
       {%- endunless -%}
+      
     </div>
   </div>
 {% endpaginate %}
