@@ -1,7 +1,7 @@
-{% if collection.description != blank %}
-  <div class="accordion">
-    {% assign parts = collection.description | split: '<h5>' %}
+{% if source != blank %}
+  {% assign parts = source | split: '<h5>' %}
 
+  <div class="accordion">
     {% for part in parts %}
       {% if part contains '</h5>' %}
         {% assign title_and_content = part | split: '</h5>' %}
@@ -87,9 +87,9 @@
   }
 
   // Ensure open accordions update on resize
-  window.addEventListener("resize", function () {
-    document.querySelectorAll(".accordion-item.active .accordion-content").forEach(content => {
-      content.style.maxHeight = content.scrollHeight + "px";
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.accordion-item.active .accordion-content').forEach((content) => {
+      content.style.maxHeight = content.scrollHeight + 'px';
     });
   });
 </script>
