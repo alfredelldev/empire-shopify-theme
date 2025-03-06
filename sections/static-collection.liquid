@@ -253,9 +253,12 @@
 
 {% paginate collection.products by paginate_by %}
   <div class="productgrid--outer {{ collection_classes | strip_newlines }}" data-productgrid-outer>
-    {% if show_sidebar %}
+    <div>
+      {% render 'filters' %}
+    </div>
+    {% comment %} {% if show_sidebar %}
       {% render 'product-grid-sidebar', menu_depth: section.settings.menu_depth_range, context: collection %}
-    {% endif %}
+    {% endif %} {% endcomment %}
 
     <div class="productgrid--wrapper">
       {% if show_filter_trigger or section.settings.sort_by or section.settings.grid_list %}

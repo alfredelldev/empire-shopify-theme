@@ -5509,7 +5509,6 @@ body .mdc-ripple-surface:hover:before {
 
 .collection--description {
   width: 100%;
-  max-width: 110ch;
 }
 
 .collection--description a {
@@ -18504,7 +18503,7 @@ body .mdc-ripple-surface:hover:before {
     display: grid;
     grid-template-columns: 185px calc(100% - 210px);
     grid-template-rows: auto auto;
-    grid-template-areas: "masthead masthead" "sidebar product-items-wrapper";
+    grid-template-areas: "masthead masthead" "product-items-wrapper product-items-wrapper";
     column-gap: 25px;
     row-gap: 2rem;
   }
@@ -18623,7 +18622,7 @@ body .mdc-ripple-surface:hover:before {
   display: grid;
 
   --grid-layout-gap: 10px;
-  --grid-column-count: 5;
+  --grid-column-count: 4;
   --grid-item--min-width: 169px;
 
   --gap-count: calc(var(--grid-column-count) - 1);

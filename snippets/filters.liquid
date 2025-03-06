@@ -1,0 +1,213 @@
+{% assign filters = collection.filters %}
+
+<div class="filters-bar">
+  <!-- Sort by pill -->
+  <div class="filter-pill" onclick="toggleFilterBox('sort')">
+    Sort by
+  </div>
+  
+  <!-- Other filter pills -->
+  {% for filter in filters %}
+    <div class="filter-pill" onclick="toggleFilterBox('{{ filter.param_name }}')">
+      {{ filter.label }}
+    </div>
+  {% endfor %}
+
+  <!-- All Filters pill -->
+  <div class="filter-pill" onclick="toggleFilterBox('all-filters')">
+    All Filters
+  </div>
+</div>
+
+<!-- Filter boxes -->
+<div class="filter-boxes">
+  <!-- Sort By Box -->
+  <div class="filter-box" id="filter-box-sort">
+    <h4>Sort by</h4>
+    {% for option in collection.sort_options %}
+      <button class="filter-option" onclick="applySort('{{ option.value }}')">
+        {{ option.name }}
+      </button>
+    {% endfor %}
+  </div>
+
+  <!-- Dynamic Filter Boxes -->
+  {% for filter in filters %}
+    <div class="filter-box" id="filter-box-{{ filter.param_name }}">
+      <h4>{{ filter.label }}</h4>
+      {% for value in filter.values %}
+        <label class="filter-option">
+          <input type="checkbox" 
+                 name="{{ filter.param_name }}" 
+                 value="{{ value.value }}" 
+                 {% if value.active %}checked{% endif %}
+                 onchange="applyFilters()">
+          {{ value.label }} ({{ value.count }})
+        </label>
+      {% endfor %}
+    </div>
+  {% endfor %}
+
+  <!-- All Filters Box -->
+  <div class="filter-box" id="filter-box-all-filters">
+    <h4>All Filters</h4>
+    {% for filter in filters %}
+      <div class="filter-group">
+        <h4>{{ filter.label }}</h4>
+        {% for value in filter.values %}
+          <label class="filter-option">
+            <input type="checkbox" 
+                   name="{{ filter.param_name }}" 
+                   value="{{ value.value }}" 
+                   {% if value.active %}checked{% endif %}
+                   onchange="applyFilters()">
+            {{ value.label }} ({{ value.count }})
+          </label>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <button class="apply-filters" onclick="applyFilters()">Apply Filters</button>
+  </div>
+</div>
+
+<!-- Active Filters Pills -->
+<div class="active-filters">
+  {% for filter in filters %}
+    {% for value in filter.values %}
+      {% if value.active %}
+        <span class="filter-pill active">
+          {{ value.label }}
+          <button class="remove-filter" onclick="removeFilter('{{ filter.param_name }}', '{{ value.value }}')">✕</button>
+        </span>
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  {% if collection.filters_active %}
+    <button class="clear-filters" onclick="clearFilters()">Remove All</button>
+  {% endif %}
+</div>
+
+<style>
+  /* Filters Bar */
+  .filters-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .filter-pill {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background: white;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .filter-pill.active {
+    background: #1682C3;
+    color: white;
+  }
+
+  /* Filter Boxes */
+  .filter-boxes {
+    position: relative;
+  }
+
+  .filter-box {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    z-index: 10;
+  }
+
+  .filter-box h4 {
+    margin-bottom: 10px;
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .filter-group {
+    margin-bottom: 15px;
+  }
+
+  .apply-filters {
+    background: #1682C3;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  /* Active Filters */
+  .active-filters {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .remove-filter {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+
+  .clear-filters {
+    background: none;
+    border: none;
+    color: red;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  function toggleFilterBox(id) {
+    // Close all filter boxes
+    document.querySelectorAll(".filter-box").forEach(box => box.style.display = "none");
+    
+    // Open the clicked one
+    let box = document.getElementById("filter-box-" + id);
+    if (box) {
+      box.style.display = "block";
+    }
+  }
+
+  function applyFilters() {
+    let params = new URLSearchParams(window.location.search);
+    
+    // Add selected checkboxes
+    document.querySelectorAll(".filter-box input:checked").forEach(input => {
+      params.append(input.name, input.value);
+    });
+
+    window.location.search = params.toString();
+  }
+
+  function applySort(value) {
+    let params = new URLSearchParams(window.location.search);
+    params.set("sort_by", value);
+    window.location.search = params.toString();
+  }
+
+  function removeFilter(name, value) {
+    let params = new URLSearchParams(window.location.search);
+    params.delete(name, value);
+    window.location.search = params.toString();
+  }
+
+  function clearFilters() {
+    window.location.search = "";
+  }
+</script>
