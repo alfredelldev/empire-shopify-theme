@@ -1,0 +1,95 @@
+{% if source != blank %}
+  {% assign parts = source | split: '<h5>' %}
+
+  <div class="accordion">
+    {% for part in parts %}
+      {% if part contains '</h5>' %}
+        {% assign title_and_content = part | split: '</h5>' %}
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            {{ title_and_content[0] | strip_html }}
+            <span class="accordion-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>{{ title_and_content[1] }}</p>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+<style>
+  .accordion {
+    border: 1px solid #fff;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  .accordion-item {
+    border-top: 1px solid #ddd;
+  }
+  .accordion-item:last-child {
+    border-bottom: none;
+  }
+  .accordion-header {
+    width: 100%;
+    background: #fff;
+    border: none;
+    padding: 15px 0;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: var(--font-heading-family);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s;
+  }
+  .accordion-header:hover {
+    background: #fff;
+  }
+  .accordion-icon {
+    font-weight: bold;
+    transition: transform 0.3s;
+  }
+  .accordion-content {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-in-out;
+  }
+  .accordion-item.active .accordion-content {
+    max-height: 500px; /* Adjust based on content */
+    opacity: 1;
+  }
+  .accordion-item.active .accordion-icon {
+    transform: rotate(45deg);
+  }
+
+  .collection--description-content {
+    padding: 0 15px;
+  }
+</style>
+
+<script>
+  function toggleAccordion(button) {
+    var item = button.parentElement;
+    var content = item.querySelector('.accordion-content');
+
+    if (item.classList.contains('active')) {
+      item.classList.remove('active');
+      content.style.maxHeight = null;
+    } else {
+      item.classList.add('active');
+      content.style.maxHeight = content.scrollHeight + 'px';
+    }
+  }
+
+  // Ensure open accordions update on resize
+  window.addEventListener('resize', function () {
+    document.querySelectorAll('.accordion-item.active .accordion-content').forEach((content) => {
+      content.style.maxHeight = content.scrollHeight + 'px';
+    });
+  });
+</script>
