@@ -5509,6 +5509,7 @@ body .mdc-ripple-surface:hover:before {
 
 .collection--description {
   width: 100%;
+  margin-top: 64px;
 }
 
 .collection--description a {
@@ -18133,11 +18134,16 @@ body .mdc-ripple-surface:hover:before {
 
 .filter-item--grid a {
   position: relative;
-  display: block;
-  padding: 0.625rem 2.3125rem 0.625rem 0.625rem;
-  color: rgb(255, 255, 255);
-  background: #1c83c4;
-  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 8px 16px;
+  color: #1d1d1f;
+  background: #fff;
+  border-radius: 25px;
+  border: 1px solid #1d1d1f;
+  text-decoration: none;
 }
 .filter-item--grid .filter-text {
   font-size: var(--font-size-body-small);
@@ -18146,16 +18152,13 @@ body .mdc-ripple-surface:hover:before {
 }
 .filter-item--grid .filter-text {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
 }
 .filter-item--grid .filter-icon--remove {
-  position: absolute;
-  top: 50%;
-  right: 0.625rem;
-  padding: 0.25rem;
-  color: #1c83c4;
+  position: relative;
+  padding-right: 8px;
+  color: #1d1d1f;
   border-radius: 100%;
-  transform: translateY(-50%);
 }
 .filter-item--grid .filter-icon--remove:before {
   content: "";
@@ -18503,7 +18506,7 @@ body .mdc-ripple-surface:hover:before {
     display: grid;
     grid-template-columns: 185px calc(100% - 210px);
     grid-template-rows: auto auto;
-    grid-template-areas: "masthead masthead" "product-items-wrapper product-items-wrapper";
+    grid-template-areas: "masthead masthead" "filter-pills filter-pills" "product-items-wrapper product-items-wrapper";
     column-gap: 25px;
     row-gap: 2rem;
   }
@@ -18640,7 +18643,7 @@ body .mdc-ripple-surface:hover:before {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 1.75rem;
+  margin-top: 0;
   padding: 0;
 }
 @media (width >= 680px) {
