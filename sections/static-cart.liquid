@@ -73,17 +73,6 @@
     <div class="cartitems">
       {% if has_items %}
         <div class="cartitems--list-wrapper">
-          <div class="cartitems-header">
-            <div class="cartitems-header-item cartitems-header-item--product">
-              <span>Product</span>
-            </div>
-            <div class="cartitems-header-item cartitems-header-item--quantity">
-              <span>{{ 'cart.general.quantity' | t }}</span>
-            </div>
-            <div class="cartitems-header-item cartitems-header-item--price">
-              <span>Price</span>
-            </div>
-          </div>
           {% render 'cart-item-list', show_sku: section.settings.show_sku, cart: cart %}
         </div>
         <div class="cart-total">
@@ -284,6 +273,32 @@
         select.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     });
+
+    const checkoutButtons = document.querySelector('shopify-accelerated-checkout-cart');
+    const agreeCheckbox = document.querySelector('#terms_checkbox');
+    const selectField = document.querySelector('#delivery_option');
+
+    function toggleCheckoutButtons() {
+      const isChecked = agreeCheckbox.checked;
+      const isSelectValid = selectField.value !== ''; // Ensure the select field isn't empty
+
+      if (isChecked && isSelectValid) {
+        checkoutButtons.style.pointerEvents = 'auto';
+        checkoutButtons.style.opacity = '1';
+      } else {
+        checkoutButtons.style.pointerEvents = 'none';
+        checkoutButtons.style.opacity = '0.5';
+      }
+
+      document.body.classList.toggle("agree-checked", agreeCheckbox.checked);
+    }
+
+    // Initial check on page load
+    toggleCheckoutButtons();
+
+    // Listen for checkbox and select field changes
+    agreeCheckbox.addEventListener('change', toggleCheckoutButtons);
+    selectField.addEventListener('change', toggleCheckoutButtons);
   });
 </script>
 
