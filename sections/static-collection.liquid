@@ -259,9 +259,9 @@
       {% render 'filters', menu_depth: section.settings.menu_depth_range, context: collection %}
     </div>
     
-    {% comment %} {% if show_sidebar %}
+    {% if show_sidebar %}
       {% render 'product-grid-sidebar', menu_depth: section.settings.menu_depth_range, context: collection %}
-    {% endif %} {% endcomment %}
+    {% endif %}
 
     <div class="productgrid--wrapper">
       {% if show_filter_trigger or section.settings.sort_by or section.settings.grid_list %}

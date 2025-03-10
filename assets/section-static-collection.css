@@ -1,3 +1,23 @@
 .filter-pills {
-    grid-area: filter-pills;
+  grid-area: filter-pills;
+}
+
+.sort-popup label {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-popup li:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.sort-popup label input[type="radio"] {
+  height: 14px;
+  width: 14px;
+}
+
+.sort-popup label:has(input[type="radio"]:checked) {
+  font-weight: bold;
 }

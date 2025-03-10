@@ -1687,8 +1687,6 @@ h6 {
 .shopify-payment-button .shopify-payment-button__more-options,
 .complementary-product__link,
 .product-vendor a,
-.utils-sortby-button,
-.utils-filter-button,
 .productgrid--sidebar-menu .navmenu-link--active,
 .productgrid-listview .productitem--link,
 .productgrid--footer-results-list a,
@@ -18156,6 +18154,7 @@ body .mdc-ripple-surface:hover:before {
 }
 .filter-item--grid .filter-icon--remove {
   position: relative;
+  padding-top: 2px;
   padding-right: 8px;
   color: #1d1d1f;
   border-radius: 100%;
@@ -18562,12 +18561,7 @@ body .mdc-ripple-surface:hover:before {
 
 .productgrid--filters {
   width: 100%;
-  margin: 1.75rem 0;
-}
-@media screen and (max-width: 859px) {
-  .productgrid--filters {
-    display: none;
-  }
+  margin: 0 0 1.75rem 0;
 }
 
 .productgrid--utils-container {
@@ -18588,7 +18582,7 @@ body .mdc-ripple-surface:hover:before {
   .productgrid--utils.productgrid--utils--visible-mobile {
     display: flex;
     align-items: center;
-    padding: 0.25rem 0.625rem;
+    padding: 0 0.625rem;
     margin-left: calc((20px / 2) * -1);
   }
   .productgrid--utils.productgrid--utils-sticky {
@@ -19356,7 +19350,6 @@ body:not(.user-is-tabbing) .utils-filter-button {
 }
 
 .utils-filter {
-  margin-right: 0.75rem;
   text-align: left;
 }
 @media screen and (min-width: 860px) {
@@ -19368,19 +19361,6 @@ body:not(.user-is-tabbing) .utils-filter-button {
 .utils-filter-button {
   font-size: 0;
   transition: color 100ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.utils-filter-icon {
-  display: table-cell;
-  padding-right: 0.5rem;
-  vertical-align: middle;
-}
-.utils-filter-icon svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  transition: fill 100ms cubic-bezier(0.4, 0, 0.2, 1);
-  fill: currentColor;
 }
 
 .utils-filter-text {
