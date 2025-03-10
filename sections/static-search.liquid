@@ -46,7 +46,6 @@
 {% endif %}
 
 {% assign paginate_by = section.settings.results_per_page_range %}
-
 {% paginate search.results by paginate_by %}
 
   {% comment %}
@@ -301,7 +300,6 @@
       {% render 'pagination', paginate: paginate %}
     </div>
     {% render 'quick-shop' %}
-  </div>
 {% endpaginate %}
 
 {% schema %}
