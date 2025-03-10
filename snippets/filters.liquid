@@ -1,3 +1,5 @@
+{{ "component-filters.css" | asset_url | stylesheet_tag }}
+
 {% capture cat_array %}{%- render 'advanced-tag-loop', block: block -%}{% endcapture %}
 
 {% assign cat_array = cat_array | split: '|' %}
@@ -196,112 +198,6 @@
     </div>
   </div>
 {% endfor %}
-
-<style>
-  .pills-container {
-    display: none;
-    gap: 10px;
-    flex-wrap: wrap;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    padding-bottom: 30px;
-  }
-  .pill {
-    padding: 8px 16px;
-    border: 1px solid #1d1d1f;
-    border-radius: 25px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-  }
-  .pill .svg-wrapper {
-    padding-left: 8px;
-    pointer-events: none;
-  }
-  .pill .svg-wrapper svg {
-    width: 12px;
-    height: auto;
-    pointer-events: none;
-  }
-  .popup {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 5px;
-    padding: 10px 30px;
-    background: white;
-    border: 1px solid rgba(29, 29, 31, 0.1);
-    border-radius: 4px;
-    display: none;
-    z-index: 400;
-    max-height: 500px;
-    overflow-y: auto;
-  }
-
-  .popup-content ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-
-  .productgrid--sidebar {
-    display: none;
-  }
-
-  .productgrid--utils.productgrid--utils--visible-mobile {
-    display: flex;
-    border-top: 1px solid rgba(29, 29, 31, 0.07);
-    border-bottom: 1px solid rgba(29, 29, 31, 0.07);
-    margin-bottom: 12px;
-  }
-
-  .utils-filter {
-    width: 50%;
-    border-right: 1px solid rgba(29, 29, 31, 0.07);
-  }
-
-  .utils-sortby {
-    width: 50%;
-  }
-
-  .utils-sortby-button,
-  .utils-filter-button {
-    text-decoration: none;
-    color: #1d1d1f;
-    font-weight: 500;
-  }
-
-  .utils-sortby-button {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .utils-filter-icon svg {
-    width: 14px;
-    height: 14px;
-  }
-  
-  .utils-filter-button {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-
-  @media screen and (min-width: 860px) {
-    .pills-container {
-      display: flex;
-    }
-
-    .utils-sortby,
-    .productgrid--utils.productgrid--utils--visible-mobile {
-      display: none;
-    }
-  }
-</style>
 
 <script>
   function togglePopup(event, popupId) {
