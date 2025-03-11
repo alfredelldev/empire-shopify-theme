@@ -63,11 +63,13 @@
   method="post"
   aria-label="cart checkout"
 >
-  <header class="cart-title">
-    <div class="cart-title-left">
-      <h1>{{ 'cart.general.your_cart' | t }}</h1>
-    </div>
-  </header>
+  {% if has_items %}
+    <header class="cart-title">
+      <div class="cart-title-left">
+        <h1>{{ 'cart.general.your_cart' | t }}</h1>
+      </div>
+    </header>
+  {% endif %}
 
   <section class="cartitems--container {% if has_sidebar %}has-sidebar{% endif %}">
     <div class="cartitems">
@@ -206,11 +208,12 @@
       {% else %}
         <div class="cartitems-empty">
           <div class="cartitems-empty--inner">
-            <p>{{ 'cart.general.cart_empty' | t }}</p>
+            <h1>{{ 'cart.general.cart_empty' | t }}</h1>
+            <p>Browse our collections and find something you’ll love.</p>
 
             {% if show_continue_link %}
-              <a class="button-primary" href="{{ continue_url }}">
-                {% render 'icon-library', id: 'icon-cart' %}
+              <a class="btn-primary continue-shopping-btn" href="{{ continue_url }}">
+                {% render 'icon-library', id: 'icon-cart-white' %}
                 {{ 'cart.general.continue_shopping' | t }}
               </a>
             {% endif %}
@@ -290,7 +293,7 @@
         checkoutButtons.style.opacity = '0.5';
       }
 
-      document.body.classList.toggle("agree-checked", agreeCheckbox.checked);
+      document.body.classList.toggle('agree-checked', agreeCheckbox.checked);
     }
 
     // Initial check on page load
