@@ -64,7 +64,8 @@
   background-color: #28282b;
 }
 
-.color-swatch__circle.brushed-brass {
+.color-swatch__circle.brushed-brass,
+.color-swatch__circle.tiger-bronze {
   background: url("/cdn/shop/files/Brushed_Brass_5d75d31c-9728-4a5d-83f5-b83598f5b5c4.png?v=1710286351");
 }
 
@@ -85,11 +86,14 @@
 }
 
 .color-swatch__circle.copper,
-.color-swatch__circle.brushed-copper {
+.color-swatch__circle.brushed-copper,
+.color-swatch__circle.lustre-bronze {
   background: url("/cdn/shop/files/Brushed_Copper.png?v=1710286351");
 }
 
-.color-swatch__circle.gun-metal-grey {
+.color-swatch__circle.gun-metal-grey,
+.color-swatch__circle.gun-metal.grey,
+.color-swatch__circle.shadow {
   background: url("/cdn/shop/files/Gun_Metal.png?v=1710286351");
 }
 
