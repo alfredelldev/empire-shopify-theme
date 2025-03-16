@@ -1721,8 +1721,6 @@ h6 {
 .shopify-payment-button .shopify-payment-button__more-options,
 .complementary-product__link,
 .product-vendor a,
-.utils-sortby-button,
-.utils-filter-button,
 .productgrid--sidebar-menu .navmenu-link--active,
 .productgrid-listview .productitem--link,
 .productgrid--footer-results-list a,
@@ -5130,7 +5128,7 @@ body .mdc-ripple-surface:hover:before {
 
 .collection--description {
   width: 100%;
-  max-width: 110ch;
+  margin-top: 64px;
 }
 
 .collection--description a {
@@ -17697,11 +17695,16 @@ body .mdc-ripple-surface:hover:before {
 
 .filter-item--grid a {
   position: relative;
-  display: block;
-  padding: 0.625rem 2.3125rem 0.625rem 0.625rem;
-  color: rgb(255, 255, 255);
-  background: #1c83c4;
-  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row-reverse;
+  padding: 8px 16px;
+  color: #1d1d1f;
+  background: #fff;
+  border-radius: 25px;
+  border: 1px solid #1d1d1f;
+  text-decoration: none;
 }
 .filter-item--grid .filter-text {
   font-size: var(--font-size-body-small);
@@ -17710,16 +17713,14 @@ body .mdc-ripple-surface:hover:before {
 }
 .filter-item--grid .filter-text {
   font-style: normal;
-  font-weight: 700;
+  font-weight: 400;
 }
 .filter-item--grid .filter-icon--remove {
-  position: absolute;
-  top: 50%;
-  right: 0.625rem;
-  padding: 0.25rem;
-  color: #1c83c4;
+  position: relative;
+  padding-top: 2px;
+  padding-right: 8px;
+  color: #1d1d1f;
   border-radius: 100%;
-  transform: translateY(-50%);
 }
 .filter-item--grid .filter-icon--remove:before {
   content: "";
@@ -18067,7 +18068,7 @@ body .mdc-ripple-surface:hover:before {
     display: grid;
     grid-template-columns: 185px calc(100% - 210px);
     grid-template-rows: auto auto;
-    grid-template-areas: "masthead masthead" "sidebar product-items-wrapper";
+    grid-template-areas: "masthead masthead" "filter-pills filter-pills" "product-items-wrapper product-items-wrapper";
     column-gap: 25px;
     row-gap: 2rem;
   }
@@ -18123,12 +18124,7 @@ body .mdc-ripple-surface:hover:before {
 
 .productgrid--filters {
   width: 100%;
-  margin: 1.75rem 0;
-}
-@media screen and (max-width: 859px) {
-  .productgrid--filters {
-    display: none;
-  }
+  margin: 0 0 1.75rem 0;
 }
 
 .productgrid--utils-container {
@@ -18149,7 +18145,7 @@ body .mdc-ripple-surface:hover:before {
   .productgrid--utils.productgrid--utils--visible-mobile {
     display: flex;
     align-items: center;
-    padding: 0.25rem 0.625rem;
+    padding: 0 0.625rem;
     margin-left: calc((20px / 2) * -1);
   }
   .productgrid--utils.productgrid--utils-sticky {
@@ -18186,7 +18182,7 @@ body .mdc-ripple-surface:hover:before {
   display: grid;
 
   --grid-layout-gap: 10px;
-  --grid-column-count: 5;
+  --grid-column-count: 4;
   --grid-item--min-width: 169px;
 
   --gap-count: calc(var(--grid-column-count) - 1);
@@ -18204,7 +18200,7 @@ body .mdc-ripple-surface:hover:before {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-top: 1.75rem;
+  margin-top: 0;
   padding: 0;
 }
 @media (width >= 680px) {
@@ -18917,7 +18913,6 @@ body:not(.user-is-tabbing) .utils-filter-button {
 }
 
 .utils-filter {
-  margin-right: 0.75rem;
   text-align: left;
 }
 @media screen and (min-width: 860px) {
@@ -18929,19 +18924,6 @@ body:not(.user-is-tabbing) .utils-filter-button {
 .utils-filter-button {
   font-size: 0;
   transition: color 100ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.utils-filter-icon {
-  display: table-cell;
-  padding-right: 0.5rem;
-  vertical-align: middle;
-}
-.utils-filter-icon svg {
-  display: block;
-  width: 20px;
-  height: 20px;
-  transition: fill 100ms cubic-bezier(0.4, 0, 0.2, 1);
-  fill: currentColor;
 }
 
 .utils-filter-text {
