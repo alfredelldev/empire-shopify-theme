@@ -57,11 +57,29 @@
     </header>
   {% endif %}
 
-  {% if page.content != blank %}
+  {%- unless page.content == blank -%}
+    {% assign content = page.content %}
+    {% assign parts = content | split: "<h5>" %}
+  
     <div class="page-content rte">
-      {{ page.content }}
+      {% for part in parts %}
+        {% if part contains "</h5>" %}
+          {% assign title_and_content = part | split: "</h5>" %}
+  
+          <!-- Remove extracted content -->
+          {% assign title = "<h5>" | append: title_and_content[0] | append: "</h5>" %}
+          {% assign content_part = title_and_content[1] %}
+          {% assign content = content | remove: title | remove: content_part %}
+        {% endif %}
+      {% endfor %}
+  
+      <!-- Show remaining content (excluding accordion sections) -->
+      {{- content -}}
+  
+      <!-- Render accordion with extracted content -->
+      {% render 'accordion', source: page.content %}
     </div>
-  {% endif %}
+  {%- endunless -%}
 
   {% for block in section.blocks %}
     {% if block.type == "text-banner" %}
