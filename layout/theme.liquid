@@ -101,7 +101,8 @@
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
     {% render 'pagefly-app-header' %}
-  {% include 'pagefly-app-header' %}</head>
+    {% include 'pagefly-app-header' %}
+  </head>
 
   {% render 'swymSnippet' %}
 
@@ -563,7 +564,7 @@
       data-shopify-common="{{ 'shopify_common.js' | shopify_asset_url }}"
       data-pxu-polyfills="{{ 'polyfills.min.js' | asset_url }}"
     ></script>
-    
+
     {% render 'structured-data' %}
 
     <script>
