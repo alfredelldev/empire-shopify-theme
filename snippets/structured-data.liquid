@@ -102,9 +102,107 @@
 {% comment %} Store Information Structured Data {% endcomment %}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
-    "@type": "WebSite",
-    "name": {{ shop.name | json }},
-    "url": {{ shop.url | json }}
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://blueleafbath.com.au#website",
+        "name": "Blue Leaf Bathware & Tiles",
+        "url": "https://blueleafbath.com.au",
+        "description": "Blue Leaf Bathware & Tiles offers high-quality bathware and tiles in Australia, providing stylish and durable solutions for your home renovation needs.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Blue Leaf Bathware & Tiles",
+          "logo": "https://blueleafbath.com.au/cdn/shop/files/600x150_600x150.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+61-1800-882-583",
+            "contactType": "Customer Service",
+            "areaServed": "AU",
+            "availableLanguage": "en"
+          }
+        },
+        "sameAs": [
+          "https://www.instagram.com/blueleafbath/",
+          "https://www.linkedin.com/company/blue-leaf-bathware-&-tiles/",
+          "https://x.com/BlueLeafBath",
+          "https://www.youtube.com/channel/UCS-cX5zx8Iqf1p3j7Hki_wA"
+        ],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://blueleafbath.com.au/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blueleafbath.com.au/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Products",
+            "item": "https://blueleafbath.com.au/products"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Freestanding Baths",
+            "item": "https://blueleafbath.com.au/collections/freestanding-baths"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Showers",
+            "item": "https://blueleafbath.com.au/collections/bathroom-showers"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Kitchen Sinks",
+            "item": "https://blueleafbath.com.au/collections/kitchen-sinks"
+          }
+        ]
+      },
+      {
+        "@type": "Store",
+        "@id": "https://blueleafbath.com.au#store",
+        "name": "Blue Leaf Bathware & Tiles",
+        "image": "https://lh3.googleusercontent.com/p/AF1QipMMr0Zpydz5YM6Ki3TQ6RI7jOXGdSeSAD8a-k6V=s1360-w1360-h1020",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "5/9 Ladbroke St",
+          "addressLocality": "Milperra",
+          "addressRegion": "NSW",
+          "postalCode": "2214",
+          "addressCountry": "AU"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+61-1800-882-583",
+          "contactType": "Customer Service",
+          "availableLanguage": "en"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:30",
+            "closes": "16:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "Closed",
+            "closes": "Closed"
+          }
+        ]
+      }
+    ]
   }
 </script>
