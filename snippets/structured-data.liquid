@@ -1,68 +1,34 @@
 {% comment %}
   Article structured data
-  https://developers.google.com/search/docs/data-types/articles
 {% endcomment %}
-
 {% if template contains 'article' %}
-  {%- capture article_description  -%}
-    {%- if article.excerpt != blank -%}
-      {{ article.excerpt | strip_html }}
-    {%- else -%}
-      {{ article.content | truncatewords: 100 | strip_html }}
-    {%- endif -%}
+  {%- capture article_description -%}
+    {{ article.excerpt | default: article.content | truncatewords: 100 | strip_html }}
   {%- endcapture -%}
 
   <script type="application/ld+json">
     {
-      "@context": "http://schema.org",
+      "@context": "https://schema.org",
       "@type": "BlogPosting",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "{{ shop.url }}{{ article.url }}"
-      },
       "headline": {{ article.title | json }},
-      {% if article.image %}
-        "image": {
-          "@type": "ImageObject",
-          "url": {{ article.image | img_url: '800x800' | prepend: 'https:' | json }},
-          "height": 800,
-          "width": 800
-        },
-      {% endif %}
-      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
-      "dateModified": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' | json}},
-      "author": {
-        "@type": "Person",
-        "name": {{ article.author | json }}
-      },
+      "description": {{ article_description | json }},
+      "url": {{ article.url | prepend: shop.url | json }},
+      "datePublished": {{ article.published_at | date: "%Y-%m-%d" | json }},
+      "dateModified": {{ article.updated_at | date: "%Y-%m-%d" | json }},
+      "author": { "@type": "Person", "name": "Blue Leaf Bathware & Tiles" },
       "publisher": {
         "@type": "Organization",
-        "name": {{ shop.name | json }},
-        "logo": {
-          "@type": "ImageObject",
-          "url": {{ article.user.image | img_url: '200x200' | prepend: 'https:' | json }}
-        }
+        "name": "Blue Leaf Bathware & Tiles",
+        "logo": { "@type": "ImageObject", "url": "https://blueleafbath.com.au/cdn/shop/files/600x150_600x150.png?v=1631754130" }
       },
-      "description": {{ article_description | json }}
+      "mainEntityOfPage": {{ article.title | json }},
+      "image": {{ article.image.src | json }},
+      "keywords": {{ article.tags | join: ", " | json }}
     }
   </script>
 {% endif %}
 
-{% comment %}
-  Breadcrumbs
-  https://developers.google.com/search/docs/data-types/breadcrumbs
-{% endcomment %}
-
-{%- if current_tags -%}
-  {%- assign tag_names = current_tags | join: ', ' %}
-  {% comment %}Converting an array to a handle converts it to a string{% endcomment %}
-  {%- capture tag_handles -%}
-    {%- for tag in current_tags -%}
-      {{- tag | handle | append: '|' -}}
-    {%- endfor -%}
-  {%- endcapture -%}
-{%- endif -%}
-
+{% comment %} Breadcrumbs Structured Data {% endcomment %}
 {% if collection.url == blank %}
   {% assign collection_url = '/collections/all' %}
 {% else %}
@@ -70,308 +36,173 @@
 {% endif %}
 
 {% if template.name == 'product'
-    or template.name == 'list-collections'
-    or template.name == 'collection'
-    or template.name == 'blog'
-    or template.name == 'article'
-    or template.name == 'search'
-    or template.name == 'cart'
-    or template.name == 'page'
+  or template.name == 'collection'
+  or template.name == 'article'
+  or template.name == 'blog'
+  or template.name == 'search'
+  or template.name == 'cart'
+  or template.name == 'page'
 %}
-
   <script type="application/ld+json">
     {
       "@context": "http://schema.org",
       "@type": "BreadcrumbList",
       "itemListElement": [
-      {% case template.name %}
-        {% when 'product' %}
-          {% if product.collections.size >= 1 %}
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@id": "{{ shop.url }}/collections",
-                "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
-              }
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "{{ shop.url }}/collections/{{ product.collections.first.handle }}",
-                "name": {{ product.collections.first.title | json }}
-              }
-            },
-          {% else %}
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@id": "{{ shop.url }}/products",
-                "name": {{ 'structured_data.breadcrumbs.products' | t | json }}
-              }
-            },
-          {% endif %}
-          {
-            "@type": "ListItem",
-            "position": {% if product.collections.size >= 1 %}3{% else %}2{% endif %},
-            "item": {
-              "@id": "{{ shop.url }}{{ product.url | within: collection }}",
-              "name": {{ product.title | json }}
-            }
-          }
-        {% when 'list-collections' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ shop.url }}/collections",
-              "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
-            }
-          }
-          {% if current_page != 1 %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "{{ shop.url }}/collections",
-                "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
-              }
-            }
-          {% endif %}
-        {% when 'collection' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ shop.url }}/collections",
-              "name": {{ 'structured_data.breadcrumbs.collections' | t | json }}
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "item": {
-              "@id": "{{ shop.url }}{{ collection_url }}",
-              "name": {{ collection.title | json }}
-            }
-          }
-          {% if current_tags %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "item": {
-                "@id": "{{ shop.url }}{{ collection_url }}/{{- tag_handles | split: '|' | join: '+' -}}",
-                "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
-              }
-            }
-          {% endif %}
-          {% if current_page != 1 %}
-            {% if current_tags %}
-              {% assign position = 4 %}
-            {% else %}
-              {% assign position = 3 %}
-            {% endif %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": {{ position }},
-              "item": {
-                "@id": "{{ shop.url }}/collections?page={{ current_page }}",
-                "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
-              }
-            }
-          {% endif %}
-        {% when 'blog' or 'article' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ shop.url }}{{ blog.url }}",
-              "name": {{ blog.title | json }}
-            }
-          }
-          {% if template.name == 'article' %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "{{ shop.url }}{{ article.url }}",
-                "name": {{ article.title | json }}
-              }
-            }
-          {% elsif current_tags %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "{{ shop.url }}{{ blog.url }}/tagged/{{- tag_handles | split: '|' | join: '+' -}}",
-                "name": {{ 'structured_data.breadcrumbs.tags_html' | t: tags: tag_names | json }}
-              }
-            }
-          {% endif %}
-          {% if current_page != 1 %}
-            {% if current_tags %}
-              {% assign position = 3 %}
-              {%- capture url -%}
-                {{ shop.url }}{{ blog.url }}/tagged/{{ tag_handles | split: '|' | join: '+' }}?page={{ current_page }}
-              {%- endcapture -%}
-            {% else %}
-              {% assign position = 2 %}
-                {%- capture url -%}
-                {{ shop.url }}{{ blog.url }}?page={{ current_page }}
-              {%- endcapture -%}
-            {% endif %}
-            ,
-            {
-              "@type": "ListItem",
-              "position": {{ position }},
-              "item": {
-                "@id": "{{ url }}",
-                "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
-              }
-            }
-          {% endif %}
-        {% when 'search' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ shop.url }}/search",
-              "name": {{ 'structured_data.breadcrumbs.search' | t | json }}
-            }
-          }
-          {% if search.performed %}
-          ,
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "{{ shop.url }}/search?q={{ search.terms }}",
-                "name": {{ search.terms | json }}
-              }
-            }
-            {% if current_page != 1 %}
-            ,
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "item": {
-                  "@id": "{{ shop.url }}/search?page={{ current_page }}&q={{ search.terms }}",
-                  "name": {{ 'structured_data.breadcrumbs.page' | t: page: current_page | json }}
-                }
-              }
-            {% endif %}
-          {% endif %}
-        {% when 'cart' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ shop.url }}/cart",
-              "name": {{ 'structured_data.breadcrumbs.cart' | t | json }}
-            }
-          }
-        {% when 'page' %}
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "item": {
-              "@id": "{{ page.url }}",
-              "name": {{ page.title | json }}
-            }
-          }
-        {% else %}
-        {% endcase %}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "item": { "@id": "{{ shop.url }}/", "name": "Home" }
+        },
+        {% if template.name == 'product' and product.collections.size > 0 %}
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "item": { "@id": "{{ shop.url }}/collections/{{ product.collections.first.handle }}", "name": {{ product.collections.first.title | json }} }
+        },
+        {% endif %}
+        {
+          "@type": "ListItem",
+          "position": {% if template.name == 'product' and product.collections.size > 0 %}3{% else %}2{% endif %},
+          "item": { "@id": "{{ shop.url }}{{ request.path }}", "name": {{ page_title | json }} }
+        }
       ]
     }
   </script>
 {% endif %}
 
-{% comment %}
-  Product structured data
-  https://developers.google.com/search/docs/data-types/products
-{% endcomment %}
-
+{% comment %} Product structured data {% endcomment %}
 {% if template contains 'product' %}
   {% assign selected_variant = product.selected_or_first_available_variant | default: product.variants.first %}
   {% assign product_image = selected_variant.featured_image | default: product.featured_image %}
-  {%- capture product_name -%}
-    {{ product.title }}
-    {%- if selected_variant.title != 'Default Title' and selected_variant.option1 == 'Default Title' -%}
-      - {{ selected_variant.title }}
-    {%- endif -%}
-  {%- endcapture -%}
-
-  {%- assign now = 'now' | date: '%Y-%m-%d' | split: '-' -%}
-  {% capture year_from_now %}{{ now[0] | plus: 1 }}-{{ now[1] }}-{{ now[2] | at_most: 28 }}{% endcapture %}
+  {% capture year_from_now %}{{ 'now' | date: '%Y' | plus: 1 }}-{{ 'now' | date: '%m-%d' }}{% endcapture %}
 
   <script type="application/ld+json">
-  {
-    "@context": "http://schema.org/",
-    "@type": "Product",
-    "name": {{ product_name | strip_newlines | json }},
-    "image": {{ product_image | img_url: '1024x1024' | prepend: 'https:' | json }},
-    {% if product.description != blank %}
+    {
+      "@context": "http://schema.org/",
+      "@type": "Product",
+      "name": {{ product.title | json }},
+      "image": {{ product_image | img_url: '1024x1024' | prepend: 'https:' | json }},
       "description": {{ product.description | json }},
-    {% endif %}
-    {% if product.vendor %}
-      "brand": {
-        "@type": "Brand",
-        "name": {{ product.vendor | json }}
-      },
-    {% endif %}
-    {% if selected_variant.sku != blank %}
+      "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
       "sku": {{ selected_variant.sku | json }},
-    {% endif %}
-    {% if selected_variant.barcode != blank %}
       "mpn": {{ selected_variant.barcode | json }},
-    {% endif %}
-    {% if product.metafields.reviews.rating.value != blank %}
-      "review": {
-        "@type": "Review",
-          "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "{{ product.metafields.reviews.rating.value }}"
-        }
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "{{ product.metafields.reviews.rating.value }}",
-        "reviewCount": "{{ product.metafields.reviews.rating_count }}"
-      },
-    {% endif %}
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": {{ cart.currency.iso_code | json }},
-      "price": {{ selected_variant.price | divided_by: 100.0 | json }},
-      "availability": "http://schema.org/{% if selected_variant.available %}InStock{% else %}OutOfStock{% endif %}",
-      "url": "{{ shop.url }}{{ selected_variant.url }}",
-      "seller": {
-        "@type": "Organization",
-        "name": {{ shop.name | json }}
-      },
-      "priceValidUntil": {{ year_from_now | json }}
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": {{ cart.currency.iso_code | json }},
+        "price": {{ selected_variant.price | divided_by: 100.0 | json }},
+        "availability": "http://schema.org/{% if selected_variant.available %}InStock{% else %}OutOfStock{% endif %}",
+        "url": "{{ shop.url }}{{ selected_variant.url }}",
+        "seller": { "@type": "Organization", "name": {{ shop.name | json }} },
+        "priceValidUntil": {{ year_from_now | json }}
+      }
     }
-  }
   </script>
 {% endif %}
 
-{% comment %}
-  Store information
-  https://developers.google.com/search/docs/data-types/sitename
-{% endcomment %}
-
+{% comment %} Store Information Structured Data {% endcomment %}
 <script type="application/ld+json">
   {
-    "@context": "http://schema.org",
-    "@type": "WebSite",
-    "name": "{{ shop.name }}",
-    "url": "{{ shop.url }}"
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://blueleafbath.com.au#website",
+        "name": "Blue Leaf Bathware & Tiles",
+        "url": "https://blueleafbath.com.au",
+        "description": "Blue Leaf Bathware & Tiles offers high-quality bathware and tiles in Australia, providing stylish and durable solutions for your home renovation needs.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Blue Leaf Bathware & Tiles",
+          "logo": "https://blueleafbath.com.au/cdn/shop/files/600x150_600x150.png",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+61-1800-882-583",
+            "contactType": "Customer Service",
+            "areaServed": "AU",
+            "availableLanguage": "en"
+          }
+        },
+        "sameAs": [
+          "https://www.instagram.com/blueleafbath/",
+          "https://www.linkedin.com/company/blue-leaf-bathware-&-tiles/",
+          "https://x.com/BlueLeafBath",
+          "https://www.youtube.com/channel/UCS-cX5zx8Iqf1p3j7Hki_wA"
+        ],
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://blueleafbath.com.au/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blueleafbath.com.au/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Products",
+            "item": "https://blueleafbath.com.au/products"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Freestanding Baths",
+            "item": "https://blueleafbath.com.au/collections/freestanding-baths"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Showers",
+            "item": "https://blueleafbath.com.au/collections/bathroom-showers"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Kitchen Sinks",
+            "item": "https://blueleafbath.com.au/collections/kitchen-sinks"
+          }
+        ]
+      },
+      {
+        "@type": "Store",
+        "@id": "https://blueleafbath.com.au#store",
+        "name": "Blue Leaf Bathware & Tiles",
+        "image": "https://lh3.googleusercontent.com/p/AF1QipMMr0Zpydz5YM6Ki3TQ6RI7jOXGdSeSAD8a-k6V=s1360-w1360-h1020",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "5/9 Ladbroke St",
+          "addressLocality": "Milperra",
+          "addressRegion": "NSW",
+          "postalCode": "2214",
+          "addressCountry": "AU"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+61-1800-882-583",
+          "contactType": "Customer Service",
+          "availableLanguage": "en"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:30",
+            "closes": "16:30"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Saturday", "Sunday"],
+            "opens": "Closed",
+            "closes": "Closed"
+          }
+        ]
+      }
+    ]
   }
 </script>
