@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
       body: JSON.stringify({
         query: `
                       {
-                        products(first: 10, query: "tag:VGroup_${variantGroup}") {
+                        products(first: 10, query: "tag:VGroup--${variantGroup}") {
                           edges {
                             node {
                               id
