@@ -667,7 +667,7 @@
         if (variantGroups.size === 0) return; // No variant groups, exit early
     
         // Build GraphQL query dynamically
-        const queries = [...variantGroups].map(group => `tag:VGroup_${group}`).join(" OR ");
+        const queries = [...variantGroups].map(group => `tag:VGroup--${group}`).join(" OR ");
     
         let products = []; // Store all fetched products
         let cursor = null; // For pagination
@@ -723,13 +723,13 @@
                 if (!colorOptionsDiv) return;
     
                 allProducts.forEach((node) => {
-                    if (node.handle !== productHandle && node.tags.some(tag => tag.includes(`VGroup_${variantGroup}`))) {
+                    if (node.handle !== productHandle && node.tags.some(tag => tag.includes(`VGroup--${variantGroup}`))) {
                         let colorTag = node.tags.find(tag => tag.includes("Colour_"));
                         if (colorTag) {
                             let colorClass = colorTag.replace("Colour_", "").replace(" ", "-").toLowerCase();
                             let link = document.createElement("a");
                             link.href = `/products/${node.handle}`;
-                            link.className = `color-swatch__circle swatch-img ${colorClass}`;
+                            link.className = `color-swatch__circle test swatch-img ${colorClass}`;
                             link.title = node.title;
                             colorOptionsDiv.appendChild(link);
                         }

@@ -100,3 +100,8 @@
 .color-swatch__circle.stainless-steel {
   background: url("/cdn/shop/files/Stainless_Steel_8d646b15-aef9-4ce5-8c18-096ffd2ebb68.png?v=1710286351");
 }
+
+
+.color-swatch__container .color-options:has( a:only-child){
+  display: none !important;
+}

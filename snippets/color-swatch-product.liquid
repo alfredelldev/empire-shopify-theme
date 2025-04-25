@@ -1,7 +1,7 @@
 <div 
   id="color-options-{{ product.handle }}" 
   class="{% if is_product_page %}color-swatch-product__container{% else %}color-swatch__container{% endif %}"
-  data-variant-group="{% for tag in product.tags %}{% if tag contains 'VGroup_' %}{{ tag | replace: 'VGroup_', '' }}{% endif %}{% endfor %}"
+  data-variant-group="{% for tag in product.tags %}{% if tag contains 'VGroup--' %}{{ tag | replace: 'VGroup--', '' }}{% endif %}{% endfor %}"
 >
   {% if is_product_page %}
     <p><strong>Color</strong></p>
