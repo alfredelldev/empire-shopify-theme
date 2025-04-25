@@ -20,6 +20,10 @@
           "type": "vendor",
           "settings": {}
         },
+        "color_swatch_rwmNdi": {
+          "type": "color_swatch",
+          "settings": {}
+        },
         "sku_yErMjz": {
           "type": "sku",
           "settings": {}
@@ -87,6 +91,7 @@
       "block_order": [
         "title",
         "vendor",
+        "color_swatch_rwmNdi",
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
