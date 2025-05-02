@@ -288,16 +288,6 @@
         "disabled": false,
         "settings": {}
       },
-      "pagefly-page-builder": {
-        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
-        "disabled": false,
-        "settings": {}
-      },
-      "7313114205116804392": {
-        "type": "shopify://apps/propel-replay-session-record/blocks/app-embed/64fbaaa3-2d4a-49f3-aba7-86e92e44999f",
-        "disabled": false,
-        "settings": {}
-      },
       "12429728106950981667": {
         "type": "shopify://apps/blocky-fraud-country-blocker/blocks/app-embed/aa25b3bf-c2c5-4359-aa61-7836c225c5a9",
         "disabled": false,

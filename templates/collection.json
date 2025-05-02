@@ -21,10 +21,10 @@
             "filter_style": "groups",
             "filter_limit": "8",
             "grid_categories": "",
-            "custom_ordered_categories": "Brand, Range, Category, Product Type, Sub-Category, Colour, Size, Material",
+            "custom_ordered_categories": "Brand, Product Type, Colour, Range, Category, Size, Material,",
             "custom_ordered_tags": "Size_300mm,\nSize_400mm,\nSize_450mm,\nSize_500mm,\nSize_550mm,\nSize_Under 600mm,\nSize_600mm,\nSize_650mm,\nSize_700mm,\nSize_700-800mm,\nSize_750mm,\nSize_800mm,\nSize_900mm,",
             "excluded_tags": "",
-            "excluded_groups": ""
+            "excluded_groups": "Badge, Sub-Category"
           }
         }
       },
