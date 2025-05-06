@@ -1,26 +1,36 @@
-<div 
-  id="color-options-{{ product.handle }}" 
-  class="{% if is_product_page %}color-swatch-product__container{% else %}color-swatch__container{% endif %}"
-  data-variant-group="{% for tag in product.tags %}{% if tag contains 'VGroup--' %}{{ tag | replace: 'VGroup--', '' }}{% endif %}{% endfor %}"
->
-  {% if is_product_page %}
-    <p><strong>Colour</strong></p>
+{% assign has_vgroup = false %}
+{% for tag in product.tags %}
+  {% if tag contains 'VGroup--' %}
+    {% assign has_vgroup = true %}
+    {% break %}
   {% endif %}
+{% endfor %}
 
-  <div class="color-options">
-    {%- assign current_color_tag = '' -%}
-    {%- for tag in product.tags -%}
-      {%- if tag contains 'Colour_' -%}
-        {%- assign current_color_tag = tag | replace: 'Colour_', '' | replace: ' ', '-' | downcase -%}
+{% if has_vgroup %}
+  <div
+    id="color-options-{{ product.handle }}"
+    class="{% if is_product_page %}color-swatch-product__container{% else %}color-swatch__container{% endif %}"
+    data-variant-group="{% for tag in product.tags %}{% if tag contains 'VGroup--' %}{{ tag | replace: 'VGroup--', '' }}{% endif %}{% endfor %}"
+  >
+    {% if is_product_page %}
+      <p><strong>Colour</strong></p>
+    {% endif %}
+
+    <div class="color-options asd">
+      {%- assign current_color_tag = '' -%}
+      {%- for tag in product.tags -%}
+        {%- if tag contains 'Colour_' -%}
+          {%- assign current_color_tag = tag | replace: 'Colour_', '' | replace: ' ', '-' | downcase -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if current_color_tag != '' -%}
+        <a
+          href="{{ product.url }}"
+          class="color-swatch__circle swatch-img {{ current_color_tag }} selected"
+          title="{{ product.title }}"
+        ></a>
       {%- endif -%}
-    {%- endfor -%}
-
-    {%- if current_color_tag != '' -%}
-      <a
-        href="{{ product.url }}"
-        class="color-swatch__circle swatch-img {{ current_color_tag }} selected"
-        title="{{ product.title }}"
-      ></a>
-    {%- endif -%}
+    </div>
   </div>
-</div>
+{% endif %}

@@ -60,6 +60,15 @@
   background-color: #1d1d1f;
 }
 
+.color-swatch__circle.white,
+.color-swatch__circle.gloss-white,
+.color-swatch__circle.white-gloss,
+.color-swatch__circle.matte-white,
+.color-swatch__circle.white-matte {
+  background-color: #fff;
+  border: 1px solid #5d5d5d !important;
+}
+
 .color-swatch__circle.matte-black {
   background-color: #28282b;
 }
