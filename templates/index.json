@@ -245,21 +245,6 @@
             "opacity": 4
           }
         },
-        "promotion-1": {
-          "type": "promotion",
-          "settings": {
-            "image": "shopify://shop_images/Wordpress-Top-Image-11.png",
-            "title": "New Release",
-            "text": "Phoenix launches the Cromford collection",
-            "color": "#ffffff",
-            "block_link": "shopify://collections/phoenix-cromford",
-            "button_text": "",
-            "button_style": "primary",
-            "show_overlay": true,
-            "background": "rgba(0,0,0,0)",
-            "opacity": 12
-          }
-        },
         "promotion_tMWqGg": {
           "type": "promotion",
           "settings": {
@@ -274,14 +259,29 @@
             "background": "",
             "opacity": 50
           }
+        },
+        "promotion-1": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Wordpress-Top-Image-11.png",
+            "title": "New Release",
+            "text": "Phoenix launches the Cromford collection",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/phoenix-cromford",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "rgba(0,0,0,0)",
+            "opacity": 12
+          }
         }
       },
       "block_order": [
         "promotion-3",
         "promotion-4",
         "promotion-2",
-        "promotion-1",
-        "promotion_tMWqGg"
+        "promotion_tMWqGg",
+        "promotion-1"
       ],
       "settings": {
         "title": "",
