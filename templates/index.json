@@ -215,21 +215,6 @@
             "opacity": 14
           }
         },
-        "promotion-2": {
-          "type": "promotion",
-          "settings": {
-            "image": "shopify://shop_images/Malibu-DC_MMF133OWR_1.jpg",
-            "title": "Keep Cool",
-            "text": "Fans, Lighting & More",
-            "color": "#ffffff",
-            "block_link": "shopify://collections/martec",
-            "button_text": "",
-            "button_style": "primary",
-            "show_overlay": true,
-            "background": "#000000",
-            "opacity": 4
-          }
-        },
         "promotion-4": {
           "type": "promotion",
           "settings": {
@@ -243,6 +228,21 @@
             "show_overlay": false,
             "background": "#000000",
             "opacity": 1
+          }
+        },
+        "promotion-2": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Malibu-DC_MMF133OWR_1.jpg",
+            "title": "Keep Cool",
+            "text": "Fans, Lighting & More",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/martec",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "#000000",
+            "opacity": 4
           }
         },
         "promotion-1": {
@@ -259,13 +259,29 @@
             "background": "rgba(0,0,0,0)",
             "opacity": 12
           }
+        },
+        "promotion_tMWqGg": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/ADP-Archie-Wall-Hung-Vanity-blue-leaf-bathware-8.jpg",
+            "title": "Shop by Brand",
+            "text": "Explore our wide range of kitchen and bathware brands",
+            "color": "#ffffff",
+            "block_link": "shopify://pages/brand",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "",
+            "opacity": 50
+          }
         }
       },
       "block_order": [
         "promotion-3",
-        "promotion-2",
         "promotion-4",
-        "promotion-1"
+        "promotion-2",
+        "promotion-1",
+        "promotion_tMWqGg"
       ],
       "settings": {
         "title": "",
