@@ -205,7 +205,7 @@
           "settings": {
             "image": "shopify://shop_images/20230315_132045_2.jpg",
             "title": "Visit our Selection Centre",
-            "text": "Our design and product speciliasts are here to help.",
+            "text": "Our design and product speciliasts are here to help",
             "color": "#ffffff",
             "block_link": "shopify://collections/express-ship",
             "button_text": "",
