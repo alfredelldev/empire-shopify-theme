@@ -54,6 +54,7 @@
     "type_section": "montserrat_n8",
     "type_section_capitalize": false,
     "type_section_spacing": 0,
+    "reduce_animations": true,
     "layout_max_width": 1400,
     "product_sales_badge": false,
     "product_sales_badge_style": "text",
