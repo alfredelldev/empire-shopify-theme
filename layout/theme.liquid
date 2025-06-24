@@ -101,8 +101,22 @@
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
     {% render 'pagefly-app-header' %}
-    
-  {% include 'pagefly-app-header' %}</head>
+
+    {% include 'pagefly-app-header' %}
+
+    <!-- Google Analytics 4 - Measurement ID: MC-FYSR9QTCK0 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=MC-FYSR9QTCK0"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      // Initialises GA4 tracking correctly
+      gtag('config', 'MC-FYSR9QTCK0');
+    </script>
+  </head>
 
   {% render 'swymSnippet' %}
 
