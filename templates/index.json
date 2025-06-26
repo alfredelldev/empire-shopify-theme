@@ -470,7 +470,7 @@
         "title": "",
         "blog": "blog-posts",
         "show_date": true,
-        "show_author": false,
+        "show_author": true,
         "show_excerpt": true
       }
     }
