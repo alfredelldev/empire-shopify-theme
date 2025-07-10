@@ -203,7 +203,7 @@
         "promotion-2": {
           "type": "promotion",
           "settings": {
-            "image": "shopify://shop_images/Blue_Leaf_Bath_Clearance_Sale.png",
+            "image": "shopify://shop_images/Sale_Products.png",
             "title": "Clearance Sale",
             "text": "Shop now! Until Supplies last",
             "color": "#ffffff",
