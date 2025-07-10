@@ -12,16 +12,6 @@
     "dynamic_highlights_banner": {
       "type": "dynamic-highlights-banner",
       "blocks": {
-        "highlight-1": {
-          "type": "highlight",
-          "settings": {
-            "icon": "icon-heart",
-            "image": "shopify://shop_images/australian-owned_589a11c4-dc15-460e-9b4c-522c8b4605fc.png",
-            "title": "",
-            "text": "<p>Proudly Australian Owned & Operated</p>",
-            "link": ""
-          }
-        },
         "highlight-2": {
           "type": "highlight",
           "settings": {
@@ -51,13 +41,23 @@
             "text": "<p>Voted Best Service. Great customer service still exists</p>",
             "link": ""
           }
+        },
+        "highlight-1": {
+          "type": "highlight",
+          "settings": {
+            "icon": "icon-heart",
+            "image": "shopify://shop_images/australian-owned_589a11c4-dc15-460e-9b4c-522c8b4605fc.png",
+            "title": "",
+            "text": "<p>Proudly Australian Owned & Operated</p>",
+            "link": ""
+          }
         }
       },
       "block_order": [
-        "highlight-1",
         "highlight-2",
         "highlight-3",
-        "highlight-4"
+        "highlight-4",
+        "highlight-1"
       ],
       "custom_css": [],
       "settings": {
@@ -188,7 +188,7 @@
         "1c337722-94ca-49cb-9796-aa85850d9833"
       ],
       "settings": {
-        "title": "Shop our Wide Range of Kitchen and Bathroom Fixtures and Accessories",
+        "title": "Shop our Wide Range of Kitchen and Bathroom Products and Accessories",
         "thumbnail_columns_desktop": 4,
         "thumbnail_columns_mobile": 2,
         "image-crop": "original",
