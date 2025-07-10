@@ -120,14 +120,14 @@
           "type": "collection",
           "settings": {
             "collection": "bathroom-basins",
-            "title": "Basins"
+            "title": "Bathroom Basins"
           }
         },
         "collection-6": {
           "type": "collection",
           "settings": {
             "collection": "kitchen-sinks",
-            "title": "Sinks"
+            "title": "Kitchen Sinks"
           }
         },
         "f87bcc79-a923-486d-9068-3454522cb3c1": {
