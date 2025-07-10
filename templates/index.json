@@ -215,21 +215,6 @@
             "opacity": 4
           }
         },
-        "promotion-3": {
-          "type": "promotion",
-          "settings": {
-            "image": "shopify://shop_images/20230315_132045_2.jpg",
-            "title": "Visit our Kitchen and Bathroom Showroom",
-            "text": "Our design and product speciliasts are here to help",
-            "color": "#ffffff",
-            "block_link": "shopify://collections/express-ship",
-            "button_text": "",
-            "button_style": "primary",
-            "show_overlay": true,
-            "background": "#000000",
-            "opacity": 14
-          }
-        },
         "promotion-4": {
           "type": "promotion",
           "settings": {
@@ -243,6 +228,21 @@
             "show_overlay": false,
             "background": "#000000",
             "opacity": 1
+          }
+        },
+        "promotion-3": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/20230315_132045_2.jpg",
+            "title": "Visit our Kitchen and Bathroom Showroom",
+            "text": "Our design and product speciliasts are here to help",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/express-ship",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "#000000",
+            "opacity": 14
           }
         },
         "promotion_tMWqGg": {
@@ -278,8 +278,8 @@
       },
       "block_order": [
         "promotion-2",
-        "promotion-3",
         "promotion-4",
+        "promotion-3",
         "promotion_tMWqGg",
         "promotion-1"
       ],
