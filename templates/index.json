@@ -81,7 +81,7 @@
         "color": "#ffffff",
         "overlay_background": "#000000",
         "overlay_opacity": 29,
-        "link": "shopify://products/adp-harper-wall-hung-vanity",
+        "link": "shopify://collections/custom-vanities",
         "button_text": "Get Creative!"
       }
     },
@@ -203,7 +203,7 @@
         "promotion-2": {
           "type": "promotion",
           "settings": {
-            "image": "shopify://shop_images/Clearance_Sale.png",
+            "image": "shopify://shop_images/Blue_Leaf_Bath_Clearance_Sale.png",
             "title": "Clearance Sale",
             "text": "Shop now! Until Supplies last",
             "color": "#ffffff",
