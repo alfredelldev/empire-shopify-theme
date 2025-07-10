@@ -205,7 +205,7 @@
           "settings": {
             "image": "shopify://shop_images/Sale_Products.png",
             "title": "Clearance Sale",
-            "text": "Shop now! Until Supplies last",
+            "text": "Shop now! Until Supplies last. \nAlso available in Express Ship",
             "color": "#ffffff",
             "block_link": "shopify://collections/clearance-sale",
             "button_text": "",
