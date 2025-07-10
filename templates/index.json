@@ -233,11 +233,11 @@
         "promotion-2": {
           "type": "promotion",
           "settings": {
-            "image": "shopify://shop_images/Martec-Albatross-84-DC-Ceiling-Fan-With-Remote-Matt-Black-MAFMMR-MAF210M-blue-leaf-bathware.png",
-            "title": "Fans, Lighting & More",
-            "text": "To keep you cool and bright",
+            "image": "shopify://shop_images/Screenshot_2025-07-10_at_11.53.19_AM.png",
+            "title": "Clearance Sale",
+            "text": "Shop now! Until Supplies last",
             "color": "#ffffff",
-            "block_link": "shopify://collections/martec",
+            "block_link": "shopify://collections/clearance-sale",
             "button_text": "",
             "button_style": "primary",
             "show_overlay": true,
