@@ -200,6 +200,21 @@
     "dynamic_promo_mosaic": {
       "type": "dynamic-promo-mosaic",
       "blocks": {
+        "promotion-2": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Screenshot_2025-07-10_at_11.53.19_AM.png",
+            "title": "Clearance Sale",
+            "text": "Shop now! Until Supplies last",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/clearance-sale",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "#000000",
+            "opacity": 4
+          }
+        },
         "promotion-3": {
           "type": "promotion",
           "settings": {
@@ -228,21 +243,6 @@
             "show_overlay": false,
             "background": "#000000",
             "opacity": 1
-          }
-        },
-        "promotion-2": {
-          "type": "promotion",
-          "settings": {
-            "image": "shopify://shop_images/Screenshot_2025-07-10_at_11.53.19_AM.png",
-            "title": "Clearance Sale",
-            "text": "Shop now! Until Supplies last",
-            "color": "#ffffff",
-            "block_link": "shopify://collections/clearance-sale",
-            "button_text": "",
-            "button_style": "primary",
-            "show_overlay": true,
-            "background": "#000000",
-            "opacity": 4
           }
         },
         "promotion_tMWqGg": {
@@ -277,9 +277,9 @@
         }
       },
       "block_order": [
+        "promotion-2",
         "promotion-3",
         "promotion-4",
-        "promotion-2",
         "promotion_tMWqGg",
         "promotion-1"
       ],
