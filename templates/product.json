@@ -54,7 +54,6 @@
         "trust_badges_kTpKrX": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Industry_Expert_1.png",
             "badge_svg_icon": "",
             "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
             "badge_class": "expert"
@@ -63,7 +62,6 @@
         "trust_badges_xaNPWA": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Best_Service3.png",
             "badge_svg_icon": "",
             "badge_text": "Experience award-winning customer service that our customers rave about.",
             "badge_class": ""
@@ -72,7 +70,6 @@
         "trust_badges_KMPBit": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Australian_Owned.png",
             "badge_svg_icon": "",
             "badge_text": "Support local - buy from a proudly Australian-owned and operated business.",
             "badge_class": ""
@@ -116,27 +113,6 @@
     },
     "1694063103f42b80e8": {
       "type": "apps",
-      "blocks": {
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
-          "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
-          "disabled": true,
-          "settings": {
-            "start_tab_element": "h5",
-            "default_tab": "none",
-            "default_tab_title": "Description",
-            "pro_tabs": false,
-            "layout": "breakpoint",
-            "layout_breakpoint": 750,
-            "open_first_tab": true,
-            "allow_multiple_open": false,
-            "initialize_tabs": "immediate",
-            "custom_scripts": ""
-          }
-        }
-      },
-      "block_order": [
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"
-      ],
       "settings": {
         "include_padding": true
       }
@@ -153,10 +129,26 @@
       "settings": {
         "enable_recently_viewed_products": true
       }
+    },
+    "175255845314755a76": {
+      "type": "apps",
+      "blocks": {
+        "the_configurator_app_product_components_7mKqqc": {
+          "type": "shopify://apps/the-configurator-app/blocks/product-components/582dfaae-7f29-4b06-a25a-4be7a3ad6324",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "the_configurator_app_product_components_7mKqqc"
+      ],
+      "settings": {
+        "include_padding": true
+      }
     }
   },
   "order": [
     "main",
+    "175255845314755a76",
     "1694063103f42b80e8",
     "recommendations",
     "recently-viewed"
