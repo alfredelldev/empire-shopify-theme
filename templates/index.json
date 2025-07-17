@@ -264,8 +264,8 @@
           "type": "promotion",
           "settings": {
             "image": "shopify://shop_images/Wordpress-Top-Image-11.png",
-            "title": "New Release",
-            "text": "Phoenix launches the Cromford collection",
+            "title": "Phoenix Cromford",
+            "text": "New release! Phoenix launches the Cromford collection",
             "color": "#ffffff",
             "block_link": "shopify://collections/phoenix-cromford",
             "button_text": "",
