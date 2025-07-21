@@ -467,7 +467,7 @@
     "dynamic_blog_posts": {
       "type": "dynamic-blog-posts",
       "settings": {
-        "title": "Expert Advice on Bathroom and Kitchen Fittings and Fixtures",
+        "title": "Expert Advice on Bathroom & Kitchen Fittings and Fixtures",
         "blog": "blog-posts",
         "show_date": true,
         "show_author": true,
