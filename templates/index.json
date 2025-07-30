@@ -252,7 +252,7 @@
             "title": "Shop by Brand",
             "text": "Explore our wide range of kitchen, tapware, and bathware brands",
             "color": "#ffffff",
-            "block_link": "shopify://pages/brand",
+            "block_link": "shopify://collections/all-products",
             "button_text": "",
             "button_style": "primary",
             "show_overlay": true,
