@@ -45,6 +45,7 @@
         },
         "shipping_calculator_7HaD3y": {
           "type": "shipping_calculator",
+          "disabled": true,
           "settings": {}
         },
         "trust_badges_kTpKrX": {
