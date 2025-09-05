@@ -36,13 +36,6 @@
           "type": "price",
           "settings": {}
         },
-        "form": {
-          "type": "form",
-          "settings": {
-            "enable_local_pickup": false,
-            "show_gift_card_recipient_form": false
-          }
-        },
         "divider_A9wG8j": {
           "type": "divider",
           "settings": {}
@@ -92,7 +85,6 @@
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
-        "form",
         "divider_A9wG8j",
         "shipping_calculator_7HaD3y",
         "trust_badges_kTpKrX",
