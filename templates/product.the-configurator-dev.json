@@ -108,11 +108,11 @@
       "blocks": {
         "the_configurator_app_staging_product_components_gnyVcq": {
           "type": "shopify://apps/the-configurator-app-staging/blocks/product-components/01991842-92e3-7f25-9a08-1f9e0661cee6",
-          "disabled": true,
           "settings": {}
         },
         "the_configurator_app_product_components_YGUkyC": {
           "type": "shopify://apps/the-configurator-app-dev/blocks/product-components/582dfaae-7f29-4b06-a25a-4be7a3ad6324",
+          "disabled": true,
           "settings": {}
         }
       },
