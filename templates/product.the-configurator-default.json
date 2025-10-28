@@ -32,11 +32,14 @@
           "type": "price",
           "settings": {}
         },
-        "form": {
-          "type": "form",
+        "the_configurator_app_customize_button_f4JhKx": {
+          "type": "shopify://apps/the-configurator-app/blocks/customize-button/019a2b81-1b72-7a54-8b0e-6f1039518a13",
           "settings": {
-            "enable_local_pickup": false,
-            "show_gift_card_recipient_form": false
+            "button_label": "Create your masterpiece",
+            "button_link": "#product-configurator-app",
+            "background_color": "#ffffff",
+            "text_color": "#1d1d1f",
+            "border_color": "#1d1d1f"
           }
         },
         "divider_A9wG8j": {
@@ -91,7 +94,7 @@
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
-        "form",
+        "the_configurator_app_customize_button_f4JhKx",
         "divider_A9wG8j",
         "shipping_calculator_7HaD3y",
         "trust_badges_kTpKrX",
@@ -110,6 +113,21 @@
         "gallery_click_to_zoom": "always"
       }
     },
+    "1761667381ac9fed05": {
+      "type": "apps",
+      "blocks": {
+        "the_configurator_app_product_components_TQTNT3": {
+          "type": "shopify://apps/the-configurator-app/blocks/product-components/019a2b81-1b72-7a54-8b0e-6f1039518a13",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "the_configurator_app_product_components_TQTNT3"
+      ],
+      "settings": {
+        "include_padding": true
+      }
+    },
     "1694063103f42b80e8": {
       "type": "apps",
       "blocks": {
@@ -117,14 +135,14 @@
           "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
           "disabled": true,
           "settings": {
-            "start_tab_element": "h5",
             "default_tab": "none",
+            "start_tab_element": "h5",
             "default_tab_title": "Description",
-            "pro_tabs": false,
             "layout": "breakpoint",
             "layout_breakpoint": 750,
             "open_first_tab": true,
             "allow_multiple_open": false,
+            "pro_tabs": false,
             "initialize_tabs": "immediate",
             "custom_scripts": ""
           }
@@ -153,6 +171,7 @@
   },
   "order": [
     "main",
+    "1761667381ac9fed05",
     "1694063103f42b80e8",
     "recommendations",
     "recently-viewed"
