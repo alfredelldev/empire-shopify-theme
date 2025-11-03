@@ -17,7 +17,7 @@
           "settings": {
             "icon": "icon-delivery",
             "image": "shopify://shop_images/free-delivery_72864314-484e-4a6b-96b0-f1644240d992.png",
-            "title": "",
+            "title": "Free Delivery",
             "text": "<p>Free Delivery - Tapware, Showers & Accessories over $150</p>",
             "link": "https://blueleafbath.com.au/collections/express-ship"
           }
@@ -27,7 +27,7 @@
           "settings": {
             "icon": "icon-award-trophy",
             "image": "shopify://shop_images/customer-service_20db1306-60e5-42d2-b108-4cfc390aa55e.png",
-            "title": "",
+            "title": "Best Service",
             "text": "<p>Voted Best Service. Great customer service still exists</p>",
             "link": "https://blueleafbath.com.au/collections/clearance-sale"
           }
@@ -37,7 +37,7 @@
           "settings": {
             "icon": "icon-transfer",
             "image": "shopify://shop_images/30-day-returns_1dadb8be-0fba-4c2d-b4c9-eeae4bdf841f.png",
-            "title": "",
+            "title": "Easy Returns",
             "text": "<p>Have no fear, easy returns is here!</p>",
             "link": "https://blueleafbath.com.au/pages/returns-and-refunds"
           }
@@ -47,7 +47,7 @@
           "settings": {
             "icon": "icon-heart",
             "image": "shopify://shop_images/australian-owned_589a11c4-dc15-460e-9b4c-522c8b4605fc.png",
-            "title": "",
+            "title": "Proud Aussie",
             "text": "<p>Proudly Australian Owned & Operated</p>",
             "link": "https://blueleafbath.com.au/collections/express-ship"
           }
