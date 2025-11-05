@@ -16,6 +16,10 @@
           "type": "title",
           "settings": {}
         },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
         "vendor": {
           "type": "vendor",
           "settings": {}
@@ -75,10 +79,6 @@
             "badge_class": ""
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
         "tabs_8agxPq": {
           "type": "tabs",
           "settings": {
@@ -100,6 +100,7 @@
       },
       "block_order": [
         "title",
+        "description",
         "vendor",
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
@@ -110,7 +111,6 @@
         "trust_badges_kTpKrX",
         "trust_badges_xaNPWA",
         "trust_badges_KMPBit",
-        "description",
         "tabs_8agxPq",
         "share"
       ],
