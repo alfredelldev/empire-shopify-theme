@@ -41,9 +41,11 @@
   {% endfor %}
 
   {% if current_tags.size > 1 %}
-    <li class="filter-item--grid-simple">
+    <li class="filter-item--grid">
       <a href="{{ collection.url }}">
-        {{ 'product_grid.filters.clear_all' | t }}
+        <span class="filter-text">
+          {{ 'product_grid.filters.clear_all' | t }}
+        </span>
       </a>
     </li>
   {% endif %}

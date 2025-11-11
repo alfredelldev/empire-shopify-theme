@@ -76,6 +76,7 @@
 
     {{ 'styles.css' | asset_url | stylesheet_tag }}
     {{ 'component-collection-card.css' | asset_url | stylesheet_tag }}
+    {{ 'component-color-swatch.css' | asset_url | stylesheet_tag }}
 
     {% comment %}Inject theme-object begin{% endcomment %}
     <script>
@@ -590,5 +591,162 @@
       type="module"
       defer
     ></script>
+    {% comment %}
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("[id^='color-options-']").forEach((container) => {
+                const productHandle = container.id.replace("color-options-", "");
+                const variantGroup = container.getAttribute("data-variant-group");
+
+                console.log("Fetching variant group:", variantGroup);
+
+                if (!variantGroup) return;
+
+                fetch('/api/2025-01/graphql.json', {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Shopify-Storefront-Access-Token": "2f58fbe8ea8638f5694ca5e720f7b155"
+                    },
+                    body: JSON.stringify({
+                        query: `
+                            {
+                              products(first: 10, query: "tag:VGroup_${variantGroup}") {
+                                edges {
+                                  node {
+                                    id
+                                    title
+                                    handle
+                                    tags
+                                  }
+                                }
+                              }
+                            }
+                        `
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const products = data.data.products.edges;
+                    const colorOptionsDiv = container.querySelector(".color-options");
+
+                    if (!colorOptionsDiv) return;
+
+                    products.forEach(({ node }) => {
+                        if (node.handle !== productHandle) {
+                            let colorTag = node.tags.find(tag => tag.includes("Colour_"));
+                            if (colorTag) {
+                                let colorClass = colorTag.replace("Colour_", "").replace(" ", "-").toLowerCase();
+                                let link = document.createElement("a");
+                                link.href = `/products/${node.handle}`;
+                                link.className = `color-swatch__circle swatch-img ${colorClass}`;
+                                link.title = node.title;
+                                colorOptionsDiv.appendChild(link);
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error("Error fetching variant group:", error));
+            });
+        });
+      </script>
+    {% endcomment %}
+
+    <script type="text/javascript" defer>
+      window.addEventListener('load', function () {
+        // This waits for everything including images, iframes, etc.
+        console.log('Everything including assets fully loaded');
+
+        let variantGroups = new Set();
+        let productContainers = [];
+
+        // Collect all variant groups and elements
+        document.querySelectorAll("[id^='color-options-']").forEach((container) => {
+          const variantGroup = container.getAttribute('data-variant-group');
+          if (variantGroup) {
+            variantGroups.add(variantGroup);
+            productContainers.push({ container, variantGroup });
+          }
+        });
+
+        if (variantGroups.size === 0) return; // No variant groups, exit early
+
+        console.log('Variants: ', variantGroups);
+
+        // Build GraphQL query dynamically
+        const queries = [...variantGroups].map((group) => `tag:VGroup--${group}`).join(' OR ');
+
+        let products = []; // Store all fetched products
+        let cursor = null; // For pagination
+
+        function fetchProducts() {
+          let query = `
+                  {
+                    products(first: 50, query: "${queries}" ${cursor ? `, after: "${cursor}"` : ''}) {
+                      edges {
+                        cursor
+                        node {
+                          id
+                          title
+                          handle
+                          tags
+                        }
+                      }
+                      pageInfo {
+                        hasNextPage
+                      }
+                    }
+                  }
+              `;
+
+          return fetch('/api/2025-01/graphql.json', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Shopify-Storefront-Access-Token': '2f58fbe8ea8638f5694ca5e720f7b155',
+            },
+            body: JSON.stringify({ query }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              let edges = data.data.products.edges;
+              products.push(...edges.map((edge) => edge.node));
+
+              if (data.data.products.pageInfo.hasNextPage) {
+                cursor = edges[edges.length - 1].cursor;
+                return fetchProducts(); // Fetch next batch
+              } else {
+                return products; // Return all collected products
+              }
+            });
+        }
+
+        fetchProducts()
+          .then((allProducts) => {
+            productContainers.forEach(({ container }) => {
+              const productHandle = container.id.replace('color-options-', '');
+              const variantGroup = container.getAttribute('data-variant-group');
+              const colorOptionsDiv = container.querySelector('.color-options');
+
+              if (!colorOptionsDiv) return;
+
+              allProducts.forEach((node) => {
+                if (node.handle !== productHandle && node.tags.some((tag) => tag.includes(`VGroup--${variantGroup}`))) {
+                  let colorTag = node.tags.find((tag) => tag.includes('Colour_'));
+                  if (colorTag) {
+                    let colorClass = colorTag.replace('Colour_', '').replace(' ', '-').toLowerCase();
+                    let link = document.createElement('a');
+                    link.href = `/products/${node.handle}`;
+                    link.className = `color-swatch__circle swatch-img ${colorClass}`;
+                    link.title = node.title;
+                    colorOptionsDiv.appendChild(link);
+                  }
+                }
+              });
+            });
+          })
+          .catch((error) => console.error('Error fetching variant group:', error));
+      });
+    </script>
   </body>
 </html>

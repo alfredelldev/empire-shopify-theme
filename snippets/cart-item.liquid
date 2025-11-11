@@ -157,13 +157,24 @@
           context: 'cart',
           item: item,
         %}
+
+        <div class="cart-item__remove">
+          <a
+            class="cart-item__remove-link"
+            href="{{ routes.cart_change_url }}?line={{ item_index }}&amp;quantity=0"
+            aria-label="remove {{ item.product.title | escape }}"
+            data-cartitem-remove
+            data-no-instant
+          >
+            {%
+              render 'icon-library',
+              id: 'icon-delete',
+            %}
+          </a>
+        </div>
       </div>
 
       <div class="cart-item__total">
-        <span class="visually-hidden">
-          {{- 'cart.general.total_line_price' | t -}}
-        </span>
-
         {%- if item_has_discounts -%}
           <span class="visually-hidden">
             {{- 'product_price.price.original' | t -}}
@@ -190,21 +201,6 @@
         >
           {{ item.final_line_price | money }}
         </div>
-      </div>
-
-      <div class="cart-item__remove">
-        <a
-          class="cart-item__remove-link"
-          href="{{ routes.cart_change_url }}?line={{ item_index }}&amp;quantity=0"
-          aria-label="remove {{ item.product.title | escape }}"
-          data-cartitem-remove
-          data-no-instant
-        >
-          {%
-            render 'icon-library',
-            id: 'icon-remove',
-          %}
-        </a>
       </div>
     </div>
   </div>

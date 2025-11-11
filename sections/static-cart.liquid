@@ -1,3 +1,5 @@
+{{ 'component-cart.css' | asset_url | stylesheet_tag }}
+
 {% assign is_customer = false %}
 {% if shop.customer_accounts_enabled and customer %}
   {% assign is_customer = true %}
@@ -34,7 +36,8 @@
   type="application/json"
   data-section-type="static-cart"
   data-section-id="{{ section.id }}"
-  data-section-data>
+  data-section-data
+>
   {
     "settings": {
       "shipping": {{ section.settings.enable_shipping_calc | json }},
@@ -60,150 +63,157 @@
   method="post"
   aria-label="cart checkout"
 >
-  <header class="cart-title">
-    <div class="cart-title-left">
-      <h1>{{ 'cart.general.your_cart' | t }}</h1>
-
-      {% if has_items %}
-        <div class="cart-title-total--small"></div>
-      {% endif %}
-    </div>
-
-    {% if has_items or show_continue_link %}
-      <div class="cart-title-right">
-        {% if has_items %}
-          <div class="cart-title-total--large">
-            <div class="cart-title-total" data-cart-title-total>
-              {{ 'cart.general.subtotal' | t }}
-
-              <span class="money" data-cart-total>
-                {{ cart.total_price | money }}
-              </span>
-            </div>
-          </div>
-
-          <button
-            class="button-primary cart-title-button"
-            name="checkout"
-            type="submit"
-            aria-label="{{ 'cart.general.checkout' | t }}"
-          >
-            {% if settings.enable_checkout_lock_icon %}
-              {% render 'icon-checkout-lock' %}
-            {% else %}
-              {% render 'icon-library', id: 'icon-cart' %}
-            {% endif %}
-            {{ 'cart.general.checkout' | t }}
-          </button>
-        {% elsif show_continue_link %}
-          {{ continue_link_html }}
-        {% endif %}
+  {% if has_items %}
+    <header class="cart-title">
+      <div class="cart-title-left">
+        <h1>{{ 'cart.general.your_cart' | t }}</h1>
       </div>
-    {% endif %}
-  </header>
+    </header>
+  {% endif %}
 
   <section class="cartitems--container {% if has_sidebar %}has-sidebar{% endif %}">
     <div class="cartitems">
       {% if has_items %}
-        {%
-          render 'cart-item-list',
-          show_sku: section.settings.show_sku
-          cart: cart
-        %}
+        <div class="cartitems--list-wrapper">
+          {% render 'cart-item-list', show_sku: section.settings.show_sku, cart: cart %}
+        </div>
         <div class="cart-total">
-
-          {% if section.settings.enable_order_notes %}
-            <div class="cart-ordernote">
-              <span class="cart-ordernote-heading">{{ 'cart.general.enter_order_note' | t }}</span>
-              <div class="form-field">
-                <textarea class="form-field-input form-field-textarea" name="note" id="cart-note">{{ cart.note }}</textarea>
-                <label class="form-field-title" for="cart-note">{{ 'cart.general.special_instructions' | t }}</label>
+          <div class="options-col">
+            <div class="form-field">
+              <div class="cart__delivery-option form-field-select-wrapper">
+                <label for="delivery_option"
+                  ><strong>Delivery Option<span class="required">*</span></strong></label
+                >
+                <select
+                  class="field__input form-field-select"
+                  name="attributes[Delivery Option]"
+                  id="delivery_option"
+                  required
+                >
+                  <option value="" selected disabled>Select an option</option>
+                  <option value="Authority to leave">Authority to leave</option>
+                  <option value="Signature required">Signature required</option>
+                </select>
+                <div class="svg-wrapper">
+                  {% render 'icon-chevron-down-small' %}
+                </div>
+                <p id="delivery-error" style="color: red; display: none;">Please select a delivery option.</p>
               </div>
             </div>
-          {% endif %}
 
-          <div class="cart-final-total">
+            {% if section.settings.enable_order_notes %}
+              <div class="cart-ordernote">
+                <span class="cart-ordernote-heading">{{ 'cart.general.enter_order_note' | t }}</span>
+                <div class="form-field">
+                  <textarea
+                    class="form-field-input form-field-textarea"
+                    name="note"
+                    id="cart-note"
+                  >{{ cart.note }}</textarea>
+                  <label class="form-field-title" for="cart-note">{{ 'cart.general.special_instructions' | t }}</label>
+                </div>
+              </div>
+            {% endif %}
 
-            <noscript>
-              <button
-                class="cart-update"
-                type="submit"
-                aria-label="{{ 'cart.general.update' | t }}"
-              >
-                {{ 'cart.general.update' | t }}
-              </button>
-            </noscript>
-
-            <ul class="discount-list" data-cart-discounts aria-label="{{ 'product.general.discounts' | t }}">
-              {%
-                render 'cart-discounts',
-                cart: cart
-              %}
-            </ul>
-
-            <div class="cart-subtotal">
-              <span>{{ 'cart.general.subtotal' | t }}</span>
-              <span class="money" data-cart-total>{{ cart.total_price | money }}</span>
-            </div>
-          </div>
-
-          <div class="cart-shipping">
-            {%- capture taxes_shipping_checkout -%}
-              {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
-                {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
-              {%- elsif cart.taxes_included -%}
-                {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
-              {%- elsif shop.shipping_policy.body != blank -%}
-                {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
-              {%- else -%}
-                {{ 'cart.general.tax_and_shipping' | t }}
-              {%- endif -%}
-            {%- endcapture -%}
-
-            <p class="cart-message meta">{{ taxes_shipping_checkout }}</p>
-
-            {% comment %}
-              snippets/cart-shipping.liquid has an internal check to see if shipping is required
-            {% endcomment %}
             {% if section.settings.enable_shipping_calc %}
               {% render 'cart-shipping' %}
             {% endif %}
           </div>
 
-          <div class="cart-checkout">
-            <button
-              class="button-primary"
-              type="submit"
-              name="checkout"
-              aria-label="{{ 'cart.general.checkout' | t }}"
-            >
-              {% if settings.enable_checkout_lock_icon %}
-                {% render 'icon-checkout-lock' %}
-              {% else %}
-                {% render 'icon-library', id: 'icon-cart' %}
-              {% endif %}
-              {{ 'cart.general.checkout' | t }}
-            </button>
+          <div class="summary-col">
+            <div class="cart-final-total">
+              <noscript>
+                <button
+                  class="cart-update"
+                  type="submit"
+                  aria-label="{{ 'cart.general.update' | t }}"
+                >
+                  {{ 'cart.general.update' | t }}
+                </button>
+              </noscript>
 
-            {% if additional_checkout_buttons %}
-              <div class="additional-checkout-buttons">
-                {{ content_for_additional_checkout_buttons }}
+              <h5>Order summary</h5>
+
+              <hr>
+
+              <ul class="discount-list" data-cart-discounts aria-label="{{ 'product.general.discounts' | t }}">
+                {% render 'cart-discounts', cart: cart %}
+              </ul>
+
+              <div class="cart-subtotal">
+                <span class="subtotal-label">{{ 'cart.general.subtotal' | t }}</span>
+                <span class="money" data-cart-total>{{ cart.total_price | money }}</span>
               </div>
-            {% endif %}
+            </div>
 
-            {% if show_continue_link %}
-              {{ continue_link_html }}
-            {% endif %}
+            <div class="cart-shipping">
+              {%- capture taxes_shipping_checkout -%}
+                {%- if cart.taxes_included and shop.shipping_policy.body != blank -%}
+                  {{ 'cart.general.taxes_included_and_shipping_policy_html' | t: link: shop.shipping_policy.url }}
+                {%- elsif cart.taxes_included -%}
+                  {{ 'cart.general.taxes_included_but_shipping_at_checkout' | t }}
+                {%- elsif shop.shipping_policy.body != blank -%}
+                  {{ 'cart.general.taxes_and_shipping_policy_at_checkout_html' | t: link: shop.shipping_policy.url }}
+                {%- else -%}
+                  {{ 'cart.general.tax_and_shipping' | t }}
+                {%- endif -%}
+              {%- endcapture -%}
+
+              <div class="cart__terms text-center mb-4">
+                <input type="checkbox" id="terms_checkbox" required>
+                <label for="terms_checkbox"
+                  >I agree to the <a href="/pages/terms-and-conditions" target="_blank">terms and conditions</a></label
+                >
+                <p id="terms-error" style="color: red; display: none;">You must agree to the terms and conditions.</p>
+              </div>
+
+              <p class="cart-message meta text-center m-0">{{ taxes_shipping_checkout }}</p>
+            </div>
+
+            <div class="cart-checkout">
+              <button
+                class="button-primary checkout-btn"
+                type="submit"
+                name="checkout"
+                aria-label="{{ 'cart.general.checkout' | t }}"
+              >
+                {% if settings.enable_checkout_lock_icon %}
+                  {% render 'icon-checkout-lock' %}
+                {% else %}
+                  {% render 'icon-library', id: 'icon-cart-white' %}
+                {% endif %}
+                {{ 'cart.general.checkout' | t }}
+              </button>
+
+              {% if additional_checkout_buttons %}
+                <div class="additional-checkout-buttons">
+                  {{ content_for_additional_checkout_buttons }}
+                </div>
+              {% endif %}
+
+              <ul class="payment-icons">
+                {% for type in shop.enabled_payment_types %}
+                  <li class="payment-icons-item">
+                    {{ type | payment_type_svg_tag }}
+                  </li>
+                {% endfor %}
+              </ul>
+
+              {% if show_continue_link %}
+                {{ continue_link_html }}
+              {% endif %}
+            </div>
           </div>
         </div>
       {% else %}
         <div class="cartitems-empty">
           <div class="cartitems-empty--inner">
-            <p>{{ 'cart.general.cart_empty' | t }}</p>
+            <h1>{{ 'cart.general.cart_empty' | t }}</h1>
+            <p>Browse our collections and find something you’ll love.</p>
 
             {% if show_continue_link %}
-              <a class="button-primary" href="{{ continue_url }}">
-                {% render 'icon-library', id: 'icon-cart' %}
+              <a class="btn-primary continue-shopping-btn" href="{{ continue_url }}">
+                {% render 'icon-library', id: 'icon-cart-white' %}
                 {{ 'cart.general.continue_shopping' | t }}
               </a>
             {% endif %}
@@ -221,14 +231,13 @@
 
               <article class="cart-sidebar-item">
                 {% if image %}
-                  {%
-                    render 'rimg',
+                  {% render 'rimg',
                     img: image,
                     class: 'cart-sidebar-item-image',
                     size: '445x',
                     lazy: true,
                     canvas: true,
-                    focal_point: image.presentation.focal_point,
+                    focal_point: image.presentation.focal_point
                   %}
                 {% else %}
                   {{ 'image' | placeholder_svg_tag: 'placeholder--image cart-sidebar-item-image' }}
@@ -253,6 +262,48 @@
     {% endif %}
   </section>
 </form>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector("form[action$='/cart']");
+    const select = document.getElementById('delivery_option');
+    const errorMsg = document.getElementById('delivery-error');
+
+    form.addEventListener('submit', function (event) {
+      if (!select.value) {
+        event.preventDefault();
+        errorMsg.style.display = 'block';
+        select.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+
+    const checkoutButtons = document.querySelector('shopify-accelerated-checkout-cart');
+    const agreeCheckbox = document.querySelector('#terms_checkbox');
+    const selectField = document.querySelector('#delivery_option');
+
+    function toggleCheckoutButtons() {
+      const isChecked = agreeCheckbox.checked;
+      const isSelectValid = selectField.value !== ''; // Ensure the select field isn't empty
+
+      if (isChecked && isSelectValid) {
+        checkoutButtons.style.pointerEvents = 'auto';
+        checkoutButtons.style.opacity = '1';
+      } else {
+        checkoutButtons.style.pointerEvents = 'none';
+        checkoutButtons.style.opacity = '0.5';
+      }
+
+      document.body.classList.toggle('agree-checked', agreeCheckbox.checked);
+    }
+
+    // Initial check on page load
+    toggleCheckoutButtons();
+
+    // Listen for checkbox and select field changes
+    agreeCheckbox.addEventListener('change', toggleCheckoutButtons);
+    selectField.addEventListener('change', toggleCheckoutButtons);
+  });
+</script>
 
 {% schema %}
 {

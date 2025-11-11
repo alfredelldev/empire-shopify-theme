@@ -1,3 +1,5 @@
+{{ 'section-static-collection.css' | asset_url | stylesheet_tag }}
+
 {% assign filter_block = null %}
 {% assign sidebar_blocks = false %}
 {% assign menu_block_count = 0 %}
@@ -250,6 +252,10 @@
 
 {% paginate collection.products by paginate_by %}
   <div class="productgrid--outer {{ collection_classes | strip_newlines }}" data-productgrid-outer>
+    <div class="filter-pills">
+      {% render 'filters', menu_depth: section.settings.menu_depth_range, context: collection %}
+    </div>
+    
     {% if show_sidebar %}
       {% render 'product-grid-sidebar', menu_depth: section.settings.menu_depth_range, context: collection %}
     {% endif %}

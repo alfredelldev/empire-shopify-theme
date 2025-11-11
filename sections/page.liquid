@@ -1,9 +1,61 @@
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show Page Title",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text-banner",
+      "name": "Text Banner",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Heading Title"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "Heading Title"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Page"
+    }
+  ]
+}
+{% endschema %}
+
 <article class="site-page" data-template-page>
-  <header class="page-masthead">
-    <h1 class="page-title">
-      {{ page.title }}
-    </h1>
-  </header>
+  {% if section.settings.show_title %}
+    <header class="page-masthead">
+      <h1 class="page-title">
+        {{ page.title }}
+      </h1>
+    </header>
+  {% endif %}
 
   {%- unless page.content == blank -%}
     {% assign content = page.content %}
@@ -28,4 +80,14 @@
       {% render 'accordion', source: page.content %}
     </div>
   {%- endunless -%}
+
+  {% for block in section.blocks %}
+    {% if block.type == "text-banner" %}
+      <div class="text-banner__container container">
+        <h1>{{ block.settings.heading }}</h1>
+        <p>{{ block.settings.description }}</p>
+        <a href="{{ block.settings.button_link }}" class="btn">{{ block.settings.button_text }}</a>
+      </div>
+    {% endif %}
+  {% endfor %}
 </article>
