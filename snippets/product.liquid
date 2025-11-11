@@ -223,7 +223,7 @@
             {% when 'title' %}
               {% if is_product_modal %}
                 <h2 class="product-title">
-                  <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+                  <a href="{{ product.url }}">{{ product.title }}</a>
                 </h2>
               {% else %}
                 {% if template == 'index' %}
@@ -530,7 +530,7 @@
             {% when 'view-product-link' %}
               <a
                 class="product-link"
-                href="{{ product.url | within: collection }}"
+                href="{{ product.url }}"
                 data-product-details-link
               >
                 {{ block.settings.text | escape }}

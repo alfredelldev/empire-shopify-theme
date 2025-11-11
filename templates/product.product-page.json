@@ -20,10 +20,6 @@
           "type": "vendor",
           "settings": {}
         },
-        "color_swatch_rwmNdi": {
-          "type": "color_swatch",
-          "settings": {}
-        },
         "sku_yErMjz": {
           "type": "sku",
           "settings": {}
@@ -55,6 +51,7 @@
         "trust_badges_kTpKrX": {
           "type": "trust_badges",
           "settings": {
+            "badge_icon": "shopify://shop_images/Industry_Expert_1.png",
             "badge_svg_icon": "",
             "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
             "badge_class": "expert"
@@ -63,6 +60,7 @@
         "trust_badges_xaNPWA": {
           "type": "trust_badges",
           "settings": {
+            "badge_icon": "shopify://shop_images/Best_Service3.png",
             "badge_svg_icon": "",
             "badge_text": "Experience award-winning customer service that our customers rave about.",
             "badge_class": ""
@@ -71,6 +69,7 @@
         "trust_badges_KMPBit": {
           "type": "trust_badges",
           "settings": {
+            "badge_icon": "shopify://shop_images/Australian_Owned.png",
             "badge_svg_icon": "",
             "badge_text": "Support local - buy from a proudly Australian-owned and operated business.",
             "badge_class": ""
@@ -79,6 +78,19 @@
         "description": {
           "type": "description",
           "settings": {}
+        },
+        "tabs_8agxPq": {
+          "type": "tabs",
+          "settings": {
+            "show_product_description": false,
+            "show_tabs_below_product_gallery": false,
+            "tab_heading_1": "Tab 1",
+            "tab_text_1": "<p>Use this text to share information about your product.</p>",
+            "tab_heading_2": "Tab 2",
+            "tab_text_2": "<p>Use this text to share information about your product.</p>",
+            "tab_heading_3": "Tab 3",
+            "tab_text_3": "<p>Use this text to share information about your product.</p>"
+          }
         },
         "share": {
           "type": "share",
@@ -89,7 +101,6 @@
       "block_order": [
         "title",
         "vendor",
-        "color_swatch_rwmNdi",
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
@@ -100,6 +111,7 @@
         "trust_badges_xaNPWA",
         "trust_badges_KMPBit",
         "description",
+        "tabs_8agxPq",
         "share"
       ],
       "settings": {
@@ -115,14 +127,25 @@
     "1694063103f42b80e8": {
       "type": "apps",
       "blocks": {
-        "the_configurator_app_product_components_YGUkyC": {
-          "type": "shopify://apps/the-configurator-app-dev/blocks/product-components/582dfaae-7f29-4b06-a25a-4be7a3ad6324",
+        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
+          "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
           "disabled": true,
-          "settings": {}
+          "settings": {
+            "default_tab": "none",
+            "start_tab_element": "h5",
+            "default_tab_title": "Description",
+            "layout": "breakpoint",
+            "layout_breakpoint": 750,
+            "open_first_tab": true,
+            "allow_multiple_open": false,
+            "pro_tabs": false,
+            "initialize_tabs": "immediate",
+            "custom_scripts": ""
+          }
         }
       },
       "block_order": [
-        "the_configurator_app_product_components_YGUkyC"
+        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"
       ],
       "settings": {
         "include_padding": true
@@ -140,26 +163,10 @@
       "settings": {
         "enable_recently_viewed_products": true
       }
-    },
-    "1760636125da8f8a68": {
-      "type": "apps",
-      "blocks": {
-        "the_configurator_app_staging_product_components_VMTPfk": {
-          "type": "shopify://apps/the-configurator-app-staging/blocks/product-components/01991842-92e3-7f25-9a08-1f9e0661cee6",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "the_configurator_app_staging_product_components_VMTPfk"
-      ],
-      "settings": {
-        "include_padding": true
-      }
     }
   },
   "order": [
     "main",
-    "1760636125da8f8a68",
     "1694063103f42b80e8",
     "recommendations",
     "recently-viewed"

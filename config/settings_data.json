@@ -54,6 +54,7 @@
     "type_section": "montserrat_n8",
     "type_section_capitalize": false,
     "type_section_spacing": 0,
+    "reduce_animations": true,
     "layout_max_width": 1400,
     "product_sales_badge": false,
     "product_sales_badge_style": "text",
@@ -295,6 +296,11 @@
       },
       "11735689235857492391": {
         "type": "shopify://apps/algolia-search-and-discovery/blocks/autocomplete/57bb7f86-d5fe-4d43-96ca-3953324494cf",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
         "settings": {}
       }

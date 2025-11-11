@@ -9,12 +9,12 @@
  */
 {
   "sections": {
-    "pf-daa1b79d": {
-      "type": "pf-daa1b79d",
+    "main": {
+      "type": "page",
       "settings": {}
     }
   },
   "order": [
-    "pf-daa1b79d"
+    "main"
   ]
 }

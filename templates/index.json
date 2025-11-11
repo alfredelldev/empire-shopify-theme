@@ -12,34 +12,14 @@
     "dynamic_highlights_banner": {
       "type": "dynamic-highlights-banner",
       "blocks": {
-        "highlight-1": {
-          "type": "highlight",
-          "settings": {
-            "icon": "icon-heart",
-            "image": "shopify://shop_images/australian-owned_589a11c4-dc15-460e-9b4c-522c8b4605fc.png",
-            "title": "",
-            "text": "<p>Proudly Australian Owned & Operated</p>",
-            "link": ""
-          }
-        },
         "highlight-2": {
           "type": "highlight",
           "settings": {
             "icon": "icon-delivery",
             "image": "shopify://shop_images/free-delivery_72864314-484e-4a6b-96b0-f1644240d992.png",
-            "title": "",
+            "title": "FREE Delivery",
             "text": "<p>Free Delivery - Tapware, Showers & Accessories over $150</p>",
-            "link": ""
-          }
-        },
-        "highlight-3": {
-          "type": "highlight",
-          "settings": {
-            "icon": "icon-transfer",
-            "image": "shopify://shop_images/30-day-returns_1dadb8be-0fba-4c2d-b4c9-eeae4bdf841f.png",
-            "title": "",
-            "text": "<p>Have no fear, easy returns is here!</p>",
-            "link": ""
+            "link": "https://blueleafbath.com.au/collections/express-ship"
           }
         },
         "highlight-4": {
@@ -47,17 +27,37 @@
           "settings": {
             "icon": "icon-award-trophy",
             "image": "shopify://shop_images/customer-service_20db1306-60e5-42d2-b108-4cfc390aa55e.png",
-            "title": "",
+            "title": "Best Service",
             "text": "<p>Voted Best Service. Great customer service still exists</p>",
-            "link": ""
+            "link": "https://blueleafbath.com.au/collections/clearance-sale"
+          }
+        },
+        "highlight-3": {
+          "type": "highlight",
+          "settings": {
+            "icon": "icon-transfer",
+            "image": "shopify://shop_images/30-day-returns_1dadb8be-0fba-4c2d-b4c9-eeae4bdf841f.png",
+            "title": "Easy Returns",
+            "text": "<p>Have no fear, easy returns is here!</p>",
+            "link": "https://blueleafbath.com.au/pages/returns-and-refunds"
+          }
+        },
+        "highlight-1": {
+          "type": "highlight",
+          "settings": {
+            "icon": "icon-heart",
+            "image": "shopify://shop_images/australian-owned_589a11c4-dc15-460e-9b4c-522c8b4605fc.png",
+            "title": "Proud Aussie",
+            "text": "<p>Proudly Australian Owned & Operated</p>",
+            "link": "https://blueleafbath.com.au/collections/express-ship"
           }
         }
       },
       "block_order": [
-        "highlight-1",
         "highlight-2",
+        "highlight-4",
         "highlight-3",
-        "highlight-4"
+        "highlight-1"
       ],
       "custom_css": [],
       "settings": {
@@ -74,14 +74,14 @@
       "type": "pxs-image-with-text-overlay",
       "settings": {
         "section_height": "medium",
-        "image": "shopify://shop_images/2_3e660ccc-6225-408f-9882-771b98a38c88.jpg",
-        "title": "Create Your Masterpiece",
-        "text": "<p>Unleash your creativity with our newly launched vanity customiser</p>",
+        "image": "shopify://shop_images/ADP_Customised_Vanity.jpg",
+        "title": "Create Your Custom Vanity",
+        "text": "<p>Unleash your creativity with Blue Leaf's newly launched vanity customiser</p>",
         "content_position": "bottom-left",
         "color": "#ffffff",
         "overlay_background": "#000000",
         "overlay_opacity": 29,
-        "link": "shopify://products/adp-harper-wall-hung-vanity",
+        "link": "shopify://collections/custom-vanity",
         "button_text": "Get Creative!"
       }
     },
@@ -92,7 +92,7 @@
           "type": "collection",
           "settings": {
             "collection": "australian-made-vanity",
-            "title": "Vanities & Cabinets"
+            "title": "Vanities & Bathroom Cabinets"
           }
         },
         "collection-2": {
@@ -120,14 +120,14 @@
           "type": "collection",
           "settings": {
             "collection": "bathroom-basins",
-            "title": "Basins"
+            "title": "Bathroom Basins"
           }
         },
         "collection-6": {
           "type": "collection",
           "settings": {
             "collection": "kitchen-sinks",
-            "title": "Sinks"
+            "title": "Kitchen Sinks"
           }
         },
         "f87bcc79-a923-486d-9068-3454522cb3c1": {
@@ -188,7 +188,7 @@
         "1c337722-94ca-49cb-9796-aa85850d9833"
       ],
       "settings": {
-        "title": "Explore Our Premium Ranges",
+        "title": "Shop our Wide Range of Kitchen & Bathroom Fittings and Accessories",
         "thumbnail_columns_desktop": 4,
         "thumbnail_columns_mobile": 2,
         "image-crop": "original",
@@ -200,29 +200,14 @@
     "dynamic_promo_mosaic": {
       "type": "dynamic-promo-mosaic",
       "blocks": {
-        "promotion-3": {
-          "type": "promotion",
-          "settings": {
-            "image": "shopify://shop_images/20230315_132045_2.jpg",
-            "title": "Visit our Selection Centre",
-            "text": "Our design and product speciliasts are here to help.",
-            "color": "#ffffff",
-            "block_link": "shopify://collections/express-ship",
-            "button_text": "",
-            "button_style": "primary",
-            "show_overlay": true,
-            "background": "#000000",
-            "opacity": 14
-          }
-        },
         "promotion-2": {
           "type": "promotion",
           "settings": {
-            "image": "shopify://shop_images/Malibu-DC_MMF133OWR_1.jpg",
-            "title": "Keep Cool",
-            "text": "Fans, Lighting & More",
+            "image": "shopify://shop_images/Sale_Products.png",
+            "title": "Clearance Sale",
+            "text": "Shop now! Until Supplies last. \nAlso available in Express Ship",
             "color": "#ffffff",
-            "block_link": "shopify://collections/martec",
+            "block_link": "shopify://collections/clearance-sale",
             "button_text": "",
             "button_style": "primary",
             "show_overlay": true,
@@ -237,7 +222,7 @@
             "title": "",
             "text": "",
             "color": "#ffffff",
-            "block_link": "shopify://collections/express-ship",
+            "block_link": "shopify://collections/all-bathroom-products",
             "button_text": "",
             "button_style": "secondary",
             "show_overlay": false,
@@ -245,12 +230,42 @@
             "opacity": 1
           }
         },
+        "promotion-3": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/20230315_132045_2.jpg",
+            "title": "Visit our Kitchen and Bathroom Showroom",
+            "text": "Our design and product speciliasts are here to help",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/express-ship",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "#000000",
+            "opacity": 14
+          }
+        },
+        "promotion_tMWqGg": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Timberline-Oxbow-Wall-Hung-Vanity-blue-leaf-bathware.jpg",
+            "title": "Shop by Brand",
+            "text": "Explore our wide range of kitchen, tapware, and bathware brands",
+            "color": "#ffffff",
+            "block_link": "shopify://collections/all-products",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": true,
+            "background": "",
+            "opacity": 50
+          }
+        },
         "promotion-1": {
           "type": "promotion",
           "settings": {
             "image": "shopify://shop_images/Wordpress-Top-Image-11.png",
-            "title": "New Release",
-            "text": "Phoenix launches the Cromford collection",
+            "title": "Phoenix Cromford",
+            "text": "New release! Phoenix launches the Cromford collection",
             "color": "#ffffff",
             "block_link": "shopify://collections/phoenix-cromford",
             "button_text": "",
@@ -262,9 +277,10 @@
         }
       },
       "block_order": [
-        "promotion-3",
         "promotion-2",
         "promotion-4",
+        "promotion-3",
+        "promotion_tMWqGg",
         "promotion-1"
       ],
       "settings": {
@@ -282,7 +298,7 @@
           "type": "slide",
           "settings": {
             "background_image": "shopify://shop_images/lifestyle_VS790-12_V726-12_Phoenix_Vivid_Slimline_Vessel_Mixer_and_Vivid_Twin_Shower_RGB_89b275ee-539b-4735-9faa-42a4dd9ddf8a.jpg",
-            "title": "Explore our premium ranges",
+            "title": "Explore Blue Leaf's premium bathroom tap ranges",
             "text": "",
             "color": "#ffffff",
             "link": "",
@@ -302,7 +318,7 @@
           "type": "slide",
           "settings": {
             "background_image": "shopify://shop_images/214791803_5962082553832544_7927398482850384594_n.jpg",
-            "title": "Granite Sinks",
+            "title": "Granite Kitchen Sinks",
             "text": "Save on a huge range of Granite Sinks. Styles and configurations to suit your next kitchen project.",
             "color": "#ffffff",
             "link": "",
@@ -414,7 +430,7 @@
         "testimonial-6"
       ],
       "settings": {
-        "title": "What our customers have to say about Blue Leaf",
+        "title": "What our customers have to say about Blue Leaf Bathware",
         "image_crop": "rounded",
         "text_size": "medium"
       }
@@ -427,8 +443,16 @@
           "settings": {
             "title": "",
             "title_color": "",
+            "title_size_v2": 0,
             "alignment": "center",
+            "instafeed_margin_top": 0,
+            "instafeed_margin_bottom": 0,
+            "instafeed_margin_sides": 0,
+            "show_instagram_link": false,
+            "link_alignment": "left",
+            "link_color": "#000000",
             "background_color": "",
+            "feed_id": "",
             "html_area": ""
           }
         }
@@ -443,10 +467,10 @@
     "dynamic_blog_posts": {
       "type": "dynamic-blog-posts",
       "settings": {
-        "title": "",
+        "title": "Expert Advice on Bathroom & Kitchen Fittings and Fixtures",
         "blog": "blog-posts",
         "show_date": true,
-        "show_author": false,
+        "show_author": true,
         "show_excerpt": true
       }
     }

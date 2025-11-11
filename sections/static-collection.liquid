@@ -249,9 +249,6 @@
 %}
 
 {% render 'collection-filters', tag_groups: tag_groups, tag_option_groups: tag_option_groups %}
-{% if collection.metafields.prefilters.disabled != true %}
-  {% render 'collection-prefilter', tag_groups: tag_groups, tag_option_groups: tag_option_groups %}
-{% endif %}
 
 {% paginate collection.products by paginate_by %}
   <div class="productgrid--outer {{ collection_classes | strip_newlines }}" data-productgrid-outer>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js no-touch" lang="{{ request.locale.iso_code }}">
   <head>
+    <meta name="facebook-domain-verification" content="t2r2ox5nuegv3sduyn3tsghzh9cos9" />
     <script>
       window.Store = window.Store || {};
       window.Store.id = {{ shop.id }};
@@ -102,8 +103,8 @@
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
     {% render 'pagefly-app-header' %}
-    {% include 'pagefly-app-header' %}
-  </head>
+    
+  {% include 'pagefly-app-header' %}</head>
 
   {% render 'swymSnippet' %}
 
