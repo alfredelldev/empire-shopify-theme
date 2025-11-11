@@ -21,13 +21,9 @@
       <span>{{ page.title }}</span>
 
     {% elsif template contains 'product' %}
-      {% assign product_collections = product.collections %}
-
-      {% if product_collections.size > 0 %}
-        {% for coll in product_collections %}
-          {{ delimiter }}
-          <a href="{{ coll.url }}">{{ coll.title }}</a>
-        {% endfor %}
+      {% if collection %}
+        {{ delimiter }}
+        {{ collection.title | link_to: collection.url }}
       {% endif %}
 
       {{ delimiter }}
