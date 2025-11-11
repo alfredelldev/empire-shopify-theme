@@ -21,9 +21,11 @@
       <span>{{ page.title }}</span>
 
     {% elsif template contains 'product' %}
-      {% if collection %}
+      {% assign active_collection = collection | default: product.collections.first %}
+
+      {% if active_collection %}
         {{ delimiter }}
-        {{ collection.title | link_to: collection.url }}
+        {{ active_collection.title | link_to: active_collection.url }}
       {% endif %}
 
       {{ delimiter }}
