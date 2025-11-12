@@ -21,14 +21,29 @@
       <span>{{ page.title }}</span>
 
     {% elsif template contains 'product' %}
-      {% assign product_collections = product.collections | slice: 0, 3 %}
+      {% assign excluded_collections = 'sale,new-arrivals,featured,trending,bestsellers,all-over-1,all-products,all-bathroom-supplies,all-ceiling-fans,express-ship,clearance-sale' | split: ',' %}
+      {% assign filtered_collections = '' %}
 
-      {% if product_collections.size > 0 %}
-        {% for coll in product_collections %}
+      {% for coll in product.collections %}
+        {% unless excluded_collections contains coll.handle %}
+          {% if filtered_collections == '' %}
+            {% assign filtered_collections = coll.handle %}
+          {% else %}
+            {% assign filtered_collections = filtered_collections | append: ',' | append: coll.handle %}
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+
+      {% assign filtered_collections_array = filtered_collections | split: ',' %}
+      {% assign limited_collections = filtered_collections_array | slice: 0, 3 %}
+
+      {% for handle in limited_collections %}
+        {% assign coll = collections[handle] %}
+        {% if coll %}
           {{ delimiter }}
           <a href="{{ coll.url }}">{{ coll.title }}</a>
-        {% endfor %}
-      {% endif %}
+        {% endif %}
+      {% endfor %}
 
       {{ delimiter }}
       <span>{{ product.title }}</span>
