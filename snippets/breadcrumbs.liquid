@@ -21,29 +21,20 @@
       <span>{{ page.title }}</span>
 
     {% elsif template contains 'product' %}
-      {% assign excluded_collections = 'sale,new-arrivals,featured,trending,bestsellers,all-over-1,all-products,all-bathroom-supplies,all-ceiling-fans,express-ship,clearance-sale' | split: ',' %}
-      {% assign filtered_collections = '' %}
+      {{ delimiter }}
 
-      {% for coll in product.collections %}
-        {% unless excluded_collections contains coll.handle %}
-          {% if filtered_collections == '' %}
-            {% assign filtered_collections = coll.handle %}
-          {% else %}
-            {% assign filtered_collections = filtered_collections | append: ',' | append: coll.handle %}
-          {% endif %}
-        {% endunless %}
-      {% endfor %}
+      {% if product.vendor %}
+        <a href="{{ routes.collections_url }}/vendors?q={{ product.vendor | url_encode }}">
+          {{ product.vendor }}
+        </a>
+      {% endif %}
 
-      {% assign filtered_collections_array = filtered_collections | split: ',' %}
-      {% assign limited_collections = filtered_collections_array | slice: 0, 3 %}
-
-      {% for handle in limited_collections %}
-        {% assign coll = collections[handle] %}
-        {% if coll %}
-          {{ delimiter }}
-          <a href="{{ coll.url }}">{{ coll.title }}</a>
-        {% endif %}
-      {% endfor %}
+      {% if product.type %}
+        {{ delimiter }}
+        <a href="{{ routes.collections_url }}/types?q={{ product.type | url_encode }}">
+          {{ product.type }}
+        </a>
+      {% endif %}
 
       {{ delimiter }}
       <span>{{ product.title }}</span>
