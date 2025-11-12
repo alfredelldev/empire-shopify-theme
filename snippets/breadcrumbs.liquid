@@ -24,14 +24,16 @@
       {{ delimiter }}
 
       {% if product.vendor %}
-        <a href="{{ routes.collections_url }}/vendors?q={{ product.vendor | url_encode }}">
+        {% assign vendor_handle = product.vendor | handle %}
+        <a href="{{ routes.collections_url }}/{{ vendor_handle }}">
           {{ product.vendor }}
         </a>
       {% endif %}
 
       {% if product.type %}
+        {% assign type_handle = product.type | handle %}
         {{ delimiter }}
-        <a href="{{ routes.collections_url }}/types?q={{ product.type | url_encode }}">
+        <a href="{{ routes.collections_url }}/{{ type_handle }}">
           {{ product.type }}
         </a>
       {% endif %}
