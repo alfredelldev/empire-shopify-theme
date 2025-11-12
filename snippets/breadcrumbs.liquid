@@ -21,11 +21,13 @@
       <span>{{ page.title }}</span>
 
     {% elsif template contains 'product' %}
-      {% assign active_collection = collection | default: product.collections.first %}
+      {% assign product_collections = product.collections | slice: 0, 3 %}
 
-      {% if active_collection %}
-        {{ delimiter }}
-        {{ active_collection.title | link_to: active_collection.url }}
+      {% if product_collections.size > 0 %}
+        {% for coll in product_collections %}
+          {{ delimiter }}
+          <a href="{{ coll.url }}">{{ coll.title }}</a>
+        {% endfor %}
       {% endif %}
 
       {{ delimiter }}
