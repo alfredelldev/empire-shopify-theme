@@ -369,6 +369,12 @@
       {%- endcapture -%}
 
       <div class="productitem__image-container">
+        {% if product.tags contains 'Sale-Sticker' %}
+          <div class="sale-badge">
+            <img src="{{ 'sale-sticker.png' | asset_url }}" alt="Sale Badge" width="" height="">
+          </div>
+        {% endif %}
+
         <a
           class="productitem--image-link"
           href="{{ product.url }}"
