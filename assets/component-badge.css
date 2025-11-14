@@ -71,6 +71,10 @@
   display: none;
 }
 
+.productitem__image-container {
+  position: relative;
+}
+
 .sale-badge {
   position: absolute;
   top: 0;
