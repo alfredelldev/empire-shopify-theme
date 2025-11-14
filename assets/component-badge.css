@@ -34,13 +34,13 @@
 }
 
 .badges__container .productitem__badge.productitem__badge_australian-made {
-  background-color: #27AE60;
+  background-color: #27ae60;
 }
 .badges__container .productitem__badge.productitem__badge_clearance {
   background-color: #b3261e;
 }
 .badges__container .productitem__badge.productitem__badge_express-ship {
-  background-color: #1682C3;
+  background-color: #1682c3;
 }
 
 .discount-label__badge {
@@ -69,4 +69,11 @@
 
 .badges__container:empty {
   display: none;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
 }
