@@ -24,6 +24,12 @@
   "
   data-gallery-viewer
 >
+  {% if product.tags contains 'sales-sticker' %}
+    <div class="sale-badge">
+      <img src="{{ 'sale-sticker.png' | asset_url }}" alt="Sale Badge" width="" height="">
+    </div>
+  {% endif %}
+
   {% for media in product.media %}
     <figure
       class="
@@ -47,27 +53,27 @@
         {% assign zoom_width = media.width %}
         {% if image_crop %}
           {% case aspect_ratio %}
-          {% when 'short' %}
-            {% assign min_width = media.height | times: 4 | divided_by: 3 %}
-            {% if media.width > min_width %}
-              {% assign zoom_width = min_width %}
-            {% else %}
-              {% assign zoom_height = media.width | times: 3 | divided_by: 4 %}
-            {% endif %}
-          {% when 'square' %}
-            {% comment %} Square crop {% endcomment %}
-            {% if media.height > media.width %}
-              {% assign zoom_height = media.width %}
-            {% else %}
-              {% assign zoom_width = media.height %}
-            {% endif %}
-          {% when 'tall' %}
-            {% assign min_width = media.height | times: 2 | divided_by: 3 %}
-            {% if media.width > min_width %}
-              {% assign zoom_width = min_width %}
-            {% else %}
-              {% assign zoom_height = media.width | times: 3 | divided_by: 2 %}
-            {% endif %}
+            {% when 'short' %}
+              {% assign min_width = media.height | times: 4 | divided_by: 3 %}
+              {% if media.width > min_width %}
+                {% assign zoom_width = min_width %}
+              {% else %}
+                {% assign zoom_height = media.width | times: 3 | divided_by: 4 %}
+              {% endif %}
+            {% when 'square' %}
+              {% comment %} Square crop {% endcomment %}
+              {% if media.height > media.width %}
+                {% assign zoom_height = media.width %}
+              {% else %}
+                {% assign zoom_width = media.height %}
+              {% endif %}
+            {% when 'tall' %}
+              {% assign min_width = media.height | times: 2 | divided_by: 3 %}
+              {% if media.width > min_width %}
+                {% assign zoom_width = min_width %}
+              {% else %}
+                {% assign zoom_height = media.width | times: 3 | divided_by: 2 %}
+              {% endif %}
           {% endcase %}
         {% endif %}
 
@@ -95,54 +101,53 @@
       {% endif %}
     >
       {% case media.media_type %}
-      {% when 'image' %}
-        <div
-          class="product-gallery--image-background"
-          {% if image_crop %}
-            {%
-              render 'rimg',
+        {% when 'image' %}
+          <div
+            class="product-gallery--image-background"
+            {% if image_crop %}
+              {% render 'rimg', img: media, size: 'x700', lazy: true, background: true %}
+            {% endif %}
+          >
+            {% render 'rimg',
               img: media,
+              class: 'product-gallery--loaded-image',
               size: 'x700',
               lazy: true,
-              background: true
+              canvas: true
             %}
-          {% endif %}
-        >
-          {%
-            render 'rimg',
-            img: media,
-            class: 'product-gallery--loaded-image'
-            size: 'x700',
-            lazy: true,
-            canvas: true
-          %}
-        </div>
-      {% when 'external_video' %}
-        {% assign external_video_url = media | external_video_url %}
-        <div class="product-gallery--external-video">
-          {%
-            render 'video'
-            url: external_video_url,
-            cover: media.preview_image,
-            slideshow: true,
-            aspect_ratio: '16-9',
-          %}
-        </div>
-      {% when 'model' %}
-        {{ media | model_viewer_tag: image_size: '1024x', reveal: 'interaction' , toggleable: true, interaction-prompt-threshold: 0 }}
-        <noscript>
-          <img
-            src="{{ media.preview_image | img_url: '1024x' }}"
-            alt="{{ media.preview_image.alt | escape }}"
-            width="{{ media.preview_image.width }}"
-            height="{{ media.preview_image.height }}"
-            loading="lazy"
-          >
-        </noscript>
-      {% when 'video' %}
-        {{ media | media_tag: image_size: '1024x' }}
-      {% else %}
-        {{ media | media_tag }}
+          </div>
+        {% when 'external_video' %}
+          {% assign external_video_url = media | external_video_url %}
+          <div class="product-gallery--external-video">
+            {% render 'video',
+              url: external_video_url,
+              cover: media.preview_image,
+              slideshow: true,
+              aspect_ratio: '16-9'
+            %}
+          </div>
+        {% when 'model' %}
+          {{
+            media
+            | model_viewer_tag:
+              image_size: '1024x',
+              reveal: 'interaction',
+              toggleable: true,
+              interaction-prompt-threshold: 0
+          }}
+          <noscript>
+            <img
+              src="{{ media.preview_image | img_url: '1024x' }}"
+              alt="{{ media.preview_image.alt | escape }}"
+              width="{{ media.preview_image.width }}"
+              height="{{ media.preview_image.height }}"
+              loading="lazy"
+            >
+          </noscript>
+        {% when 'video' %}
+          {{ media | media_tag: image_size: '1024x' }}
+        {% else %}
+          {{ media | media_tag }}
       {% endcase %}
     </figure>
   {% else %}
@@ -161,7 +166,7 @@
     </figure>
   {% endfor %}
 
-  {% assign image_count = product.media | where: "media_type", "image" | size %}
+  {% assign image_count = product.media | where: 'media_type', 'image' | size %}
   {% if image_count > 0 and gallery_click_to_zoom != 'disabled' %}
     <button
       class="
@@ -169,7 +174,8 @@
         {% if gallery_click_to_zoom == 'desktop' %}expand--hide-mobile{% endif %}
         {% if gallery_click_to_zoom == 'mobile' %}expand--hide-desktop{% endif %}
       "
-      data-gallery-expand aria-haspopup="true"
+      data-gallery-expand
+      aria-haspopup="true"
     >
       <span class="click-text" tabindex="-1">
         {% render 'icon-library', id: 'icon-zoom' %}
