@@ -36,6 +36,10 @@
           "type": "divider",
           "settings": {}
         },
+        "the_configurator_app_simple_configurator_ge6g6T": {
+          "type": "shopify://apps/the-configurator-app/blocks/simple-configurator/019a2b81-1b72-7a54-8b0e-6f1039518a13",
+          "settings": {}
+        },
         "divider_A9wG8j": {
           "type": "divider",
           "settings": {}
@@ -89,6 +93,7 @@
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
         "divider_dWQEBV",
+        "the_configurator_app_simple_configurator_ge6g6T",
         "divider_A9wG8j",
         "shipping_calculator_7HaD3y",
         "trust_badges_kTpKrX",
