@@ -42,7 +42,7 @@
   {% assign product_available = product.available %}
   {% assign product_title = product.title %}
   {% assign product_vendor = product.vendor %}
-  {% assign product_link = product.url %}
+  {% assign product_link = product.url | split: '?' | first %}
   {% assign product_description = product.description | strip_html %}
   {% assign product_description_size = product.description | strip_html | size %}
   {% if recently_viewed == true %}
@@ -377,7 +377,7 @@
 
         <a
           class="productitem--image-link"
-          href="{{ product.url }}"
+          href="{{ product.url | split: '?' | first }}"
           aria-label="{{ product.url }}"
           tabindex="-1"
           data-product-page-link
@@ -528,7 +528,7 @@
           <div class="productitem--actions" data-product-actions style="gap: 0.25rem;">
             <div class="productitem--action">
               <a
-                href="{{ product.url }}"
+                href="{{ product.url | split: '?' | first }}"
                 aria-label="{{ product.url }}"
                 style="text-decoration: none;"
               >
