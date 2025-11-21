@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js no-touch" lang="{{ request.locale.iso_code }}">
   <head>
-    <meta name="facebook-domain-verification" content="t2r2ox5nuegv3sduyn3tsghzh9cos9" />
+    <meta name="facebook-domain-verification" content="t2r2ox5nuegv3sduyn3tsghzh9cos9">
     <script>
       window.Store = window.Store || {};
       window.Store.id = {{ shop.id }};
@@ -102,8 +102,20 @@
     </script>
     {% comment %}Inject theme-object end{% endcomment %}
     {% render 'pagefly-app-header' %}
-    
-  {% include 'pagefly-app-header' %}</head>
+
+    {% include 'pagefly-app-header' %}
+
+    {% if template.name contains 'collection' %}
+      <script>
+        const params = new URLSearchParams(window.location.search);
+        const pageNum = params.get('page');
+
+        if (pageNum && Number(pageNum) > 1) {
+          document.write('<meta name="robots" content="noindex, nofollow">');
+        }
+      </script>
+    {% endif %}
+  </head>
 
   {% render 'swymSnippet' %}
 
