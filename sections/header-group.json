@@ -57,15 +57,6 @@
     "header": {
       "type": "static-header",
       "blocks": {
-        "meganav_aaDbMr": {
-          "type": "meganav",
-          "settings": {
-            "menu": "",
-            "title": "Appliances",
-            "collection": "appliances",
-            "type": "default"
-          }
-        },
         "d43bf0af-1f8c-4fd1-b633-a91b0c4170f6": {
           "type": "meganav",
           "settings": {
@@ -111,23 +102,32 @@
             "type": "default"
           }
         },
+        "meganav_aaDbMr": {
+          "type": "meganav",
+          "settings": {
+            "menu": "appliances",
+            "title": "Appliances",
+            "collection": "appliances",
+            "type": "default"
+          }
+        },
         "8ec0966d-7268-4156-8f6b-f03211fce8db": {
           "type": "meganav",
           "settings": {
             "menu": "colours",
-            "title": "Shop by Colour",
+            "title": "Shop Colours",
             "collection": "",
             "type": "image"
           }
         }
       },
       "block_order": [
-        "meganav_aaDbMr",
         "d43bf0af-1f8c-4fd1-b633-a91b0c4170f6",
         "4557eb4d-453e-4248-889b-8a1bd4e98686",
         "ad6023fc-4b24-4de1-aab1-e883dc61eab1",
         "b8accc06-83f1-4bcf-ab0e-9aeef1d5e166",
         "cce09304-e497-48c0-a712-962624847044",
+        "meganav_aaDbMr",
         "8ec0966d-7268-4156-8f6b-f03211fce8db"
       ],
       "settings": {
