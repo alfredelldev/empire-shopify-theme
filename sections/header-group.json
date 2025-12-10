@@ -57,6 +57,15 @@
     "header": {
       "type": "static-header",
       "blocks": {
+        "meganav_aaDbMr": {
+          "type": "meganav",
+          "settings": {
+            "menu": "",
+            "title": "Appliances",
+            "collection": "appliances",
+            "type": "default"
+          }
+        },
         "d43bf0af-1f8c-4fd1-b633-a91b0c4170f6": {
           "type": "meganav",
           "settings": {
@@ -113,6 +122,7 @@
         }
       },
       "block_order": [
+        "meganav_aaDbMr",
         "d43bf0af-1f8c-4fd1-b633-a91b0c4170f6",
         "4557eb4d-453e-4248-889b-8a1bd4e98686",
         "ad6023fc-4b24-4de1-aab1-e883dc61eab1",
