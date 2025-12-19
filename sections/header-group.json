@@ -151,11 +151,24 @@
         "small_promo_icon": "icon-question-mark",
         "cart_icon": "icon-cart"
       }
+    },
+    "dynamic_custom_liquid_KebqeE": {
+      "type": "dynamic-custom-liquid",
+      "custom_css": [
+        ".announcement-01 {background-color: #9b2c2c; text-align: center;}",
+        ".announcement-01 p {color: #fff; text-align: center; margin: 0; padding: 16px 0;}",
+        ".custom-liquid--container {max-width: 100%; padding: 0; margin: 0;}"
+      ],
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "custom_liquid": "<div class=\"announcement-01\">\n<p>\nMerry Christmas 🎄 - Online store is open 24/7 - All orders will be dispatched when we return on the 5th of Jan 2026\n</p>\n</div>"
+      }
     }
   },
   "order": [
     "announcement-bar",
     "utility-bar",
-    "header"
+    "header",
+    "dynamic_custom_liquid_KebqeE"
   ]
 }
