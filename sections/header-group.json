@@ -154,6 +154,7 @@
     },
     "dynamic_custom_liquid_KebqeE": {
       "type": "dynamic-custom-liquid",
+      "disabled": true,
       "custom_css": [
         ".announcement-01 {background-color: #9b2c2c; text-align: center;}",
         ".announcement-01 p {color: #fff; text-align: center; margin: 0; padding: 16px 0;}",
