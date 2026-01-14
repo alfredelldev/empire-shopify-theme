@@ -655,7 +655,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "@media (max-width: 767px) {.extension-button {display: none !important; }}"
+      "@media (max-width: 767px) {.extension-button {display: none !important; } #launcher {bottom: 90px !important; z-index: 1 !important; }}"
     ]
   }
 }
