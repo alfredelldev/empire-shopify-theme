@@ -28,15 +28,15 @@
           "type": "price",
           "settings": {}
         },
+        "the_configurator_app_dev_simple_configurator_4BGWtt": {
+          "type": "shopify://apps/the-configurator-app-dev/blocks/simple-configurator/582dfaae-7f29-4b06-a25a-4be7a3ad6324",
+          "settings": {}
+        },
         "5e6ce68e-58f8-4a44-8202-877b404dfc9b": {
           "type": "stock_level",
           "settings": {
             "colour_stock_low": "#ff0000"
           }
-        },
-        "99b89d72-0153-4a22-bfea-299af64c15e2": {
-          "type": "simple_configurator",
-          "settings": {}
         },
         "divider_JfUm7B": {
           "type": "divider",
@@ -45,7 +45,6 @@
         "trust_badges_tUFyQM": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Industry_Expert_1.png",
             "badge_svg_icon": "",
             "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
             "badge_class": "expert"
@@ -54,7 +53,6 @@
         "trust_badges_3NTfkG": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Best_Service3.png",
             "badge_svg_icon": "",
             "badge_text": "Experience award-winning customer service that our customers rave about.",
             "badge_class": ""
@@ -63,7 +61,6 @@
         "trust_badges_WFQdie": {
           "type": "trust_badges",
           "settings": {
-            "badge_icon": "shopify://shop_images/Australian_Owned.png",
             "badge_svg_icon": "",
             "badge_text": "Support local - buy from a proudly Australian-owned and operated business.",
             "badge_class": ""
@@ -92,8 +89,8 @@
         "vendor",
         "89939ce7-a3a6-450c-8568-cbbbc2394485",
         "price",
+        "the_configurator_app_dev_simple_configurator_4BGWtt",
         "5e6ce68e-58f8-4a44-8202-877b404dfc9b",
-        "99b89d72-0153-4a22-bfea-299af64c15e2",
         "divider_JfUm7B",
         "trust_badges_tUFyQM",
         "trust_badges_3NTfkG",
