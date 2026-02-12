@@ -1,0 +1,141 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "static-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "89939ce7-a3a6-450c-8568-cbbbc2394485": {
+          "type": "sku",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "5e6ce68e-58f8-4a44-8202-877b404dfc9b": {
+          "type": "stock_level",
+          "settings": {
+            "colour_stock_low": "#ff0000"
+          }
+        },
+        "99b89d72-0153-4a22-bfea-299af64c15e2": {
+          "type": "simple_configurator",
+          "settings": {}
+        },
+        "divider_JfUm7B": {
+          "type": "divider",
+          "settings": {}
+        },
+        "trust_badges_tUFyQM": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Industry_Expert_1.png",
+            "badge_svg_icon": "",
+            "badge_text": "Industry experts delivering trusted solutions and product information you can count on.",
+            "badge_class": "expert"
+          }
+        },
+        "trust_badges_3NTfkG": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Best_Service3.png",
+            "badge_svg_icon": "",
+            "badge_text": "Experience award-winning customer service that our customers rave about.",
+            "badge_class": ""
+          }
+        },
+        "trust_badges_WFQdie": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_icon": "shopify://shop_images/Australian_Owned.png",
+            "badge_svg_icon": "",
+            "badge_text": "Support local - buy from a proudly Australian-owned and operated business.",
+            "badge_class": ""
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "disabled": true,
+          "settings": {
+            "enable_local_pickup": true,
+            "show_gift_card_recipient_form": false
+          }
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "title",
+        "vendor",
+        "89939ce7-a3a6-450c-8568-cbbbc2394485",
+        "price",
+        "5e6ce68e-58f8-4a44-8202-877b404dfc9b",
+        "99b89d72-0153-4a22-bfea-299af64c15e2",
+        "divider_JfUm7B",
+        "trust_badges_tUFyQM",
+        "trust_badges_3NTfkG",
+        "trust_badges_WFQdie",
+        "description",
+        "form",
+        "share"
+      ],
+      "settings": {
+        "gallery_aspect_ratio": "natural",
+        "gallery_image_crop": false,
+        "gallery_thumbnail_position": "below",
+        "gallery_video_autoplay": true,
+        "gallery_video_looping": true,
+        "gallery_hover_zoom": "disabled",
+        "gallery_click_to_zoom": "always"
+      }
+    },
+    "1694063103f42b80e8": {
+      "type": "apps",
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "recommendations": {
+      "type": "static-product-recommendations",
+      "settings": {
+        "show_product_recommendations": true,
+        "product_recommendations_heading": "Recommended products"
+      }
+    },
+    "recently-viewed": {
+      "type": "static-recently-viewed",
+      "settings": {
+        "enable_recently_viewed_products": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "1694063103f42b80e8",
+    "recommendations",
+    "recently-viewed"
+  ]
+}
