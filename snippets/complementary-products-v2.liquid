@@ -1,0 +1,67 @@
+{{ 'component-complementary-v2.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'component-complementary-v2.js' | asset_url }}" defer></script>
+
+<div class="complementary-products-v2">
+  <div class="opt-ad-form-group">
+    <div class="opt-ad-label-row">
+      <label class="opt-ad-label">Optional Additions</label
+      ><a href="javascript:void(0)" class="opt-ad-remove-btn" style="display: none;">Remove item</a>
+    </div>
+    <div class="opt-ad-dropdown-host">
+      <button type="button" class="opt-ad-dropdown" aria-haspopup="listbox" aria-expanded="true">
+        <div class="opt-ad-selected">
+          <div class="opt-ad-thumb-wrap">
+            <img
+              class="opt-ad-thumb"
+              alt=""
+              src="https://cdn.shopify.com/extensions/019c6ec7-0a45-76de-8002-51d65cf7c0f6/dev-c1db6179-d36c-4cc1-b9e2-88dc4b6571e6/assets/plus-icon-sm.jpeg"
+              height=""
+              width=""
+            >
+          </div>
+          <div class="opt-ad-selected-info">
+            <div class="opt-ad-selected-title">Add Additional Products</div>
+            <div class="opt-ad-selected-price"></div>
+          </div>
+        </div>
+        <div class="opt-ad-chevron" style="transform: rotate(180deg);">▾</div>
+      </button>
+      <div class="opt-ad-options" role="listbox" style="display: block;">
+        {% assign complementary_products = product.metafields['shopify--discovery--product_recommendation'].complementary_products.value %}
+
+        {% if complementary_products != blank %}
+          {% for rec_product in complementary_products %}
+            {% assign variant = rec_product.selected_or_first_available_variant %}
+
+            <div class="opt-ad-option">
+              <img
+                class="opt-ad-opt-thumb"
+                src="{{ rec_product.featured_image | image_url: width: 120 }}"
+                alt="{{ rec_product.title }}"
+                height=""
+                width=""
+              >
+
+              <div class="opt-ad-opt-info">
+                <div class="opt-ad-opt-title">
+                  {{ rec_product.title }}
+                </div>
+                <div class="opt-ad-opt-price">
+                  {{ variant.price | money }}
+                </div>
+              </div>
+
+              <div class="opt-ad-opt-addtocart">
+                <form method="post" action="/cart/add" class="complementary-add-form">
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit">Add to cart</button>
+                </form>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

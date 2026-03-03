@@ -1,0 +1,191 @@
+.opt-ad-v3 {
+  overflow: hidden;
+  background: #fff;
+}
+
+.opt-ad-v3__toggle {
+  width: 100%;
+  background: #fff;
+  border: none;
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.opt-ad-v3__icon {
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.opt-ad-v3__content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  background: #fafafa;
+}
+
+.opt-ad-v3__content.is-open {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.opt-ad-v3__inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.opt-ad-v3__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  background: #fff;
+}
+
+.opt-ad-v3__item:hover {
+  background-color: #f8fafd;
+}
+
+.opt-ad-v3__thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.opt-ad-v3__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.opt-ad-v3__product-title {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.opt-ad-v3__price {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.opt-ad-v3__btn {
+  background: #1c83c4;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  min-width: 96px;
+  min-height: 31px;
+}
+
+.opt-ad-v3__btn:hover {
+  background: #1a96e6;
+}
+
+/* Spinner inside button */
+.opt-ad-v3__btn.loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.opt-ad-v3__btn.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border: 2px solid #fff;
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.opt-ad-v3-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.opt-ad-v3-modal-content {
+  background: #fff;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 480px;
+  width: 90%;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.opt-ad-v3-modal-content h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.opt-ad-v3-modal-content select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.opt-ad-v3-modal-content .variant-price {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.opt-ad-v3-modal-content button {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.opt-ad-v3-modal-content .opt-ad-v3-addtocart {
+  background-color: #1c83c4;
+  color: #fff;
+}
+
+.opt-ad-v3-modal-content .close-btn {
+  background: #eee;
+  color: #111;
+}
+
+.opt-ad-v3-modal-content button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
