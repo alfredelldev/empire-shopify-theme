@@ -1,0 +1,69 @@
+{{ 'component-complementary-v3.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'component-complementary-v3.js' | asset_url }}" defer></script>
+
+<div class="complementary-products-v3">
+  {% assign complementary_products = product.metafields['shopify--discovery--product_recommendation'].complementary_products.value %}
+
+  {% if complementary_products != blank %}
+    <div class="opt-ad-v3">
+      <button
+        class="opt-ad-v3__toggle"
+        type="button"
+        aria-expanded="true"
+      >
+        <span class="opt-ad-v3__title">Additional Options</span>
+        <span class="opt-ad-v3__icon">–</span>
+      </button>
+
+      <div class="opt-ad-v3__content is-open">
+        <div class="opt-ad-v3__inner">
+          {% for rec_product in complementary_products %}
+            {% assign variant = rec_product.selected_or_first_available_variant %}
+            {% assign handle = rec_product.handle %}
+            {% assign has_variants = rec_product.variants | size %}
+
+            <div
+              class="opt-ad-v3__item"
+              data-has-variants="{% if has_variants > 1 %}true{% else %}false{% endif %}"
+              data-rec-product-handle="{{ handle }}"
+            >
+              <img
+                class="opt-ad-v3__thumb"
+                src="{{ rec_product.featured_image | image_url: width: 160 }}"
+                alt="{{ rec_product.title }}"
+                height=""
+                width=""
+              >
+
+              <div class="opt-ad-v3__info">
+                <div class="opt-ad-v3__product-title">
+                  {{ rec_product.title }}
+                </div>
+                <div class="opt-ad-v3__price">
+                  {{ variant.price | money }}
+                </div>
+              </div>
+
+              {% comment %}
+                <form method="post" action="/cart/add" class="opt-ad-v3__form">
+                  <input type="hidden" name="id" value="{{ variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="opt-ad-v3__btn" data-quick-buy>Add to cart</button>
+                </form>
+              {% endcomment %}
+              {% if rec_product.variants.size == 1 %}
+                <form method="post" action="/cart/add" class="opt-ad-v3__form">
+                  <input type="hidden" name="id" value="{{ rec_product.selected_or_first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="opt-ad-v3__btn">Add to cart</button>
+                </form>
+              {% else %}
+                <button type="button" class="opt-ad-v3__btn opt-ad-v3__btn--select-variant">Select options</button>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>

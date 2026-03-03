@@ -1,0 +1,245 @@
+/* Basic container */
+#product-configurator-app.simple-configurator {
+  margin: 0 auto;
+  color: #1d1d1f;
+}
+.opt-ad-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+/* Form */
+.opt-ad-form {
+  display: block;
+  gap: 16px;
+}
+.opt-ad-form-group {
+  margin-bottom: 14px;
+}
+
+/* Label */
+.opt-ad-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #1d1d1f;
+}
+
+/* Dropdown (fake select) */
+.opt-ad-dropdown {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  min-height: 52px;
+  width: 100%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+.opt-ad-dropdown:focus {
+  outline: 2px solid rgba(0, 120, 212, 0.12);
+  border-color: #cde4ff;
+}
+
+/* Selected area */
+.opt-ad-selected {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.opt-ad-thumb-wrap {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fefefe;
+  border: 1px solid #eee;
+  border-radius: 6px;
+}
+.opt-ad-thumb {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.opt-ad-selected-info {
+  min-width: 0;
+  overflow: hidden;
+  text-align: left;
+}
+.opt-ad-selected-title {
+  font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #111;
+}
+.opt-ad-selected-price {
+  font-size: 12px;
+  color: #666;
+  margin-top: 2px;
+}
+
+/* Chevron */
+.opt-ad-chevron {
+  margin-left: auto;
+  color: #888;
+  font-size: 14px;
+  transform-origin: center;
+  transition: transform 0.18s ease;
+}
+
+/* Dropdown list */
+.opt-ad-options {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 60;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  max-height: 320px;
+  overflow: auto;
+  padding: 8px;
+}
+
+/* Option row */
+.opt-ad-option {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px;
+  border-radius: 6px;
+}
+.opt-ad-option + .opt-ad-option {
+  margin-top: 6px;
+}
+.opt-ad-option:hover {
+  background: #f8fafd;
+}
+.opt-ad-option.selected {
+  background: #eef7ff;
+  border: 1px solid #d6ecff;
+}
+
+.opt-ad-option .opt-ad-opt-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #eee;
+  background: #fafafa;
+}
+.opt-ad-option .opt-ad-opt-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.opt-ad-option .opt-ad-opt-title {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #111;
+}
+.opt-ad-option .opt-ad-opt-price {
+  font-size: 12px;
+  color: #666;
+  margin-top: 3px;
+}
+
+/* Components list */
+.opt-ad-components {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 24px 0 18px 0;
+}
+
+/* Summary */
+.opt-ad-summary {
+  display: flex;
+  gap: 24px;
+  flex-direction: column;
+  margin-top: 18px;
+}
+.opt-ad-total span {
+  color: #666;
+  font-size: 13px;
+  display: block;
+}
+#total-price {
+  font-size: 18px;
+  color: #111;
+}
+
+/* Button */
+.opt-ad-complete {
+  background: #1c83c4;
+  color: #fff;
+  border: 2px solid #1c83c4;
+  padding: 10px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.opt-ad-complete .opt-ad-complete-label {
+  margin-top: 3px;
+}
+.opt-ad-complete[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.opt-ad-complete:hover:not(:disabled) {
+  background-color: #1a96e6;
+  border-color: #1a96e6;
+  color: white;
+}
+
+.opt-ad-dropdown-host {
+  position: relative;
+}
+
+.opt-ad-selected-preview {
+  display: none;
+}
+
+.opt-ad-label-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.opt-ad-label-row a {
+  color: rgba(11, 76, 128, 1);
+}
+
+.opt-ad-opt-addtocart {
+  margin-left: auto;
+  min-width: 86px;
+  cursor: pointer;
+}
+
+.opt-ad-opt-addtocart button {
+  cursor: pointer;
+  background: #1c83c4;
+  border: 1px solid;
+  border-color: #1c83c4;
+  border-radius: 100px;
+  padding: 6px 12px;
+  color: #fff;
+}

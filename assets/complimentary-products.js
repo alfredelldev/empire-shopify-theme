@@ -2,8 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const description = document.querySelector(".product-description");
   const tabHeaders = document.querySelector(".tab-headers");
   const tabContentContainer = document.querySelector(".tab-content-container");
-  const addonsContainer = document.querySelector(".addons-container");
-  const elementToCopy = document.querySelector('.icon-caret-container .icon-caret');
+  const elementToCopy = document.querySelector(
+    ".icon-caret-container .icon-caret"
+  );
   const noRecommendationsClass = "complementary-products--no-recommendations";
 
   if (description) {
@@ -40,40 +41,19 @@ document.addEventListener("DOMContentLoaded", () => {
       heading.remove();
     });
 
-    // Add the Addons tab dynamically if the container exists and doesn't have the 'no-recommendations' class
-    if (
-      addonsContainer &&
-      !addonsContainer.classList.contains("complementary-products--no-recommendations") 
-    ) {
-      const addonsTabHeader = document.createElement("button");
-      addonsTabHeader.classList.add("tab-header");
-      addonsTabHeader.classList.add("complimentary-header");
-    //   addonsTabHeader.classList.add("d-none");
-      addonsTabHeader.textContent = "Optional Additions";
-      addonsTabHeader.setAttribute("data-tab", "addons");
-      tabContentContainer.appendChild(addonsTabHeader);
-
-      addonsContainer.classList.add("tab-content");
-      addonsContainer.id = "addons"; // Ensure ID matches tab
-      if (tabHeaders.childElementCount === 1) {
-        addonsTabHeader.classList.add("active");
-        addonsContainer.classList.add("active");
-      }
-
-      tabContentContainer.appendChild(addonsContainer);
-    }
-
-    const shortDescription = document.querySelector('.product-block--description');
-    const tabsContainer = document.querySelector('.tabs-container');
-    const productTitle = document.querySelector('.product-title');
+    const shortDescription = document.querySelector(
+      ".product-block--description"
+    );
+    const tabsContainer = document.querySelector(".tabs-container");
+    const productTitle = document.querySelector(".product-title");
 
     if (shortDescription && tabsContainer && productTitle) {
-      const newDiv = document.createElement('div');
-      newDiv.classList.add('new-description-wrapper');
+      const newDiv = document.createElement("div");
+      newDiv.classList.add("new-description-wrapper");
 
       // Copy the product title and create an h3
-      const productTitleCopy = document.createElement('h5');
-      productTitleCopy.classList.add('product-title-copied'); // Optional: Add a new class for styling
+      const productTitleCopy = document.createElement("h5");
+      productTitleCopy.classList.add("product-title-copied"); // Optional: Add a new class for styling
       productTitleCopy.textContent = productTitle.textContent.trim(); // Copy text content
 
       // Add the copied product title to the new div
@@ -92,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     tabs.forEach((tab) => {
       const clonedElement = elementToCopy.cloneNode(true); // Clone the element (deep clone)
-      clonedElement.classList.remove('d-none');
+      clonedElement.classList.remove("d-none");
       tab.appendChild(clonedElement); // Append the cloned element to the tab header
 
       // tab.addEventListener("click", () => {
@@ -147,14 +127,10 @@ const removeAddons = () => {
   const tabHeaderAddons = document.querySelector(".complimentary-header");
 
   tabHeaderAddons.classList.add("d-none");
-
-  console.log("asdasdasd");
 };
 
 const showAddons = () => {
   const tabHeaderAddons = document.querySelector(".complimentary-header");
 
   tabHeaderAddons.classList.remove("d-none");
-
-  console.log("asdasdasd");
 };
