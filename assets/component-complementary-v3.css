@@ -29,7 +29,7 @@
 }
 
 .opt-ad-v3__content.is-open {
-  max-height: 320px;
+  max-height: 240px;
   overflow-y: auto;
 }
 
