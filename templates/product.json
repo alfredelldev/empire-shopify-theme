@@ -39,6 +39,10 @@
             "show_gift_card_recipient_form": false
           }
         },
+        "complementary_products_v3_bG73T3": {
+          "type": "complementary-products-v3",
+          "settings": {}
+        },
         "divider_A9wG8j": {
           "type": "divider",
           "settings": {}
@@ -92,6 +96,7 @@
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
         "form",
+        "complementary_products_v3_bG73T3",
         "divider_A9wG8j",
         "shipping_calculator_7HaD3y",
         "trust_badges_kTpKrX",
@@ -117,14 +122,14 @@
           "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
           "disabled": true,
           "settings": {
-            "start_tab_element": "h5",
             "default_tab": "none",
+            "start_tab_element": "h5",
             "default_tab_title": "Description",
-            "pro_tabs": false,
             "layout": "breakpoint",
             "layout_breakpoint": 750,
             "open_first_tab": true,
             "allow_multiple_open": false,
+            "pro_tabs": false,
             "initialize_tabs": "immediate",
             "custom_scripts": ""
           }
