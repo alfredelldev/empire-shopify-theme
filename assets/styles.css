@@ -20876,6 +20876,7 @@ shopify-payment-terms {
   flex: 1;
   width: 100%;
   padding: 1rem;
+  border-radius: 100px;
 }
 .modal .product-form--atc-button {
   min-width: 200px;
