@@ -36,6 +36,14 @@
           "type": "price",
           "settings": {}
         },
+        "complementary_products_HFEmqc": {
+          "type": "complementary_products",
+          "settings": {
+            "heading": "Pairs well with",
+            "product_recommendation_limit": 5,
+            "products_per_slide": 2
+          }
+        },
         "form": {
           "type": "form",
           "settings": {
@@ -93,6 +101,7 @@
         "sku_yErMjz",
         "sku_price_stock_KY4JQc",
         "price_FeCKyd",
+        "complementary_products_HFEmqc",
         "form",
         "divider_A9wG8j",
         "shipping_calculator_7HaD3y",
@@ -110,6 +119,21 @@
         "gallery_video_looping": true,
         "gallery_hover_zoom": "disabled",
         "gallery_click_to_zoom": "always"
+      }
+    },
+    "1760636125da8f8a68": {
+      "type": "apps",
+      "blocks": {
+        "the_configurator_app_staging_product_components_VMTPfk": {
+          "type": "shopify://apps/the-configurator-app-staging/blocks/product-components/01991842-92e3-7f25-9a08-1f9e0661cee6",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "the_configurator_app_staging_product_components_VMTPfk"
+      ],
+      "settings": {
+        "include_padding": true
       }
     },
     "1694063103f42b80e8": {
@@ -139,21 +163,6 @@
       "type": "static-recently-viewed",
       "settings": {
         "enable_recently_viewed_products": true
-      }
-    },
-    "1760636125da8f8a68": {
-      "type": "apps",
-      "blocks": {
-        "the_configurator_app_staging_product_components_VMTPfk": {
-          "type": "shopify://apps/the-configurator-app-staging/blocks/product-components/01991842-92e3-7f25-9a08-1f9e0661cee6",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "the_configurator_app_staging_product_components_VMTPfk"
-      ],
-      "settings": {
-        "include_padding": true
       }
     }
   },
