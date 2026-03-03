@@ -12,45 +12,33 @@ function initOptAdV3() {
     const content = accordion.querySelector(".opt-ad-v3__content");
     const icon = accordion.querySelector(".opt-ad-v3__icon");
 
-    // --- Accordion toggle ---
+    // Accordion toggle
     toggle.addEventListener("click", () => {
       const isOpen = toggle.getAttribute("aria-expanded") === "true";
-
-      if (isOpen) {
-        toggle.setAttribute("aria-expanded", "false");
-        content.classList.remove("is-open");
-        icon.textContent = "+";
-      } else {
-        toggle.setAttribute("aria-expanded", "true");
-        content.classList.add("is-open");
-        icon.textContent = "–";
-      }
+      toggle.setAttribute("aria-expanded", !isOpen);
+      content.classList.toggle("is-open");
+      icon.textContent = isOpen ? "+" : "–";
     });
 
-    // --- AJAX Add to Cart (inside accordion) ---
-    const forms = accordion.querySelectorAll(".opt-ad-v3__form");
-    forms.forEach((form) => {
+    // AJAX Add to Cart (simple products)
+    accordion.querySelectorAll(".opt-ad-v3__form").forEach((form) => {
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const btn = form.querySelector(".opt-ad-v3__btn");
         const originalText = btn.textContent;
 
-        // Loading state
         btn.disabled = true;
         btn.classList.add("loading");
         btn.textContent = "";
 
         try {
-          const response = await fetch("/cart/add.js", {
+          await fetch("/cart/add.js", {
             method: "POST",
             body: new FormData(form),
           });
-          const data = await response.json();
-          console.log("Added to cart:", data);
 
           document.dispatchEvent(new CustomEvent("cart:refresh"));
 
-          // Feedback
           btn.classList.remove("loading");
           btn.textContent = "Added!";
           setTimeout(() => {
@@ -58,15 +46,15 @@ function initOptAdV3() {
             btn.disabled = false;
           }, 1500);
         } catch (err) {
-          console.error("Error adding to cart:", err);
           btn.textContent = originalText;
           btn.classList.remove("loading");
+          btn.disabled = false;
           alert("Error adding product to cart.");
         }
       });
     });
 
-    // --- Variant modal button inside accordion ---
+    // Variant modal
     accordion
       .querySelectorAll(".opt-ad-v3__btn--select-variant")
       .forEach((btn) => {
@@ -78,27 +66,56 @@ function initOptAdV3() {
             const res = await fetch(`/products/${handle}.js`);
             const product = await res.json();
 
-            // Create modal
             const modal = document.createElement("div");
             modal.className = "opt-ad-v3-modal";
 
-            // Build select options for variants
+            const firstVariant = product.variants[0];
+            let selectedVariantId = firstVariant.id;
+
             const variantOptions = product.variants
-              .map(
-                (v, i) =>
-                  `<option value="${v.id}" ${i === 0 ? "selected" : ""}>${
-                    v.title
-                  } — $${(v.price / 100).toFixed(2)}</option>`
-              )
+              .map((v, i) => {
+                const img = v.featured_image?.src || product.featured_image;
+                return `
+                <div class="opt-ad-v3-variant-option ${
+                  i === 0 ? "is-active" : ""
+                }"
+                     data-id="${v.id}"
+                     data-price="${v.price}">
+                  <img src="${img}" alt="${v.title}">
+                  <div class="variant-meta">
+                    <div class="variant-title">${v.title}</div>
+                    <div class="variant-price">$${(v.price / 100).toFixed(
+                      2
+                    )}</div>
+                  </div>
+                </div>
+              `;
+              })
               .join("");
 
             modal.innerHTML = `
             <div class="opt-ad-v3-modal-content">
               <h2>${product.title}</h2>
-              <select class="opt-ad-v3-variant-select">${variantOptions}</select>
-              <div class="variant-price">$${(
-                product.variants[0].price / 100
-              ).toFixed(2)}</div>
+
+              <div class="opt-ad-v3-variant-dropdown">
+                <div class="opt-ad-v3-selected">
+                  <img src="${
+                    firstVariant.featured_image?.src || product.featured_image
+                  }">
+                  <div>
+                    <div class="variant-title">${firstVariant.title}</div>
+                    <div class="variant-price">$${(
+                      firstVariant.price / 100
+                    ).toFixed(2)}</div>
+                  </div>
+                  <span class="chevron">▾</span>
+                </div>
+
+                <div class="opt-ad-v3-variant-options">
+                  ${variantOptions}
+                </div>
+              </div>
+
               <button class="opt-ad-v3-addtocart">Add to cart</button>
               <button class="close-btn">Cancel</button>
             </div>
@@ -106,54 +123,80 @@ function initOptAdV3() {
 
             document.body.appendChild(modal);
 
-            const select = modal.querySelector(".opt-ad-v3-variant-select");
-            const priceEl = modal.querySelector(".variant-price");
+            const dropdown = modal.querySelector(".opt-ad-v3-variant-dropdown");
+            const selected = modal.querySelector(".opt-ad-v3-selected");
+            const optionsWrap = modal.querySelector(
+              ".opt-ad-v3-variant-options"
+            );
             const addBtn = modal.querySelector(".opt-ad-v3-addtocart");
             const closeBtn = modal.querySelector(".close-btn");
 
-            // Update price when variant changes
-            select.addEventListener("change", () => {
-              const selectedVariant = product.variants.find(
-                (v) => v.id == select.value
-              );
-              priceEl.textContent = `$${(selectedVariant.price / 100).toFixed(
-                2
-              )}`;
+            // Toggle dropdown
+            selected.addEventListener("click", () => {
+              dropdown.classList.toggle("is-open");
             });
+
+            // Variant selection
+            optionsWrap
+              .querySelectorAll(".opt-ad-v3-variant-option")
+              .forEach((option) => {
+                option.addEventListener("click", () => {
+                  optionsWrap
+                    .querySelectorAll(".opt-ad-v3-variant-option")
+                    .forEach((o) => o.classList.remove("is-active"));
+
+                  option.classList.add("is-active");
+
+                  const id = option.dataset.id;
+                  const price = option.dataset.price;
+                  const img = option.querySelector("img").src;
+                  const title =
+                    option.querySelector(".variant-title").textContent;
+
+                  selectedVariantId = id;
+
+                  selected.innerHTML = `
+                <img src="${img}">
+                <div>
+                  <div>${title}</div>
+                  <div class="variant-price">$${(price / 100).toFixed(2)}</div>
+                </div>
+                <span class="chevron">▾</span>
+              `;
+
+                  dropdown.classList.remove("is-open");
+                });
+              });
 
             // Close modal
             closeBtn.addEventListener("click", () => modal.remove());
 
-            // AJAX Add to cart from modal
+            // AJAX Add to Cart
             addBtn.addEventListener("click", async () => {
-              const variantId = select.value;
               addBtn.disabled = true;
-              addBtn.textContent = "Adding…";
+              addBtn.textContent = "Adding...";
 
               try {
                 const formData = new FormData();
-                formData.append("id", variantId);
+                formData.append("id", selectedVariantId);
                 formData.append("quantity", 1);
 
-                const response = await fetch("/cart/add.js", {
+                await fetch("/cart/add.js", {
                   method: "POST",
                   body: formData,
                 });
-                const data = await response.json();
-                console.log("Added variant to cart:", data);
 
                 document.dispatchEvent(new CustomEvent("cart:refresh"));
+
                 addBtn.textContent = "Added!";
                 setTimeout(() => modal.remove(), 1000);
               } catch (err) {
-                console.error(err);
-                alert("Error adding to cart.");
                 addBtn.disabled = false;
                 addBtn.textContent = "Add to cart";
+                alert("Error adding to cart.");
               }
             });
           } catch (err) {
-            console.error(err);
             alert("Error fetching product details.");
           }
         });

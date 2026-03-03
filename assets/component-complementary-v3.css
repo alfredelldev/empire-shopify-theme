@@ -139,8 +139,9 @@
   border-radius: 12px;
   max-width: 480px;
   width: 90%;
-  max-height: 400px;
-  overflow-y: auto;
+  min-height: 445px;
+  max-height: 85vh;   /* important */
+  overflow: visible;  /* important */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
@@ -161,10 +162,14 @@
   border: 1px solid #ccc;
 }
 
+.opt-ad-v3-modal-content .variant-title {
+  font-size: 14px;
+}
+
 .opt-ad-v3-modal-content .variant-price {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .opt-ad-v3-modal-content button {
@@ -188,4 +193,63 @@
 .opt-ad-v3-modal-content button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.opt-ad-v3-variant-dropdown {
+  position: relative;
+}
+
+.opt-ad-v3-selected {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.opt-ad-v3-selected img,
+.opt-ad-v3-variant-option img {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.opt-ad-v3-selected span.chevron {
+    margin-left: auto;
+}
+
+.opt-ad-v3-variant-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  display: none;
+  z-index: 1000;
+}
+
+.opt-ad-v3-variant-dropdown.is-open .opt-ad-v3-variant-options {
+  display: block;
+}
+
+.opt-ad-v3-variant-option {
+  display: flex;
+  gap: 12px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.opt-ad-v3-variant-option:hover {
+  background: #f5f5f5;
+}
+.opt-ad-v3-variant-option.is-active {
+  background: #eef6ff;
 }
