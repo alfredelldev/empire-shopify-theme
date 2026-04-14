@@ -1,0 +1,215 @@
+{{ 'product-tabs.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-tabs.js' | asset_url }}" defer></script>
+
+<div
+  class="product-tabs product-section--container product-row--container"
+  id="product-tabs-{{ section.id }}"
+  data-description-mode="{{ section.settings.description_mode }}"
+>
+  {% assign product_obj = product %}
+
+  {% comment %}
+    DESCRIPTION SOURCE (hidden, JS will parse it)
+  {% endcomment %}
+  <div class="product-description-source rte" style="display:none;">
+    {{ product.description }}
+  </div>
+
+  {% comment %}
+    METAFIELD SOURCES
+  {% endcomment %}
+  <div class="tabs-data" style="display:none;">
+    {% for block in section.blocks %}
+      {% if block.type == 'metafield_tab' %}
+        {% assign mf = product_obj.metafields[block.settings.namespace][block.settings.key] %}
+        {% if mf != blank and mf.value != blank %}
+          <div
+            data-tab-source
+            data-title="{{ block.settings.label | escape }}"
+            data-handle="{{ block.settings.label | handle }}"
+          >
+            {{ mf.value }}
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+
+    {% for block in section.blocks %}
+      {% if block.type == 'formatted_tab' %}
+        {% capture has_content %}{% endcapture %}
+
+        <ul class="specs-list">
+          {% for i in (1..6) %}
+            {% assign label_key = 'field_' | append: i | append: '_label' %}
+            {% assign value_key = 'field_' | append: i | append: '_value' %}
+
+            {% assign field_label = block.settings[label_key] %}
+            {% assign field_value = block.settings[value_key] %}
+
+            {% if field_label != blank and field_value != blank %}
+              {% capture has_content %}true{% endcapture %}
+              <li>
+                <strong>{{ field_label }}:</strong>
+                {{ field_value }}
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+
+        {% if has_content == 'true' %}
+          <div
+            data-tab-source
+            data-title="{{ block.settings.label | escape }}"
+            data-handle="{{ block.settings.label | handle }}"
+          >
+            <ul class="specs-list">
+              {% for i in (1..6) %}
+                {% assign label_key = 'field_' | append: i | append: '_label' %}
+                {% assign value_key = 'field_' | append: i | append: '_value' %}
+
+                {% assign field_label = block.settings[label_key] %}
+                {% assign field_value = block.settings[value_key] %}
+
+                {% if field_label != blank and field_value != blank %}
+                  <li>
+                    <strong>{{ field_label }}:</strong>
+                    {{ field_value }}
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {% comment %}
+    OUTPUT
+  {% endcomment %}
+  <div class="description-above"></div>
+  <div class="tabs-nav"></div>
+  <div class="tabs-content"></div>
+</div>
+
+{% comment %}
+  {% schema %}
+  {
+    "name": "Product Tabs",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show Description Tab",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "description_label",
+        "label": "Description Label",
+        "default": "Description"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_heading_tabs",
+        "label": "Convert headings to tabs (fallback)",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "heading_levels",
+        "label": "Heading levels (comma separated)",
+        "default": "h2,h3"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "metafield_tab",
+        "name": "Metafield Tab",
+        "settings": [
+          {
+            "type": "text",
+            "id": "label",
+            "label": "Tab Label",
+            "default": "Specs"
+          },
+          {
+            "type": "text",
+            "id": "namespace",
+            "label": "Namespace",
+            "default": "custom"
+          },
+          {
+            "type": "text",
+            "id": "key",
+            "label": "Key",
+            "default": "specs"
+          }
+        ]
+      }
+    ],
+    "max_blocks": 10,
+    "presets": [
+      {
+        "name": "Product Tabs"
+      }
+    ]
+  }
+  {% endschema %}
+{% endcomment %}
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "settings": [
+    {
+      "type": "select",
+      "id": "description_mode",
+      "label": "Description behavior",
+      "options": [
+        { "value": "tab", "label": "As tab" },
+        { "value": "above", "label": "Always visible (no tab)" },
+        { "value": "hidden", "label": "Hidden" }
+      ],
+      "default": "tab"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "metafield_tab",
+      "name": "Metafield Tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab Label" },
+        { "type": "text", "id": "namespace", "label": "Namespace" },
+        { "type": "text", "id": "key", "label": "Key" }
+      ]
+    },
+    {
+      "type": "formatted_tab",
+      "name": "Formatted Tab",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Tab Label" },
+
+        { "type": "text", "id": "field_1_label", "label": "Field 1 Label" },
+        { "type": "text", "id": "field_1_value", "label": "Field 1 Value" },
+
+        { "type": "text", "id": "field_2_label", "label": "Field 2 Label" },
+        { "type": "text", "id": "field_2_value", "label": "Field 2 Value" },
+
+        { "type": "text", "id": "field_3_label", "label": "Field 3 Label" },
+        { "type": "text", "id": "field_3_value", "label": "Field 3 Value" },
+
+        { "type": "text", "id": "field_4_label", "label": "Field 4 Label" },
+        { "type": "text", "id": "field_4_value", "label": "Field 4 Value" },
+
+        { "type": "text", "id": "field_5_label", "label": "Field 5 Label" },
+        { "type": "text", "id": "field_5_value", "label": "Field 5 Value" },
+
+        { "type": "text", "id": "field_6_label", "label": "Field 6 Label" },
+        { "type": "text", "id": "field_6_value", "label": "Field 6 Value" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product Tabs" }]
+}
+{% endschema %}

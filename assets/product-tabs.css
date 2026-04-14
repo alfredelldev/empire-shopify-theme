@@ -1,0 +1,59 @@
+.tabs-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 15px 24px;
+  border-radius: 999px;
+  border: 1px solid #4F6A8A;
+  color: #4f4f4f;
+  background: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.tab-btn.active {
+  background: #4F6A8A;
+  color: #fff;
+  border-color: #4F6A8A;
+}
+
+.tab-panel {
+  display: none;
+  border: unset;
+  padding: 0.5rem 1rem 1rem 1rem;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+
+.specs-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 6px 0;
+}
+
+.spec-label {
+  font-weight: 600;
+}
+
+.spec-value {
+  opacity: 0.8;
+}
+
+.product-tabs .description-above {
+    margin-bottom: 30px;
+}
