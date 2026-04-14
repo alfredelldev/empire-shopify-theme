@@ -39,7 +39,8 @@
             "button_link": "#product-configurator-app",
             "background_color": "#ffffff",
             "text_color": "#1d1d1f",
-            "border_color": "#1d1d1f"
+            "border_color": "#1d1d1f",
+            "button_css": "configurator-custom-css"
           }
         },
         "divider_A9wG8j": {
@@ -80,6 +81,7 @@
         },
         "description": {
           "type": "description",
+          "disabled": true,
           "settings": {}
         },
         "share": {
@@ -111,6 +113,53 @@
         "gallery_video_looping": true,
         "gallery_hover_zoom": "disabled",
         "gallery_click_to_zoom": "always"
+      }
+    },
+    "product_tabs_BQWjzz": {
+      "type": "product-tabs",
+      "blocks": {
+        "metafield_tab_KWPQnY": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Key Features",
+            "namespace": "custom",
+            "key": "key_features"
+          }
+        },
+        "metafield_tab_Uah4nM": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Specifications",
+            "namespace": "custom",
+            "key": "specifications"
+          }
+        },
+        "metafield_tab_bNiApj": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Downloads",
+            "namespace": "custom",
+            "key": "downloads"
+          }
+        },
+        "metafield_tab_Qqzgpx": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "About {{ product.vendor }}",
+            "namespace": "custom",
+            "key": "about_brand"
+          }
+        }
+      },
+      "block_order": [
+        "metafield_tab_KWPQnY",
+        "metafield_tab_Uah4nM",
+        "metafield_tab_bNiApj",
+        "metafield_tab_Qqzgpx"
+      ],
+      "name": "Product Tabs",
+      "settings": {
+        "description_mode": "above"
       }
     },
     "1761667381ac9fed05": {
@@ -171,6 +220,7 @@
   },
   "order": [
     "main",
+    "product_tabs_BQWjzz",
     "1761667381ac9fed05",
     "1694063103f42b80e8",
     "recommendations",
