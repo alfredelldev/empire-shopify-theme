@@ -115,6 +115,53 @@
         "gallery_click_to_zoom": "always"
       }
     },
+    "product_tabs_i7QrrL": {
+      "type": "product-tabs",
+      "blocks": {
+        "metafield_tab_HcPkRY": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Key Features",
+            "namespace": "custom",
+            "key": "key_features"
+          }
+        },
+        "metafield_tab_RCWnxj": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Specifications",
+            "namespace": "custom",
+            "key": "specifications"
+          }
+        },
+        "metafield_tab_dWrEDg": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Downloads",
+            "namespace": "custom",
+            "key": "downloads"
+          }
+        },
+        "metafield_tab_4Anr6h": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "About {{ product.vendor }}",
+            "namespace": "custom",
+            "key": "about_brand"
+          }
+        }
+      },
+      "block_order": [
+        "metafield_tab_HcPkRY",
+        "metafield_tab_RCWnxj",
+        "metafield_tab_dWrEDg",
+        "metafield_tab_4Anr6h"
+      ],
+      "name": "Product Tabs",
+      "settings": {
+        "description_mode": "above"
+      }
+    },
     "1694063103f42b80e8": {
       "type": "apps",
       "blocks": {
@@ -158,6 +205,7 @@
   },
   "order": [
     "main",
+    "product_tabs_i7QrrL",
     "1694063103f42b80e8",
     "recommendations",
     "recently-viewed"
