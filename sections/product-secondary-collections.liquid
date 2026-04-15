@@ -1,28 +1,13 @@
-{% comment %}
-  Product Secondary Collections (UX-only)
-{% endcomment %}
-
 {% if product %}
-  {% assign mode = section.settings.mode %}
-  {% assign include_raw = section.settings.include_collections | downcase | strip %}
-  {% assign exclude_raw = section.settings.exclude_collections | downcase | strip %}
-
-  {% assign include_list = include_raw | split: ',' %}
-  {% assign exclude_list = exclude_raw | split: ',' %}
-
+  {% assign source = section.settings.source %}
   {% assign style = section.settings.style %}
   {% assign limit = section.settings.limit %}
   {% assign count = 0 %}
   {% assign has_items = false %}
 
-  {%- comment -%}
-    Normalize vendor to handle format
-    "Brand X" → "brand-x"
-  {%- endcomment -%}
-  {% assign vendor_handle = product.vendor | handleize %}
+  {% assign base_collection = section.settings.base_collection %}
 
-  <div class="product-secondary-collections product-section--container product-row--container style-{{ style }}" id="secondary-collections-{{ section.id }}">
-    
+  <div class="product-secondary-collections style-{{ style }}" id="secondary-collections-{{ section.id }}">
     {% if section.settings.heading != blank %}
       <div class="psc-heading">{{ section.settings.heading }}</div>
     {% endif %}
@@ -33,53 +18,195 @@
       <ul class="psc-list">
     {% endif %}
 
-      {% for collection in product.collections %}
-        {% assign handle = collection.handle | downcase %}
-        {% assign show = false %}
+    {% if source == 'collections' %}
+      {% assign vendor_handle = product.vendor | handleize %}
+      {% assign exclude_raw = section.settings.exclude_collections | downcase | strip %}
+      {% assign exclude_list = exclude_raw | split: ',' %}
 
-        {%- comment -%}
-          Base include/exclude logic
-        {%- endcomment -%}
-        {% if mode == 'include' %}
-          {% if include_raw != blank and include_list contains handle %}
-            {% assign show = true %}
-          {% endif %}
-        {% else %}
-          {% assign show = true %}
-          {% if exclude_raw != blank and exclude_list contains handle %}
-            {% assign show = false %}
-          {% endif %}
+      {% for collection in product.collections %}
+        {% assign handle = collection.handle %}
+
+        {% assign show = true %}
+
+        {% if exclude_list contains handle %}
+          {% assign show = false %}
         {% endif %}
 
-        {%- comment -%}
-          NEW: Exclude vendor-matching collection
-        {%- endcomment -%}
         {% if section.settings.exclude_vendor and handle == vendor_handle %}
           {% assign show = false %}
         {% endif %}
 
         {% if show %}
+          {% if limit > 0 and count >= limit %}{% break %}{% endif %}
+          {% assign count = count | plus: 1 %}
           {% assign has_items = true %}
 
-          {% if limit > 0 and count >= limit %}
-            {% break %}
-          {% endif %}
-
-          {% assign count = count | plus: 1 %}
-
           {% if style == 'pill' %}
-            <a href="{{ collection.url }}" class="psc-item">
-              {{ collection.title }}
-            </a>
+            <a href="{{ collection.url }}" class="psc-item">{{ collection.title }}</a>
           {% else %}
             <li class="psc-item">
-              <a href="{{ collection.url }}">
-                {{ collection.title }}
-              </a>
+              <a href="{{ collection.url }}">{{ collection.title }}</a>
             </li>
           {% endif %}
         {% endif %}
       {% endfor %}
+
+    {% else %}
+      {%- comment -%}
+        STEP 1: Detect base collection
+      {%- endcomment -%}
+
+      {% assign exclude_raw = section.settings.exclude_collections | downcase | strip %}
+      {% assign exclude_list = exclude_raw | split: ',' %}
+      {% assign vendor_handle = product.vendor | handleize %}
+
+      {% assign base_collection = null %}
+
+      {%- comment -%} OPTION: detect from URL {%- endcomment -%}
+      {% if section.settings.detect_from_url and collection %}
+        {% assign handle = collection.handle | downcase %}
+        {% assign valid = true %}
+
+        {% if exclude_list contains handle %}
+          {% assign valid = false %}
+        {% endif %}
+
+        {% if section.settings.exclude_vendor and handle == vendor_handle %}
+          {% assign valid = false %}
+        {% endif %}
+
+        {% if valid %}
+          {% assign base_collection = collection %}
+        {% endif %}
+      {% endif %}
+
+      {%- comment -%} fallback to product.collections {%- endcomment -%}
+      {% if base_collection == null %}
+        {% for c in product.collections %}
+          {% assign handle = c.handle | downcase %}
+          {% assign valid = true %}
+
+          {% if exclude_list contains handle %}
+            {% assign valid = false %}
+          {% endif %}
+
+          {% if section.settings.exclude_vendor and handle == vendor_handle %}
+            {% assign valid = false %}
+          {% endif %}
+
+          {% if valid %}
+            {% assign base_collection = c %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {%- comment -%} fallback to type/vendor {%- endcomment -%}
+      {% assign base_label = '' %}
+      {% assign base_url = '' %}
+
+      {% if base_collection %}
+        {% assign base_label = base_collection.title %}
+        {% assign base_url = base_collection.url %}
+      {% elsif product.type != blank %}
+        {% assign base_label = product.type %}
+        {% assign base_url = '/collections/' | append: product.type | handleize %}
+      {% else %}
+        {% assign base_label = product.vendor %}
+        {% assign base_url = '/collections/' | append: product.vendor | handleize %}
+      {% endif %}
+
+      {%- comment -%}
+        STEP 2: Build breadcrumb levels
+      {%- endcomment -%}
+
+      {% assign group_order = section.settings.tag_groups | downcase | split: ',' %}
+
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+
+      {% capture levels %}
+    <a href="{{ base_url }}">{{ base_label }}</a>
+  {% endcapture %}
+
+      {% capture loop_output %}
+    <li><a href="{{ base_url }}">{{ base_label }}</a></li>
+  {% endcapture %}
+
+      {% for group in group_order %}
+        {% assign group = group | strip %}
+
+        {% for tag in product.tags %}
+          {% assign parts = tag | split: '_' %}
+          {% assign prefix = parts[0] | downcase %}
+          {% assign value = parts[1] %}
+
+          {% if prefix == group and value != blank %}
+            {% assign value_down = value | downcase %}
+
+            {%- comment -%} Merge duplicate labels {%- endcomment -%}
+            {% if section.settings.merge_duplicates and value_down == last_label %}
+              {% break %}
+            {% endif %}
+
+            {% assign prefix_handle = prefix | handleize %}
+            {% assign value_handle = value | handleize %}
+
+            {% assign tag_query = '' %}
+
+            {% assign new_tag = prefix_handle | append: '_' | append: value_handle %}
+
+            {% if tag_query == '' %}
+              {% assign tag_query = new_tag %}
+            {% else %}
+              {% assign tag_query = tag_query | append: '+' | append: new_tag %}
+            {% endif %}
+
+            {% assign current_url = base_url | append: '/' | append: tag_query %}
+
+            {% capture levels %}
+          {{ levels }}
+          <span class="psc-separator">›</span>
+          <a href="{{ current_url }}">{{ value }}</a>
+        {% endcapture %}
+
+            {% capture loop_output %}
+          {{ loop_output }}
+          <li>
+            {{ levels }}
+          </li>
+        {% endcapture %}
+
+            {% assign last_label = value_down %}
+
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+
+      {%- comment -%}
+        STEP 3: Render based on display mode
+      {%- endcomment -%}
+
+      {% if section.settings.display_mode == 'single' %}
+        {% if style == 'pill' %}
+          <div class="psc-breadcrumb">
+            {{ levels }}
+          </div>
+        {% else %}
+          <li class="psc-item">
+            {{ levels }}
+          </li>
+        {% endif %}
+
+      {% else %}
+        <ul class="psc-loop">
+          {{ loop_output }}
+        </ul>
+      {% endif %}
+
+      {% assign has_items = true %}
+    {% endif %}
 
     {% if style == 'pill' %}
       </div>
@@ -89,28 +216,44 @@
 
     {% unless has_items %}
       <style>
-        #secondary-collections-{{ section.id }} {
-          display: none;
-        }
+        #secondary-collections-{{ section.id }}{display:none;}
       </style>
     {% endunless %}
-
   </div>
 {% endif %}
 
 <style>
-  .product-secondary-collections {
-    margin-top: 32px;
-  }
-
-  .psc-heading {
+  .psc-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
     font-size: 14px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    opacity: 0.8;
   }
 
-  /* PILL STYLE */
+  .psc-breadcrumb a {
+    text-decoration: none;
+  }
+
+  .psc-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .psc-separator {
+    opacity: 0.5;
+  }
+
+  .psc-loop {
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  .psc-loop li {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  /* PILL */
   .style-pill .psc-list {
     display: flex;
     flex-wrap: wrap;
@@ -118,112 +261,124 @@
   }
 
   .style-pill .psc-item {
-    display: inline-block;
     padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
     font-size: 13px;
     text-decoration: none;
-    border: 1px solid #1c83c4;
-    border-radius: 20px;
-    transition: all 0.2s ease;
-    color: #1c83c4;
   }
 
-  .style-pill .psc-item:hover {
-    border-color: #1c83c4;
-    background-color: #1c83c4;
-    color: #fff;
-  }
-
-  /* LIST STYLE */
+  /* LIST */
   .style-list .psc-list {
     padding-left: 18px;
-    margin: 0;
   }
 
   .style-list .psc-item {
     margin-bottom: 4px;
-    font-size: 14px;
-  }
-
-  .style-list .psc-item a {
-    text-decoration: none;
-    color: #1c83c4;
-  }
-
-  .style-list .psc-item a:hover {
-    text-decoration: underline;
   }
 </style>
 
 {% schema %}
 {
-  "name": "Secondary Collections",
+  "name": "Secondary Navigation",
   "settings": [
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Source",
+      "options": [
+        { "value": "collections", "label": "Collections" },
+        { "value": "tags", "label": "Tags" }
+      ],
+      "default": "collections"
+    },
     {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "More from:"
+      "default": "More from:",
+      "label": "Heading"
     },
     {
       "type": "select",
       "id": "style",
-      "label": "Style",
       "options": [
-        { "value": "pill", "label": "Pill (chips)" },
-        { "value": "list", "label": "Simple list (bullets)" }
+        { "value": "pill", "label": "Pill" },
+        { "value": "list", "label": "List" }
       ],
-      "default": "pill"
+      "default": "pill",
+      "label": "Style"
     },
     {
       "type": "range",
       "id": "limit",
-      "label": "Number of items to show",
       "min": 0,
       "max": 20,
       "step": 1,
       "default": 0,
-      "info": "Set to 0 to show all"
+      "label": "Limit (0 = all)"
     },
+
     {
       "type": "checkbox",
       "id": "exclude_vendor",
-      "label": "Exclude collections matching product vendor",
-      "default": true
-    },
-    {
-      "type": "select",
-      "id": "mode",
-      "label": "Display Mode",
-      "options": [
-        {
-          "value": "include",
-          "label": "Show only included collections"
-        },
-        {
-          "value": "exclude",
-          "label": "Show all except excluded"
-        }
-      ],
-      "default": "exclude"
-    },
-    {
-      "type": "text",
-      "id": "include_collections",
-      "label": "Include Collections (handles, comma separated)",
-      "info": "Example: brand-a,luxury-baths,sale"
+      "default": true,
+      "label": "Exclude vendor collection"
     },
     {
       "type": "text",
       "id": "exclude_collections",
-      "label": "Exclude Collections (handles, comma separated)",
-      "info": "Example: frontpage,hidden"
+      "default": "frontpage",
+      "label": "Exclude collections (handles)"
+    },
+
+    {
+      "type": "text",
+      "id": "tag_group",
+      "label": "Tag Group (for tags source)",
+      "info": "Example: product type, size, installation type"
+    },
+    {
+      "type": "text",
+      "id": "base_collection",
+      "label": "Base collection handle",
+      "default": "bathroom-accessories"
+    },
+    {
+      "type": "text",
+      "id": "base_collection_label",
+      "label": "Base collection label",
+      "default": "Bathroom Accessories"
+    },
+    {
+      "type": "text",
+      "id": "tag_groups",
+      "label": "Tag groups order",
+      "default": "product type,installation type,size",
+      "info": "Order matters. Example: product type,installation type,size"
+    },
+    {
+      "type": "select",
+      "id": "display_mode",
+      "label": "Display mode",
+      "options": [
+        { "value": "single", "label": "Single line" },
+        { "value": "loop", "label": "Loop (progressive)" }
+      ],
+      "default": "single"
+    },
+    {
+      "type": "checkbox",
+      "id": "detect_from_url",
+      "label": "Detect base collection from URL",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "merge_duplicates",
+      "label": "Merge duplicate labels",
+      "default": true
     }
   ],
-  "presets": [
-    {
-      "name": "Secondary Collections"
-    }
-  ]
+  "presets": [{ "name": "Secondary Navigation" }]
 }
 {% endschema %}
