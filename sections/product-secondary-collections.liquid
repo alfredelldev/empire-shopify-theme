@@ -169,27 +169,16 @@
       {% assign tag_query = '' %}
       {% assign current_url = base_url %}
       {% assign last_label = base_label | downcase %}
-      {% assign index = 0 %}
 
-      {% capture levels %}
-  {% if section.settings.link_mode == 'all' %}
-    <a href="{{ base_url }}">{{ base_label }}</a>
-  {% else %}
-    <span>{{ base_label }}</span>
-  {% endif %}
-{% endcapture %}
+      {% assign crumb_labels = base_label %}
+      {% assign crumb_urls = base_url %}
 
       {% capture loop_output %}
   <li>
-    {% if section.settings.link_mode == 'all' %}
-      <a href="{{ base_url }}">{{ base_label }}</a>
-    {% else %}
-      <span>{{ base_label }}</span>
-    {% endif %}
+    <a href="{{ base_url }}">{{ base_label }}</a>
   </li>
 {% endcapture %}
 
-      {%- comment -%} Second pass: build output {%- endcomment -%}
       {% for group in group_order %}
         {% assign group = group | strip %}
 
@@ -221,37 +210,41 @@
               {% assign current_url = base_url | append: '/' | append: new_tag %}
             {% endif %}
 
-            {% assign index = index | plus: 1 %}
+            {%- comment -%}
+              Build breadcrumb row:
+              previous = spans
+              current = link
+            {%- endcomment -%}
 
-            {%- comment -%} ✅ CORRECT LINK LOGIC {%- endcomment -%}
-            {% assign is_link = false %}
+            {% assign labels_array = crumb_labels | split: '||' %}
+            {% assign urls_array = crumb_urls | split: '||' %}
 
-            {% if section.settings.link_mode == 'all' %}
-              {% assign is_link = true %}
-            {% elsif section.settings.link_mode == 'last' and index == items_count %}
-              {% assign is_link = true %}
-            {% endif %}
+            {% capture row %}
+        {% for lbl in labels_array %}
+          {% unless forloop.first %}
+            <span class="psc-separator">›</span>
+          {% endunless %}
+          {% if section.settings.link_mode == 'all' %}
+            <a href="{{ urls_array[forloop.index0] }}">{{ lbl }}</a>
+          {% else %}
+            <span>{{ lbl }}</span>
+          {% endif %}
+        {% endfor %}
 
-            {% capture item_html %}
-        {% if is_link %}
-          <a href="{{ current_url }}">{{ value }}</a>
-        {% else %}
-          <span>{{ value }}</span>
-        {% endif %}
-      {% endcapture %}
-
-            {% capture levels %}
-        {{ levels }}
         <span class="psc-separator">›</span>
-        {{ item_html }}
+        <a href="{{ current_url }}">{{ value }}</a>
       {% endcapture %}
 
             {% capture loop_output %}
         {{ loop_output }}
-        <li>{{ levels }}</li>
+        <li>{{ row }}</li>
       {% endcapture %}
 
+            {%- comment -%} Update breadcrumb state {%- endcomment -%}
+            {% assign crumb_labels = crumb_labels | append: '||' | append: value %}
+            {% assign crumb_urls = crumb_urls | append: '||' | append: current_url %}
             {% assign last_label = value_down %}
+
             {% break %}
           {% endif %}
         {% endfor %}
@@ -261,27 +254,21 @@
         STEP 3: Render based on display mode
       {%- endcomment -%}
 
-      {% if section.settings.link_mode == 'last' %}
-        {% assign parts = levels | split: '›' %}
+      {% assign labels_array = crumb_labels | split: '||' %}
+      {% assign urls_array = crumb_urls | split: '||' %}
 
-        {% capture rebuilt %}
-            {% for part in parts %}
-            {% assign trimmed = part | strip %}
-
-            {% if forloop.last %}
-                <span class="psc-separator">›</span>
-                {{ trimmed | replace: '<span', '<a href="' | replace: '</span>', '">' | append: '</a>' }}
-            {% else %}
-                {% unless forloop.first %}
-                <span class="psc-separator">›</span>
-                {% endunless %}
-                <span>{{ trimmed | strip_html }}</span>
-            {% endif %}
-            {% endfor %}
-        {% endcapture %}
-
-        {% assign levels = rebuilt %}
-      {% endif %}
+      {% capture levels %}
+        {% for lbl in labels_array %}
+          {% unless forloop.first %}
+            <span class="psc-separator">›</span>
+          {% endunless %}
+          {% if section.settings.link_mode == 'all' or forloop.last %}
+            <a href="{{ urls_array[forloop.index0] }}">{{ lbl }}</a>
+          {% else %}
+            <span>{{ lbl }}</span>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
 
       {% if section.settings.display_mode == 'single' %}
         {% if style == 'pill' %}
@@ -393,7 +380,7 @@
 
 {% schema %}
 {
-  "name": "Secondary Navigation",
+  "name": "Secondary Breadcrumbs",
   "settings": [
     {
       "type": "select",
@@ -512,6 +499,6 @@
       "default": "all"
     }
   ],
-  "presets": [{ "name": "Secondary Navigation" }]
+  "presets": [{ "name": "Secondary Breadcrumbs" }]
 }
 {% endschema %}
