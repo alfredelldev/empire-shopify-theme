@@ -162,6 +162,27 @@
         "description_mode": "above"
       }
     },
+    "product_secondary_breadcrumbs_JQKcjL": {
+      "type": "product-secondary-breadcrumbs",
+      "name": "Secondary Breadcrumbs",
+      "settings": {
+        "source": "tags",
+        "heading": "More from:",
+        "style": "list",
+        "limit": 6,
+        "exclude_vendor": true,
+        "exclude_collections": "Just-Arrived,All-over-1,All-Products,Best-Selling-collection,New-collection,express-ship",
+        "tag_group": "product type,installation type,size",
+        "base_collection": "{{ product.vendor }}",
+        "base_collection_label": "{{ product.vendor }}",
+        "tag_groups": "product type,installation type,size",
+        "display_mode": "loop",
+        "detect_from_url": false,
+        "merge_duplicates": false,
+        "url_mode": "combined",
+        "link_mode": "last"
+      }
+    },
     "1761667381ac9fed05": {
       "type": "apps",
       "blocks": {
@@ -172,33 +193,6 @@
       },
       "block_order": [
         "the_configurator_app_product_components_TQTNT3"
-      ],
-      "settings": {
-        "include_padding": true
-      }
-    },
-    "1694063103f42b80e8": {
-      "type": "apps",
-      "blocks": {
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
-          "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
-          "disabled": true,
-          "settings": {
-            "default_tab": "none",
-            "start_tab_element": "h5",
-            "default_tab_title": "Description",
-            "layout": "breakpoint",
-            "layout_breakpoint": 750,
-            "open_first_tab": true,
-            "allow_multiple_open": false,
-            "pro_tabs": false,
-            "initialize_tabs": "immediate",
-            "custom_scripts": ""
-          }
-        }
-      },
-      "block_order": [
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"
       ],
       "settings": {
         "include_padding": true
@@ -221,8 +215,8 @@
   "order": [
     "main",
     "product_tabs_BQWjzz",
+    "product_secondary_breadcrumbs_JQKcjL",
     "1761667381ac9fed05",
-    "1694063103f42b80e8",
     "recommendations",
     "recently-viewed"
   ]
