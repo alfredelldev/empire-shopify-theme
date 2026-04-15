@@ -1,0 +1,504 @@
+{% if product %}
+  {% assign source = section.settings.source %}
+  {% assign style = section.settings.style %}
+  {% assign limit = section.settings.limit %}
+  {% assign count = 0 %}
+  {% assign has_items = false %}
+
+  {% assign base_collection = section.settings.base_collection %}
+
+  <div
+    class="product-secondary-collections product-section--container product-row--container style-{{ style }}"
+    id="secondary-collections-{{ section.id }}"
+  >
+    {% if section.settings.heading != blank %}
+      <div class="psc-heading">{{ section.settings.heading }}</div>
+    {% endif %}
+
+    {% if style == 'pill' %}
+      <div class="psc-list">
+    {% else %}
+      <ul class="psc-list">
+    {% endif %}
+
+    {% if source == 'collections' %}
+      {% assign vendor_handle = product.vendor | handleize %}
+      {% assign exclude_raw = section.settings.exclude_collections | downcase | strip %}
+      {% assign exclude_list = exclude_raw | split: ',' %}
+
+      {% for collection in product.collections %}
+        {% assign handle = collection.handle %}
+
+        {% assign show = true %}
+
+        {% if exclude_list contains handle %}
+          {% assign show = false %}
+        {% endif %}
+
+        {% if section.settings.exclude_vendor and handle == vendor_handle %}
+          {% assign show = false %}
+        {% endif %}
+
+        {% if show %}
+          {% if limit > 0 and count >= limit %}{% break %}{% endif %}
+          {% assign count = count | plus: 1 %}
+          {% assign has_items = true %}
+
+          {% if style == 'pill' %}
+            <a href="{{ collection.url }}" class="psc-item">{{ collection.title }}</a>
+          {% else %}
+            <li class="psc-item">
+              <a href="{{ collection.url }}">{{ collection.title }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+    {% else %}
+      {%- comment -%}
+        STEP 1: Detect base collection
+      {%- endcomment -%}
+
+      {% assign exclude_raw = section.settings.exclude_collections | downcase | strip %}
+      {% assign exclude_list = exclude_raw | split: ',' %}
+      {% assign vendor_handle = product.vendor | handleize %}
+
+      {% assign base_collection = null %}
+
+      {%- comment -%} OPTION: detect from URL {%- endcomment -%}
+      {% if section.settings.detect_from_url and collection %}
+        {% assign handle = collection.handle | downcase %}
+        {% assign valid = true %}
+
+        {% if exclude_list contains handle %}
+          {% assign valid = false %}
+        {% endif %}
+
+        {% if section.settings.exclude_vendor and handle == vendor_handle %}
+          {% assign valid = false %}
+        {% endif %}
+
+        {% if valid %}
+          {% assign base_collection = collection %}
+        {% endif %}
+      {% endif %}
+
+      {%- comment -%} fallback to product.collections {%- endcomment -%}
+      {% if base_collection == null %}
+        {% for c in product.collections %}
+          {% assign handle = c.handle | downcase %}
+          {% assign valid = true %}
+
+          {% if exclude_list contains handle %}
+            {% assign valid = false %}
+          {% endif %}
+
+          {% if section.settings.exclude_vendor and handle == vendor_handle %}
+            {% assign valid = false %}
+          {% endif %}
+
+          {% if valid %}
+            {% assign base_collection = c %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+
+      {%- comment -%} fallback to type/vendor {%- endcomment -%}
+      {% assign base_label = '' %}
+      {% assign base_url = '' %}
+
+      {% if base_collection %}
+        {% assign base_label = base_collection.title %}
+        {% assign base_url = base_collection.url %}
+      {% elsif product.type != blank %}
+        {% assign base_label = product.type %}
+        {% assign base_url = '/collections/' | append: product.type | handleize %}
+      {% else %}
+        {% assign base_label = product.vendor %}
+        {% assign base_url = '/collections/' | append: product.vendor | handleize %}
+      {% endif %}
+
+      {%- comment -%}
+        STEP 2: Build breadcrumb levels
+      {%- endcomment -%}
+
+      {% assign group_order = section.settings.tag_groups | downcase | split: ',' %}
+
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+
+      {% capture levels %}
+        <a href="{{ base_url }}">{{ base_label }}</a>
+        {% endcapture %}
+
+      {% capture loop_output %}
+        <li><a href="{{ base_url }}">{{ base_label }}</a></li>
+        {% endcapture %}
+
+      {% assign tag_query = '' %}
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+
+      {% assign items_count = 0 %}
+
+      {%- comment -%} First pass: count valid items {%- endcomment -%}
+      {% for group in group_order %}
+        {% assign group = group | strip %}
+
+        {% for tag in product.tags %}
+          {% assign parts = tag | split: '_' %}
+          {% assign prefix = parts[0] | downcase %}
+          {% assign value = parts[1] %}
+
+          {% if prefix == group and value != blank %}
+            {% assign value_down = value | downcase %}
+
+            {% if section.settings.merge_duplicates and value_down == last_label %}
+              {% break %}
+            {% endif %}
+
+            {% assign items_count = items_count | plus: 1 %}
+            {% assign last_label = value_down %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+
+      {%- comment -%} Reset trackers {%- endcomment -%}
+      {% assign tag_query = '' %}
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+
+      {% assign crumb_labels = base_label %}
+      {% assign crumb_urls = base_url %}
+
+      {% capture loop_output %}
+  <li>
+    <a href="{{ base_url }}">{{ base_label }}</a>
+  </li>
+{% endcapture %}
+
+      {% for group in group_order %}
+        {% assign group = group | strip %}
+
+        {% for tag in product.tags %}
+          {% assign parts = tag | split: '_' %}
+          {% assign prefix = parts[0] | downcase %}
+          {% assign value = parts[1] %}
+
+          {% if prefix == group and value != blank %}
+            {% assign value_down = value | downcase %}
+
+            {% if section.settings.merge_duplicates and value_down == last_label %}
+              {% break %}
+            {% endif %}
+
+            {% assign prefix_handle = prefix | handleize %}
+            {% assign value_handle = value | handleize %}
+            {% assign new_tag = prefix_handle | append: '_' | append: value_handle %}
+
+            {%- comment -%} URL logic {%- endcomment -%}
+            {% if section.settings.url_mode == 'combined' %}
+              {% if tag_query == '' %}
+                {% assign tag_query = new_tag %}
+              {% else %}
+                {% assign tag_query = tag_query | append: '+' | append: new_tag %}
+              {% endif %}
+              {% assign current_url = base_url | append: '/' | append: tag_query %}
+            {% else %}
+              {% assign current_url = base_url | append: '/' | append: new_tag %}
+            {% endif %}
+
+            {%- comment -%}
+              Build breadcrumb row:
+              previous = spans
+              current = link
+            {%- endcomment -%}
+
+            {% assign labels_array = crumb_labels | split: '||' %}
+            {% assign urls_array = crumb_urls | split: '||' %}
+
+            {% capture row %}
+        {% for lbl in labels_array %}
+          {% unless forloop.first %}
+            <span class="psc-separator">›</span>
+          {% endunless %}
+          {% if section.settings.link_mode == 'all' %}
+            <a href="{{ urls_array[forloop.index0] }}">{{ lbl }}</a>
+          {% else %}
+            <span>{{ lbl }}</span>
+          {% endif %}
+        {% endfor %}
+
+        <span class="psc-separator">›</span>
+        <a href="{{ current_url }}">{{ value }}</a>
+      {% endcapture %}
+
+            {% capture loop_output %}
+        {{ loop_output }}
+        <li>{{ row }}</li>
+      {% endcapture %}
+
+            {%- comment -%} Update breadcrumb state {%- endcomment -%}
+            {% assign crumb_labels = crumb_labels | append: '||' | append: value %}
+            {% assign crumb_urls = crumb_urls | append: '||' | append: current_url %}
+            {% assign last_label = value_down %}
+
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+
+      {%- comment -%}
+        STEP 3: Render based on display mode
+      {%- endcomment -%}
+
+      {% assign labels_array = crumb_labels | split: '||' %}
+      {% assign urls_array = crumb_urls | split: '||' %}
+
+      {% capture levels %}
+        {% for lbl in labels_array %}
+          {% unless forloop.first %}
+            <span class="psc-separator">›</span>
+          {% endunless %}
+          {% if section.settings.link_mode == 'all' or forloop.last %}
+            <a href="{{ urls_array[forloop.index0] }}">{{ lbl }}</a>
+          {% else %}
+            <span>{{ lbl }}</span>
+          {% endif %}
+        {% endfor %}
+      {% endcapture %}
+
+      {% if section.settings.display_mode == 'single' %}
+        {% if style == 'pill' %}
+          <div class="psc-breadcrumb">
+            {{ levels }}
+          </div>
+        {% else %}
+          <li class="psc-item">
+            {{ levels }}
+          </li>
+        {% endif %}
+
+      {% else %}
+        <ul class="psc-loop">
+          {{ loop_output }}
+        </ul>
+      {% endif %}
+
+      {% assign has_items = true %}
+    {% endif %}
+
+    {% if style == 'pill' %}
+      </div>
+    {% else %}
+      </ul>
+    {% endif %}
+
+    {% unless has_items %}
+      <style>
+        #secondary-collections-{{ section.id }}{display:none;}
+      </style>
+    {% endunless %}
+  </div>
+{% endif %}
+
+<style>
+  .psc-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+  }
+
+  .psc-breadcrumb a {
+    text-decoration: none;
+  }
+
+  .psc-breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  .psc-separator {
+    opacity: 0.5;
+  }
+
+  .psc-loop {
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  .psc-loop li {
+    margin-bottom: 6px;
+    font-size: 14px;
+  }
+
+  .psc-heading {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
+  /* PILL */
+  .style-pill .psc-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .style-pill .psc-item {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  /* LIST */
+  .style-list .psc-list {
+    padding-left: 18px;
+  }
+
+  .style-list .psc-item {
+    margin-bottom: 4px;
+  }
+
+  .style-list .psc-item a:hover,
+  .style-list .psc-loop a:hover {
+    text-decoration: underline;
+  }
+
+  .style-list .psc-item a,
+  .style-list .psc-loop a {
+    text-decoration: none;
+    color: #1c83c4;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Secondary Breadcrumbs",
+  "settings": [
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Source",
+      "options": [
+        { "value": "collections", "label": "Collections" },
+        { "value": "tags", "label": "Tags" }
+      ],
+      "default": "collections"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "More from:",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "options": [
+        { "value": "pill", "label": "Pill" },
+        { "value": "list", "label": "List" }
+      ],
+      "default": "pill",
+      "label": "Style"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "default": 0,
+      "label": "Limit (0 = all)"
+    },
+
+    {
+      "type": "checkbox",
+      "id": "exclude_vendor",
+      "default": true,
+      "label": "Exclude vendor collection"
+    },
+    {
+      "type": "text",
+      "id": "exclude_collections",
+      "default": "frontpage",
+      "label": "Exclude collections (handles)"
+    },
+
+    {
+      "type": "text",
+      "id": "tag_group",
+      "label": "Tag Group (for tags source)",
+      "info": "Example: product type, size, installation type"
+    },
+    {
+      "type": "text",
+      "id": "base_collection",
+      "label": "Base collection handle",
+      "default": "bathroom-accessories"
+    },
+    {
+      "type": "text",
+      "id": "base_collection_label",
+      "label": "Base collection label",
+      "default": "Bathroom Accessories"
+    },
+    {
+      "type": "text",
+      "id": "tag_groups",
+      "label": "Tag groups order",
+      "default": "product type,installation type,size",
+      "info": "Order matters. Example: product type,installation type,size"
+    },
+    {
+      "type": "select",
+      "id": "display_mode",
+      "label": "Display mode",
+      "options": [
+        { "value": "single", "label": "Single line" },
+        { "value": "loop", "label": "Loop (progressive)" }
+      ],
+      "default": "single"
+    },
+    {
+      "type": "checkbox",
+      "id": "detect_from_url",
+      "label": "Detect base collection from URL",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "merge_duplicates",
+      "label": "Merge duplicate labels",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "url_mode",
+      "label": "Tag URL format",
+      "options": [
+        { "value": "combined", "label": "Combined (tag1+tag2)" },
+        { "value": "separate", "label": "Separate (/tag1)" }
+      ],
+      "default": "combined"
+    },
+    {
+      "type": "select",
+      "id": "link_mode",
+      "label": "Link behavior",
+      "options": [
+        { "value": "all", "label": "All breadcrumb items are links" },
+        { "value": "last", "label": "Only last item is a link" }
+      ],
+      "default": "all"
+    }
+  ],
+  "presets": [{ "name": "Secondary Breadcrumbs" }]
+}
+{% endschema %}
