@@ -163,31 +163,17 @@
         "description_mode": "above"
       }
     },
-    "1694063103f42b80e8": {
-      "type": "apps",
-      "blocks": {
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9": {
-          "type": "shopify://apps/tabs-studio/blocks/product_tabs_block/19980fb9-f2ca-4ada-ad36-c0364c3318b8",
-          "disabled": true,
-          "settings": {
-            "default_tab": "none",
-            "start_tab_element": "h5",
-            "default_tab_title": "Description",
-            "layout": "breakpoint",
-            "layout_breakpoint": 750,
-            "open_first_tab": true,
-            "allow_multiple_open": false,
-            "pro_tabs": false,
-            "initialize_tabs": "immediate",
-            "custom_scripts": ""
-          }
-        }
-      },
-      "block_order": [
-        "bda9f7f9-f32e-42a5-9f98-922ba8ab2ac9"
-      ],
+    "product_secondary_collections_kVaeQR": {
+      "type": "product-secondary-collections",
+      "name": "Secondary Collections",
       "settings": {
-        "include_padding": true
+        "heading": "More from:",
+        "style": "list",
+        "limit": 6,
+        "exclude_vendor": true,
+        "mode": "exclude",
+        "include_collections": "",
+        "exclude_collections": "Just-Arrived,All-over-1,All-Products,Best-Selling-collection,New-collection,express-ship"
       }
     },
     "recommendations": {
@@ -207,7 +193,7 @@
   "order": [
     "main",
     "product_tabs_i7QrrL",
-    "1694063103f42b80e8",
+    "product_secondary_collections_kVaeQR",
     "recommendations",
     "recently-viewed"
   ]
