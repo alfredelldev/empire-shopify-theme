@@ -163,19 +163,6 @@
         "description_mode": "above"
       }
     },
-    "product_secondary_collections_kVaeQR": {
-      "type": "product-secondary-collections",
-      "name": "Secondary Collections",
-      "settings": {
-        "heading": "More from:",
-        "style": "list",
-        "limit": 6,
-        "exclude_vendor": true,
-        "mode": "exclude",
-        "include_collections": "",
-        "exclude_collections": "Just-Arrived,All-over-1,All-Products,Best-Selling-collection,New-collection,express-ship"
-      }
-    },
     "recommendations": {
       "type": "static-product-recommendations",
       "settings": {
@@ -193,7 +180,6 @@
   "order": [
     "main",
     "product_tabs_i7QrrL",
-    "product_secondary_collections_kVaeQR",
     "recommendations",
     "recently-viewed"
   ]
