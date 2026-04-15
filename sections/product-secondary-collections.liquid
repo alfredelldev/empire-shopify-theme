@@ -7,7 +7,10 @@
 
   {% assign base_collection = section.settings.base_collection %}
 
-  <div class="product-secondary-collections style-{{ style }}" id="secondary-collections-{{ section.id }}">
+  <div
+    class="product-secondary-collections product-section--container product-row--container style-{{ style }}"
+    id="secondary-collections-{{ section.id }}"
+  >
     {% if section.settings.heading != blank %}
       <div class="psc-heading">{{ section.settings.heading }}</div>
     {% endif %}
@@ -126,13 +129,20 @@
       {% assign last_label = base_label | downcase %}
 
       {% capture levels %}
-    <a href="{{ base_url }}">{{ base_label }}</a>
-  {% endcapture %}
+        <a href="{{ base_url }}">{{ base_label }}</a>
+        {% endcapture %}
 
       {% capture loop_output %}
-    <li><a href="{{ base_url }}">{{ base_label }}</a></li>
-  {% endcapture %}
+        <li><a href="{{ base_url }}">{{ base_label }}</a></li>
+        {% endcapture %}
 
+      {% assign tag_query = '' %}
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+
+      {% assign items_count = 0 %}
+
+      {%- comment -%} First pass: count valid items {%- endcomment -%}
       {% for group in group_order %}
         {% assign group = group | strip %}
 
@@ -144,41 +154,104 @@
           {% if prefix == group and value != blank %}
             {% assign value_down = value | downcase %}
 
-            {%- comment -%} Merge duplicate labels {%- endcomment -%}
+            {% if section.settings.merge_duplicates and value_down == last_label %}
+              {% break %}
+            {% endif %}
+
+            {% assign items_count = items_count | plus: 1 %}
+            {% assign last_label = value_down %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+
+      {%- comment -%} Reset trackers {%- endcomment -%}
+      {% assign tag_query = '' %}
+      {% assign current_url = base_url %}
+      {% assign last_label = base_label | downcase %}
+      {% assign index = 0 %}
+
+      {% capture levels %}
+  {% if section.settings.link_mode == 'all' %}
+    <a href="{{ base_url }}">{{ base_label }}</a>
+  {% else %}
+    <span>{{ base_label }}</span>
+  {% endif %}
+{% endcapture %}
+
+      {% capture loop_output %}
+  <li>
+    {% if section.settings.link_mode == 'all' %}
+      <a href="{{ base_url }}">{{ base_label }}</a>
+    {% else %}
+      <span>{{ base_label }}</span>
+    {% endif %}
+  </li>
+{% endcapture %}
+
+      {%- comment -%} Second pass: build output {%- endcomment -%}
+      {% for group in group_order %}
+        {% assign group = group | strip %}
+
+        {% for tag in product.tags %}
+          {% assign parts = tag | split: '_' %}
+          {% assign prefix = parts[0] | downcase %}
+          {% assign value = parts[1] %}
+
+          {% if prefix == group and value != blank %}
+            {% assign value_down = value | downcase %}
+
             {% if section.settings.merge_duplicates and value_down == last_label %}
               {% break %}
             {% endif %}
 
             {% assign prefix_handle = prefix | handleize %}
             {% assign value_handle = value | handleize %}
-
-            {% assign tag_query = '' %}
-
             {% assign new_tag = prefix_handle | append: '_' | append: value_handle %}
 
-            {% if tag_query == '' %}
-              {% assign tag_query = new_tag %}
+            {%- comment -%} URL logic {%- endcomment -%}
+            {% if section.settings.url_mode == 'combined' %}
+              {% if tag_query == '' %}
+                {% assign tag_query = new_tag %}
+              {% else %}
+                {% assign tag_query = tag_query | append: '+' | append: new_tag %}
+              {% endif %}
+              {% assign current_url = base_url | append: '/' | append: tag_query %}
             {% else %}
-              {% assign tag_query = tag_query | append: '+' | append: new_tag %}
+              {% assign current_url = base_url | append: '/' | append: new_tag %}
             {% endif %}
 
-            {% assign current_url = base_url | append: '/' | append: tag_query %}
+            {% assign index = index | plus: 1 %}
+
+            {%- comment -%} ✅ CORRECT LINK LOGIC {%- endcomment -%}
+            {% assign is_link = false %}
+
+            {% if section.settings.link_mode == 'all' %}
+              {% assign is_link = true %}
+            {% elsif section.settings.link_mode == 'last' and index == items_count %}
+              {% assign is_link = true %}
+            {% endif %}
+
+            {% capture item_html %}
+        {% if is_link %}
+          <a href="{{ current_url }}">{{ value }}</a>
+        {% else %}
+          <span>{{ value }}</span>
+        {% endif %}
+      {% endcapture %}
 
             {% capture levels %}
-          {{ levels }}
-          <span class="psc-separator">›</span>
-          <a href="{{ current_url }}">{{ value }}</a>
-        {% endcapture %}
+        {{ levels }}
+        <span class="psc-separator">›</span>
+        {{ item_html }}
+      {% endcapture %}
 
             {% capture loop_output %}
-          {{ loop_output }}
-          <li>
-            {{ levels }}
-          </li>
-        {% endcapture %}
+        {{ loop_output }}
+        <li>{{ levels }}</li>
+      {% endcapture %}
 
             {% assign last_label = value_down %}
-
             {% break %}
           {% endif %}
         {% endfor %}
@@ -187,6 +260,28 @@
       {%- comment -%}
         STEP 3: Render based on display mode
       {%- endcomment -%}
+
+      {% if section.settings.link_mode == 'last' %}
+        {% assign parts = levels | split: '›' %}
+
+        {% capture rebuilt %}
+            {% for part in parts %}
+            {% assign trimmed = part | strip %}
+
+            {% if forloop.last %}
+                <span class="psc-separator">›</span>
+                {{ trimmed | replace: '<span', '<a href="' | replace: '</span>', '">' | append: '</a>' }}
+            {% else %}
+                {% unless forloop.first %}
+                <span class="psc-separator">›</span>
+                {% endunless %}
+                <span>{{ trimmed | strip_html }}</span>
+            {% endif %}
+            {% endfor %}
+        {% endcapture %}
+
+        {% assign levels = rebuilt %}
+      {% endif %}
 
       {% if section.settings.display_mode == 'single' %}
         {% if style == 'pill' %}
@@ -253,6 +348,13 @@
     font-size: 14px;
   }
 
+  .psc-heading {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    opacity: 0.8;
+  }
+
   /* PILL */
   .style-pill .psc-list {
     display: flex;
@@ -275,6 +377,17 @@
 
   .style-list .psc-item {
     margin-bottom: 4px;
+  }
+
+  .style-list .psc-item a:hover,
+  .style-list .psc-loop a:hover {
+    text-decoration: underline;
+  }
+
+  .style-list .psc-item a,
+  .style-list .psc-loop a {
+    text-decoration: none;
+    color: #1c83c4;
   }
 </style>
 
@@ -377,6 +490,26 @@
       "id": "merge_duplicates",
       "label": "Merge duplicate labels",
       "default": true
+    },
+    {
+      "type": "select",
+      "id": "url_mode",
+      "label": "Tag URL format",
+      "options": [
+        { "value": "combined", "label": "Combined (tag1+tag2)" },
+        { "value": "separate", "label": "Separate (/tag1)" }
+      ],
+      "default": "combined"
+    },
+    {
+      "type": "select",
+      "id": "link_mode",
+      "label": "Link behavior",
+      "options": [
+        { "value": "all", "label": "All breadcrumb items are links" },
+        { "value": "last", "label": "Only last item is a link" }
+      ],
+      "default": "all"
     }
   ],
   "presets": [{ "name": "Secondary Navigation" }]
