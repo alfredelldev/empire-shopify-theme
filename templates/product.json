@@ -163,6 +163,27 @@
         "description_mode": "above"
       }
     },
+    "product_secondary_breadcrumbs_mF67cK": {
+      "type": "product-secondary-breadcrumbs",
+      "name": "Secondary Breadcrumbs",
+      "settings": {
+        "source": "tags",
+        "heading": "More from:",
+        "style": "list",
+        "limit": 6,
+        "exclude_vendor": true,
+        "exclude_collections": "Just-Arrived,All-over-1,All-Products,Best-Selling-collection,New-collection,express-ship",
+        "tag_group": "product type,installation type,size",
+        "base_collection": "{{ product.vendor }}",
+        "base_collection_label": "{{ product.vendor }}",
+        "tag_groups": "product type,installation type,size",
+        "display_mode": "loop",
+        "detect_from_url": false,
+        "merge_duplicates": false,
+        "url_mode": "combined",
+        "link_mode": "last"
+      }
+    },
     "recommendations": {
       "type": "static-product-recommendations",
       "settings": {
@@ -180,6 +201,7 @@
   "order": [
     "main",
     "product_tabs_i7QrrL",
+    "product_secondary_breadcrumbs_mF67cK",
     "recommendations",
     "recently-viewed"
   ]
