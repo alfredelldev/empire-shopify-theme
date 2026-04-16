@@ -13,7 +13,7 @@ function initTabs() {
     const descAbove = wrapper.querySelector(".description-above");
     const sources = wrapper.querySelectorAll("[data-tab-source]");
 
-    // clear UI (important)
+    // clear UI
     nav.innerHTML = "";
     content.innerHTML = "";
     descAbove.innerHTML = "";
@@ -34,79 +34,83 @@ function initTabs() {
     }
 
     function addTab(title, html, handle) {
-      if (!html || html.trim() === "") return;
-
-      // prevent duplicates
+      if (!html || !html.trim()) return;
       if (tabs.find((t) => t.handle === handle)) return;
-
       tabs.push({ title, html, handle });
     }
 
-    // -------------------------
-    // 1. DESCRIPTION PARSE FIRST
-    // -------------------------
+    // =========================
+    // 1. DESCRIPTION PARSE
+    // =========================
     if (descSource && mode !== "hidden") {
       const temp = document.createElement("div");
       temp.innerHTML = descSource.innerHTML;
 
-      const headings = temp.querySelectorAll("h2,h3,h4,h5,h6");
-
-      let nonTabContent = "";
-      let usedNodes = new Set();
-
-      // HEADINGS → TABS
       let headingTabs = [];
+
+      // =========================
+      // EXTRACT HEADINGS → TABS
+      // =========================
+      const headings = temp.querySelectorAll("h2,h3,h4,h5,h6");
 
       headings.forEach((heading) => {
         let html = "";
-        let el = heading.nextSibling;
+        let el = heading.nextElementSibling;
 
-        while (el && !(el.tagName && el.tagName.match(/^H[2-6]$/))) {
+        const nodesToRemove = [heading];
+
+        while (el && !/^H[2-6]$/.test(el.tagName)) {
+          const next = el.nextElementSibling;
+
           html += el.outerHTML || el.textContent;
-          usedNodes.add(el);
-          el = el.nextSibling;
+
+          nodesToRemove.push(el);
+
+          el = next;
         }
+
+        nodesToRemove.forEach((n) => n.remove());
 
         headingTabs.push({
           title: heading.innerText,
           html: html,
           handle: slugify(heading.innerText),
         });
-
-        usedNodes.add(heading);
       });
 
-      // NON-HEADING CONTENT
-      temp.childNodes.forEach((node) => {
-        if (!usedNodes.has(node)) {
-          nonTabContent += node.outerHTML || node.textContent;
-        }
-      });
+      // =========================
+      // CLEAN REMAINING CONTENT (IMPORTANT FIX)
+      // =========================
+      const cleanClone = temp.cloneNode(true);
 
-      // MODE: ABOVE
+      cleanClone.querySelectorAll("h2,h3,h4,h5,h6").forEach((h) => h.remove());
+
+      const nonTabContent = cleanClone.innerHTML.trim();
+
+      // =========================
+      // MODE HANDLING
+      // =========================
       if (mode === "above") {
         descAbove.innerHTML = nonTabContent;
       }
 
-      // MODE: TAB → add FIRST
-      if (mode === "tab" && nonTabContent.trim() !== "") {
+      if (mode === "tab" && nonTabContent) {
         addTab("Description", nonTabContent, "description");
       }
 
-      // ADD HEADING TABS SECOND
       headingTabs.forEach((t) => addTab(t.title, t.html, t.handle));
     }
 
-    // -------------------------
+    // =========================
     // 2. METAFIELDS LAST
-    // -------------------------
+    // =========================
     sources.forEach((el) => {
       addTab(el.dataset.title, el.innerHTML, el.dataset.handle);
     });
 
-    // -------------------------
+    // =========================
     // 3. RENDER
-    // -------------------------
+    // =========================
     tabs.forEach((tab) => {
       const btn = document.createElement("button");
       btn.className = "tab-btn";
@@ -143,9 +147,9 @@ function initTabs() {
       window.history.replaceState({}, "", url);
     }
 
-    // -------------------------
-    // 4. INITIAL ACTIVE
-    // -------------------------
+    // =========================
+    // 4. INITIAL ACTIVE TAB
+    // =========================
     const first = tabs[0]?.handle;
 
     if (urlTab && tabs.find((t) => t.handle === urlTab)) {
