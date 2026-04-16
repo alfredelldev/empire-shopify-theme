@@ -177,8 +177,8 @@
         "base_collection_label": "{{ product.vendor }}",
         "tag_groups": "product type,installation type,size",
         "display_mode": "loop",
-        "detect_from_url": false,
-        "merge_duplicates": false,
+        "detect_from_url": true,
+        "merge_duplicates": true,
         "url_mode": "combined",
         "link_mode": "last"
       }
