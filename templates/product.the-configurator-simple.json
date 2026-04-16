@@ -118,6 +118,7 @@
       "blocks": {
         "metafield_tab_aA7R3k": {
           "type": "metafield_tab",
+          "name": "Key Features",
           "settings": {
             "label": "Key Features",
             "namespace": "custom",
@@ -126,6 +127,7 @@
         },
         "metafield_tab_6h3AkT": {
           "type": "metafield_tab",
+          "name": "Specifications",
           "settings": {
             "label": "Specifications",
             "namespace": "custom",
@@ -134,6 +136,7 @@
         },
         "metafield_tab_JeRepw": {
           "type": "metafield_tab",
+          "name": "Downloads",
           "settings": {
             "label": "Downloads",
             "namespace": "custom",
@@ -142,6 +145,7 @@
         },
         "metafield_tab_xkhJ6g": {
           "type": "metafield_tab",
+          "name": "Warranty",
           "settings": {
             "label": "Warranty",
             "namespace": "custom",
@@ -150,6 +154,7 @@
         },
         "metafield_tab_WYBPj6": {
           "type": "metafield_tab",
+          "name": "About Vendor",
           "settings": {
             "label": "About {{ product.vendor }}",
             "namespace": "custom",
