@@ -140,6 +140,14 @@
             "key": "downloads"
           }
         },
+        "metafield_tab_xkhJ6g": {
+          "type": "metafield_tab",
+          "settings": {
+            "label": "Warranty",
+            "namespace": "custom",
+            "key": "warranty"
+          }
+        },
         "metafield_tab_WYBPj6": {
           "type": "metafield_tab",
           "settings": {
@@ -153,6 +161,7 @@
         "metafield_tab_aA7R3k",
         "metafield_tab_6h3AkT",
         "metafield_tab_JeRepw",
+        "metafield_tab_xkhJ6g",
         "metafield_tab_WYBPj6"
       ],
       "name": "Product Tabs",
