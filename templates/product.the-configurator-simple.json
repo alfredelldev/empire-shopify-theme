@@ -164,7 +164,7 @@
       "type": "product-secondary-breadcrumbs",
       "name": "Secondary Breadcrumbs",
       "settings": {
-        "source": "tags",
+        "source": "collections",
         "heading": "More from:",
         "style": "list",
         "limit": 6,
